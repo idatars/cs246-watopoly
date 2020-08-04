@@ -57,6 +57,37 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
 	squares.emplace_back(new Upgradable("MC", 350, 200, 35, 175, 500, 1100, 1300, 1500, Math)); // 37
 	squares.emplace_back(new CoopFee()); // 38
 	squares.emplace_back(new Upgradable("DC", 400, 200, 50, 200, 600, 1400, 1700, 2000, Math)); // 39
+
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[1]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[3]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[5]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[6]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[8]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[9]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[11]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[12]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[13]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[14]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[15]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[16]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[18]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[19]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[21]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[23]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[24]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[25]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[26]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[27]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[28]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[29]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[31]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[32]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[34]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[35]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[37]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[39]));
+
+
 }
 
 void Board::setPlayers(std::vector<std::shared_ptr<Player>> p){
@@ -79,3 +110,37 @@ std::shared_ptr<Player> Board::currentPlayer()
 std::shared_ptr<Square> Board::getSquare(int i) {
 	return squares[i];
 }
+
+std::istream& operator>>(std::istream& in, Board b) {
+
+}// load
+
+std::ostream& operator<<(std::ostream& in, Board b) {
+	in << b.numplayers << std::endl;
+	for (int i = 0; i < b.numplayers; ++i) {
+		in << b.players[i]->getName() << " " << b.players[i]->getPiece() << " ";
+		in << b.players[i]->getCups() << " " << b.players[i]->getMoney() << " ";
+		in << b.players[i]->getPos() << " ";
+		if (b.players[i]->getPos() == 10) {
+			if (b.players[i]->inTims()) {
+				in << "1 " << b.players[i]->turnsinTims();
+			}
+			else {
+				in << " 0";
+			}
+		}
+		in << std::endl;
+	}//printing all the players and their locations and other info to the file
+
+	for (int i = 0; i < b.properties.size(); ++i) {
+		in << b.properties[i]->getName() << " ";
+		if (b.properties[i]->getOwner() == nullptr) {
+			in << "BANK ";
+		}
+		else {
+			in << b.properties[i]->getOwner()->getName() << " ";
+		}
+		
+	}
+	return in;
+}//save
