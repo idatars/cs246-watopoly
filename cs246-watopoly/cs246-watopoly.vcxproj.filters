@@ -15,118 +15,118 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\coopfee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\goosenesting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\gototims.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\gym.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\main.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\monopolyblock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\nh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\nonproperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\osap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\player.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\property.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\residence.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\slc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\square.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\test.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\timsline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\tuition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\upgradable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
+    <ClInclude Include="timsline.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tuition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="upgradable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="board.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="coopfee.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="goosenesting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gototims.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="gym.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="monopolyblock.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="nonproperty.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="osap.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="player.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="property.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="residence.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="slc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="square.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\timsline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\tuition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\upgradable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\coopfee.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\goosenesting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\gototims.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\gym.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\monopolyblock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\nh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\nonproperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\osap.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\player.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\property.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\residence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\slc.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\square.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\test.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+    <ClCompile Include="timsline.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tuition.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="upgradable.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="coopfee.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="goosenesting.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gototims.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="gym.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="main.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="monopolyblock.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nh.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="nonproperty.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="osap.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="player.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="property.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="residence.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="slc.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="square.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="test.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

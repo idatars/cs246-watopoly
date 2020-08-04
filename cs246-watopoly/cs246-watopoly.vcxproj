@@ -18,6 +18,47 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="board.h" />
+    <ClInclude Include="coopfee.h" />
+    <ClInclude Include="goosenesting.h" />
+    <ClInclude Include="gototims.h" />
+    <ClInclude Include="gym.h" />
+    <ClInclude Include="monopolyblock.h" />
+    <ClInclude Include="nh.h" />
+    <ClInclude Include="nonproperty.h" />
+    <ClInclude Include="osap.h" />
+    <ClInclude Include="player.h" />
+    <ClInclude Include="property.h" />
+    <ClInclude Include="residence.h" />
+    <ClInclude Include="slc.h" />
+    <ClInclude Include="square.h" />
+    <ClInclude Include="test.h" />
+    <ClInclude Include="timsline.h" />
+    <ClInclude Include="tuition.h" />
+    <ClInclude Include="upgradable.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="board.cpp" />
+    <ClCompile Include="coopfee.cpp" />
+    <ClCompile Include="goosenesting.cpp" />
+    <ClCompile Include="gototims.cpp" />
+    <ClCompile Include="gym.cpp" />
+    <ClCompile Include="main.cc" />
+    <ClCompile Include="monopolyblock.cpp" />
+    <ClCompile Include="nh.cpp" />
+    <ClCompile Include="nonproperty.cpp" />
+    <ClCompile Include="osap.cpp" />
+    <ClCompile Include="player.cc" />
+    <ClCompile Include="property.cpp" />
+    <ClCompile Include="residence.cpp" />
+    <ClCompile Include="slc.cpp" />
+    <ClCompile Include="square.cpp" />
+    <ClCompile Include="test.cc" />
+    <ClCompile Include="timsline.cpp" />
+    <ClCompile Include="tuition.cpp" />
+    <ClCompile Include="upgradable.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
@@ -138,47 +179,6 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\board.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\coopfee.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\goosenesting.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\gototims.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\gym.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\main.cc" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\monopolyblock.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\nh.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\nonproperty.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\osap.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\player.cc" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\property.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\residence.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\slc.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\square.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\test.cc" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\timsline.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\tuition.cpp" />
-    <ClCompile Include="..\..\joe-zyc\cs246-watopoly\upgradable.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\board.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\coopfee.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\goosenesting.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\gototims.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\gym.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\monopolyblock.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\nh.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\nonproperty.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\osap.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\player.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\property.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\residence.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\slc.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\square.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\test.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\timsline.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\tuition.h" />
-    <ClInclude Include="..\..\joe-zyc\cs246-watopoly\upgradable.h" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
