@@ -22,3 +22,14 @@ int Property::getMortgage() {
     return mortgage;
 }
 
+bool isMortaged(){
+	return mortgaged;
+}
+
+void setMortaged(){
+	mortgaged = true;
+}
+
+void setUnmortaged(){
+	mortgaged = false;
+}

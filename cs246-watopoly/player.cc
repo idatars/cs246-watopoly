@@ -75,3 +75,32 @@ void Player::resetTims()
 	turnsInTims = 0;
 	tims = false;
 }
+
+void Player::buyImprovement(Upgradable * up){
+	try{
+		up->improve(this);
+	}catch(Exception & e){
+		throw(e);
+	}
+}
+
+void Player::getMortage(Property * p){
+	if(p->getOwner() != this){
+		throw(Exception{"You are not the owner of this property."});
+	}try{
+		p->mortage(this);
+	}catch(Exception & e){
+		throw e;
+	}
+}
+
+void getUnmortage(Property * p){
+	if(p->getOwner() != this){
+		throw(Exception{"You are not the owner of this property."});
+	}try{
+		p->unmortage(this);
+	}catch(Exception & e){
+		throw e;
+	}
+}
+

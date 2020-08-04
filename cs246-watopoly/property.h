@@ -11,6 +11,7 @@ class Square;
 class Property : public Square {
 	int cost;
 	Player * owner = nullptr;
+	bool mortaged= false;
 	int mortgage;
 	std::vector<Property*> monopolyBlock;
 public:
@@ -20,6 +21,11 @@ public:
 	void setOwner(Player&);
 	int getMortgage();
 	virtual void playerEffect(Player&) = 0;
+	bool isMortaged();
+	void setMortaged();
+	void setUnmortaged();
+	virtual void mortage(Player * player) = 0; // property mortaged by player
+	virtual void unmortage(Player * player) = 0; // property unmortaged by plater
 };
 
 class Auction {

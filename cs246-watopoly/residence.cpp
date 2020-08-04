@@ -31,3 +31,25 @@ void Residence::playerEffect(Player& p) {
 		p.withdrawMoney(getRent());
 	}
 }
+
+void Residence::mortage(Player * player){
+	if(this->isMortaged()){
+		throw(Exception{"You have already mortaged the property."});
+	}try{
+		player->addMoney(this->getMortage());
+		this->setMortaged();
+	}catch(Exception & e){
+		throw(e);
+	}
+}
+
+void Residence::unmortage(Player * player){
+	if(!this->isMortaged()){
+		throw(Exception{"You have already unmortaged the property."});
+	}try{
+		player->withdrawMoney(this->getMortage() * 6 / 5);
+		this->setUnmortaged();
+	}catch(Exception & e){
+		throw(e);
+	}
+}
