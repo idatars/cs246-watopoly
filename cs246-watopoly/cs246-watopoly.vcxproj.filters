@@ -128,5 +128,8 @@
     <ClCompile Include="test.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="test2.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

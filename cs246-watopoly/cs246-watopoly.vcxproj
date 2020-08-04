@@ -55,6 +55,7 @@
     <ClCompile Include="slc.cpp" />
     <ClCompile Include="square.cpp" />
     <ClCompile Include="test.cc" />
+    <ClCompile Include="test2.cc" />
     <ClCompile Include="timsline.cpp" />
     <ClCompile Include="tuition.cpp" />
     <ClCompile Include="upgradable.cpp" />
