@@ -1,4 +1,5 @@
 #include "gym.h"
+#include "exception.h"
 #include <iostream>
 
 Gym::Gym(std::string name) : Property(name, 150) {}

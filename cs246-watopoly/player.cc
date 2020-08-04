@@ -1,5 +1,6 @@
 #include "player.h"
 #include <iostream>
+#include "exception.h"
 
 Player::Player(std::string& name, char piece) {
 	this->name = name;

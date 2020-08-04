@@ -1,5 +1,6 @@
 #include "upgradable.h"
 #include <iostream>
+#include "exception.h"
 
 Upgradable::Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b) :
     Property(name, c),

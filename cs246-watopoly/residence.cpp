@@ -1,5 +1,6 @@
 #include "residence.h"
 #include <iostream>
+#include "exception.h"
 
 Residence::Residence(std::string name) : Property(name, 200) {}
 
