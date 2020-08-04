@@ -12,7 +12,7 @@ void NH::playerEffect(Player& p) {
 	else if (1 <= n && n <= 2) { // -100
 		std::cout << "You lose $100!\n";
 		p.withdrawMoney(100);
-	}
+	}//
 	else if (3 <= n && n <= 5) { // -50
 		std::cout << "You lose $50!\n";
 		p.withdrawMoney(50);
