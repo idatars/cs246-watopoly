@@ -10,6 +10,7 @@ class Upgradable;
 class MonopolyBlock {
 	std::vector<Upgradable*> members;
 public:
+	MonopolyBlock() {}
 	std::vector<Upgradable*> getMembers();
 };
 

@@ -8,14 +8,14 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
 	players = p;
 	numplayers = p.size();
 
-	std::shared_ptr<MonopolyBlock> Arts1;
-	std::shared_ptr<MonopolyBlock> Arts2;
-	std::shared_ptr<MonopolyBlock> Eng;
-	std::shared_ptr<MonopolyBlock> Health;
-	std::shared_ptr<MonopolyBlock> Env;
-	std::shared_ptr<MonopolyBlock> Sci1;
-	std::shared_ptr<MonopolyBlock> Sci2;
-	std::shared_ptr<MonopolyBlock> Math;
+	std::shared_ptr<MonopolyBlock> Arts1(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Arts2(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Eng(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Health(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Env(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Sci1(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Sci2(new MonopolyBlock);
+	std::shared_ptr<MonopolyBlock> Math(new MonopolyBlock);
 
 	squares.emplace_back(new OSAP()); // 0
 	squares.emplace_back(new Upgradable("AL", 40, 50, 2, 10, 30, 90, 160, 250, Arts1)); // 1
@@ -63,17 +63,16 @@ void Board::setPlayers(std::vector<std::shared_ptr<Player>> p){
 	players = p;
 }
 
-void Board::move(int i)
-{
+void Board::move(int i) {
+
 }
 
 std::string Board::peek(int i) {
 	return squares[i]->getName();
 }
 
-std::shared_ptr<Player> Board::currentPlayer()
-{
-	return std::shared_ptr<Player>();
+std::shared_ptr<Player> Board::currentPlayer() {
+	return players[currplayer];
 }
 
 std::shared_ptr<Square> Board::getSquare(int i) {
