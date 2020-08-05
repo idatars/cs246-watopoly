@@ -1,8 +1,13 @@
 #include "player.h"
 #include <iostream>
 #include "exception.h"
+<<<<<<< HEAD
 #include "property.h"
 #include "upgradable.h"
+=======
+#include "upgradable.h"
+#include "property.h"
+>>>>>>> improve_mortage
 
 Player::Player(std::string& name, char piece) {
 	this->name = name;
