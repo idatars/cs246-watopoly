@@ -4,6 +4,7 @@
 #include <memory>
 #include "player.h"
 #include "square.h"
+#include "monopolyblock.h"
 
 class Player;
 class Square;
@@ -13,9 +14,9 @@ class Property : public Square {
 	Player * owner = nullptr;
 	bool mortgaged= false;
 	int mortgage;
-	std::vector<Property*> monopolyBlock;
+	std::shared_ptr<MonopolyBlock> block;
 public:
-	Property(std::string& name, int c);
+	Property(std::string& name, int c, std::shared_ptr<MonopolyBlock> b);
 	int getCost();
 	Player* getOwner();
 	void setOwner(Player&);

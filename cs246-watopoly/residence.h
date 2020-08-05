@@ -8,7 +8,7 @@
 class Residence : public Property {
 	int rent[4] = { 25, 50, 100, 200 };
 public:
-	Residence(std::string name);
+	Residence(std::string name, std::shared_ptr<MonopolyBlock> b);
 	int getRent();
 	void playerEffect(std::shared_ptr<Player>);
 	void mortgageBy(Player * player) override;

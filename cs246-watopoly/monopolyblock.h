@@ -5,13 +5,13 @@
 #include <vector>
 #include <memory>
 
-class Upgradable;
+class Property;
 
 class MonopolyBlock {
-	std::vector<Upgradable*> members;
+	std::vector<Property*> members;
 public:
 	MonopolyBlock() {}
-	std::vector<Upgradable*> getMembers();
+	std::vector<Property*> getMembers();
 };
 
 #endif

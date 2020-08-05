@@ -3,10 +3,9 @@
 #include "exception.h"
 
 Upgradable::Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b) :
-    Property(name, c),
+    Property(name, c, b),
     improvementCost{ ic },
-    tuition{ t0, t1, t2, t3, t4, t5 },
-	block{ b } {
+    tuition{ t0, t1, t2, t3, t4, t5 } {
 	b->getMembers().push_back(this);
 }
 
@@ -53,7 +52,7 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 
 //returns true if the owener of the upgradable forms a monopoly and false otherwise
 bool Upgradable::ownMonopoly(){
-	Player * owner =  this->getOwner(); 
+	/*Player * owner =  this->getOwner(); 
 	if(owner==nullptr){
 		return false;
 	}
@@ -70,7 +69,7 @@ bool Upgradable::ownMonopoly(){
 		if(!has_upgradable){
 			return false;
 		}
-	}
+	}*/
 	return true;
 }
 

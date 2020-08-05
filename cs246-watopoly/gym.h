@@ -6,7 +6,7 @@
 
 class Gym : public Property {
 public:
-	Gym(std::string name);
+	Gym(std::string name, std::shared_ptr<MonopolyBlock> b);
 	int usageFees();
 	void playerEffect(std::shared_ptr<Player>);
 	void mortgageBy(Player * player) override;

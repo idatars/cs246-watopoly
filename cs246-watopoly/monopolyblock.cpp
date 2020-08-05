@@ -1,5 +1,5 @@
 #include "monopolyblock.h"
 
-std::vector<Upgradable*> MonopolyBlock::getMembers() {
+std::vector<Property*> MonopolyBlock::getMembers() {
     return members;
 }

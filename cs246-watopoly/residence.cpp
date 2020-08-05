@@ -2,7 +2,7 @@
 #include <iostream>
 #include "exception.h"
 
-Residence::Residence(std::string name) : Property(name, 200) {}
+Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {}
 
 int Residence::getRent() {
     return rent[getOwner()->getRez().size()];

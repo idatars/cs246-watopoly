@@ -57,9 +57,6 @@
     <ClInclude Include="gototims.h">
       <Filter>Header Files\Squares\NonProperty</Filter>
     </ClInclude>
-    <ClInclude Include="monopolyblock.h">
-      <Filter>Header Files\Squares\NonProperty</Filter>
-    </ClInclude>
     <ClInclude Include="nh.h">
       <Filter>Header Files\Squares\NonProperty</Filter>
     </ClInclude>
@@ -77,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="tuition.h">
       <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="monopolyblock.h">
+      <Filter>Header Files\Squares</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

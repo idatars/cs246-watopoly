@@ -2,7 +2,7 @@
 #include "exception.h"
 #include <iostream>
 
-Gym::Gym(std::string name) : Property(name, 150) {}
+Gym::Gym(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 150, b) {}
 
 int Gym::usageFees() {
 	if (getOwner()->getGyms().size() == 2) return 10 * (rand() % 6 + 1 + rand() % 6 + 1);
