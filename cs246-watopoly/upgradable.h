@@ -25,7 +25,7 @@ public:
 	bool ownMonopoly();
 	//imporve the building
 	void improve(Player * player);
-	void playerEffect(Player&) override;
+	void playerEffect(std::shared_ptr<Player>) override;
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override; 
 };

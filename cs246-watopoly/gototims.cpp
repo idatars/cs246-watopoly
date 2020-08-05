@@ -4,7 +4,7 @@ GoToTims::GoToTims() : NonProperty("Go To Tims")
 {
 }
 
-void GoToTims::playerEffect(Player& p) {
-	p.setPos(10);
-	p.setInTims(true);
+void GoToTims::playerEffect(std::shared_ptr<Player> p) {
+	p->setPos(10);
+	p->setInTims(true);
 }

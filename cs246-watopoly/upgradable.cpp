@@ -26,14 +26,14 @@ int Upgradable::getTuition() {
     return tuition[improvements];
 }
 
-void Upgradable::playerEffect(Player& p) {
+void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Academic Building) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyUpgradable(*this);
+				p->buyUpgradable(*this);
 				break;
 			}
 			else if (answer == "no") {
@@ -45,9 +45,9 @@ void Upgradable::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(getTuition());
+		p->withdrawMoney(getTuition());
 	}
 }
 

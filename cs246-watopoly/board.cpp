@@ -64,7 +64,18 @@ void Board::setPlayers(std::vector<std::shared_ptr<Player>> p){
 }
 
 void Board::move(int i) {
-
+	if (i + players[currplayer]->getPos() <= 39) {
+		players[currplayer]->setPos(players[currplayer]->getPos() + i);
+		std::cout << "You are now on " << peek(players[currplayer]->getPos()) << "\n";
+		squares[players[currplayer]->getPos()]->playerEffect(players[currplayer]);
+	}
+	else {
+		players[currplayer]->setPos((players[currplayer]->getPos() + i) % 40);
+		std::cout << "You collect $200 from OSAP\n";
+		players[currplayer]->addMoney(200);
+		std::cout << "You are now on " << peek(players[currplayer]->getPos()) << "\n";
+		squares[players[currplayer]->getPos()]->playerEffect(players[currplayer]);
+	}
 }
 
 std::string Board::peek(int i) {
@@ -73,6 +84,10 @@ std::string Board::peek(int i) {
 
 std::shared_ptr<Player> Board::currentPlayer() {
 	return players[currplayer];
+}
+
+void Board::endturn() {
+	currplayer = (currplayer + 1) % numplayers;
 }
 
 std::shared_ptr<Square> Board::getSquare(int i) {

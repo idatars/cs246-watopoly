@@ -3,17 +3,17 @@
 
 Tuition::Tuition() : NonProperty("Tuition") {}
 
-void Tuition::playerEffect(Player& p) {
+void Tuition::playerEffect(std::shared_ptr<Player> p) {
 	std::string answer;
 	std::cout << "Would you like to pay (a) $300 or (b) 10% of your total worth? ";
 	while (1) {
 		std::cin >> answer;
 		if (answer == "a") {
-			p.withdrawMoney(300);
+			p->withdrawMoney(300);
 			break;
 		}
 		else if (answer == "b") {
-			p.withdrawMoney(p.worth());
+			p->withdrawMoney(p->worth());
 			break;
 		}
 		else {

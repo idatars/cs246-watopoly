@@ -20,7 +20,7 @@ public:
 	Player* getOwner();
 	void setOwner(Player&);
 	int getMortgage();
-	virtual void playerEffect(Player&) = 0;
+	virtual void playerEffect(std::shared_ptr<Player>) = 0;
 	bool isMortgaged();
 	void setMortgaged();
 	void setUnmortgaged();

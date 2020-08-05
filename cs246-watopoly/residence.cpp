@@ -8,14 +8,14 @@ int Residence::getRent() {
     return rent[getOwner()->getRez().size()];
 }
 
-void Residence::playerEffect(Player& p) {
+void Residence::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Residence) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyResidence(*this);
+				p->buyResidence(*this);
 				break;
 			}
 			else if (answer == "no") {
@@ -27,9 +27,9 @@ void Residence::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(getRent());
+		p->withdrawMoney(getRent());
 	}
 }
 

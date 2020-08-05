@@ -15,7 +15,7 @@ public:
 	Square(std::string);
 	std::vector<Player*> getPlayers();
 	std::string getName();
-	virtual void playerEffect(Player&) = 0;
+	virtual void playerEffect(std::shared_ptr<Player>) = 0;
 };
 
 #endif

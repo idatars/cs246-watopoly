@@ -3,5 +3,5 @@
 class GooseNesting : public NonProperty {
 public:
 	GooseNesting();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 };

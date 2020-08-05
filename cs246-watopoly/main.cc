@@ -146,13 +146,25 @@ int main(int argc, char *argv[]) {
 		}
 
 		std::cin >> arg;
-		if (arg == "roll") {
-			if (!b.currentPlayer()->inTims()) {
-				int roll = rand() % 6 + 1 + rand() % 6 + 1;
-				b.move(roll);
+		while (1) {
+			if (arg == "roll") {
+				if (!b.currentPlayer()->inTims()) {
+					int roll = rand() % 6 + 1 + rand() % 6 + 1;
+					try { b.move(roll); }
+					catch (Auction) {
+
+					}
+					catch (outOfMoney) {
+
+					}
+				}
+				else {
+					std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+				}
 			}
-			else {
-				std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+			else if (arg == "next") {
+				b.endturn();
+				break;
 			}
 		}
 	}
