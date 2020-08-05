@@ -8,9 +8,9 @@ class Gym : public Property {
 public:
 	Gym(std::string name);
 	int usageFees();
-	void playerEffect(std::shared_ptr<Player>);
-	void mortage(Player * player) override;
-	void unmortage(Player * player) override;
+	void playerEffect(Player&);
+	void mortgageBy(Player * player) override;
+	void unmortgageBy(Player * player) override;
 };
 
 #endif

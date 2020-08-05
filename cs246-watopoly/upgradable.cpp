@@ -58,10 +58,16 @@ bool Upgradable::ownMonopoly(){
 		return false;
 	}
 	std::vector<Upgradable*> monopoly_members = block->getMembers();
-	std::vector<Upgradable*> player_owned = owner->getUpgradables()
+	std::vector<std::shared_ptr<Upgradable>> player_owned = owner->getUpgradables();
 	for(auto it=monopoly_members.begin(); it!=monopoly_members.end();++it){
 		//if owner does not own one of the buildings in the monopoly
-		if(std::find(player_owned.begin(),player_owned.end(),it)==player_owned.end()){ 
+		bool has_upgradable = false;
+		for(auto it2=player_owned.begin();it2!=player_owned.end();++it2){
+			if((*it)->getName() == (*it2)->getName()){
+				has_upgradable = true;
+			}
+		}
+		if(!has_upgradable){
 			return false;
 		}
 	}
@@ -74,7 +80,7 @@ void Upgradable::improve(Player * player){
 		throw(Exception{"This building is not yours :("}); // not ur property
 	}else if(!this->ownMonopoly()){
 		throw(Exception{"You do not own the monopoly, keep tring!"}); // does not own monopoly
-	}else if(imporvements == 5){ // improvement number is at max
+	}else if(improvements == 5){ // improvement number is at max
 		throw(Exception{"You have reached the maximum improvement number."});
 	}else{ // buy improvement
 		try{
@@ -86,25 +92,25 @@ void Upgradable::improve(Player * player){
 	}
 }
 
-void Upgradable::mortage(Player * player){
-	if(this->isMortaged()){
-		throw(Exception{"You have already mortaged the property."});
+void Upgradable::mortgageBy(Player * player){
+	if(this->isMortgaged()){
+		throw(Exception{"You have already mortgaged the property."});
 	}else if(improvements != 0){
 		throw(Exception{"You need to sale all the improvements."});
 	}try{
-		player->addMoney(this->getMortage());
-		this->setMortaged();
+		player->addMoney(this->getMortgage());
+		this->setMortgaged();
 	}catch(Exception & e){
 		throw(e);
 	}
 }
 
-void Upgradable::unmortage(Player * player){
-	if(!this->isMortaged()){
-		throw(Exception{"You have already unmortaged the property."});
+void Upgradable::unmortgageBy(Player * player){
+	if(!this->isMortgaged()){
+		throw(Exception{"You have already unmortgaged the property."});
 	}try{
-		player->withdrawMoney(this->getMortage() * 6 / 5);
-		this->setUnmortaged();
+		player->withdrawMoney(this->getMortgage() * 6 / 5);
+		this->setUnmortgaged();
 	}catch(Exception & e){
 		throw(e);
 	}
