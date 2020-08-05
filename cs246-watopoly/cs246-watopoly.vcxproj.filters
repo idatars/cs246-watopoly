@@ -13,61 +13,70 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Header Files\Squares">
+      <UniqueIdentifier>{62a7d4de-987a-4f96-9f0a-7be1116450a2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Squares\Property">
+      <UniqueIdentifier>{4890e012-f548-4841-85bd-91a0456f1780}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Squares\NonProperty">
+      <UniqueIdentifier>{15991581-086f-4b9d-bdad-38dc74762252}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="timsline.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="tuition.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="upgradable.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="board.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="coopfee.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="goosenesting.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gototims.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="gym.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="monopolyblock.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="nonproperty.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="osap.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="property.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="residence.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="slc.h">
+    <ClInclude Include="test.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="square.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Squares</Filter>
     </ClInclude>
-    <ClInclude Include="test.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="property.h">
+      <Filter>Header Files\Squares\Property</Filter>
+    </ClInclude>
+    <ClInclude Include="upgradable.h">
+      <Filter>Header Files\Squares\Property</Filter>
+    </ClInclude>
+    <ClInclude Include="gym.h">
+      <Filter>Header Files\Squares\Property</Filter>
+    </ClInclude>
+    <ClInclude Include="residence.h">
+      <Filter>Header Files\Squares\Property</Filter>
+    </ClInclude>
+    <ClInclude Include="coopfee.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="goosenesting.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="gototims.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="monopolyblock.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="nh.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="nonproperty.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="osap.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="slc.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="timsline.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
+    </ClInclude>
+    <ClInclude Include="tuition.h">
+      <Filter>Header Files\Squares\NonProperty</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -129,6 +138,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test2.cc">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="exception.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

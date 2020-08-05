@@ -41,6 +41,7 @@
   <ItemGroup>
     <ClCompile Include="board.cpp" />
     <ClCompile Include="coopfee.cpp" />
+    <ClCompile Include="exception.cpp" />
     <ClCompile Include="goosenesting.cpp" />
     <ClCompile Include="gototims.cpp" />
     <ClCompile Include="gym.cpp" />
