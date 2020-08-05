@@ -5,7 +5,6 @@
 #include <string>
 #include <memory>
 
-class Property;
 class Residence;
 class Upgradable;
 class Gym;
@@ -51,8 +50,8 @@ public:
 	int worth();
 
 	void buyImprovement(Upgradable * up); // player improves 'up'
-	void getMortgage(Property * p); // mortage a building
-	void getUnmortgage(Property * p); // unmortage a building 
+	void getMortage(Property * p); // mortage a building
+	void getUnmortage(Property * p); // unmortage a building 
 };
 
 class outOfMoney {

@@ -1,8 +1,6 @@
 #include "player.h"
 #include <iostream>
 #include "exception.h"
-#include "upgradable.h"
-#include "property.h"
 
 Player::Player(std::string& name, char piece) {
 	this->name = name;
@@ -87,21 +85,21 @@ void Player::buyImprovement(Upgradable * up){
 	}
 }
 
-void Player::getMortgage(Property * p){
+void Player::getMortage(Property * p){
 	if(p->getOwner() != this){
 		throw(Exception{"You are not the owner of this property."});
 	}try{
-		p->mortgageBy(this);
+		p->mortage(this);
 	}catch(Exception & e){
 		throw e;
 	}
 }
 
-void Player::getUnmortgage(Property * p){
+void getUnmortage(Property * p){
 	if(p->getOwner() != this){
 		throw(Exception{"You are not the owner of this property."});
 	}try{
-		p->unmortgageBy(this);
+		p->unmortage(this);
 	}catch(Exception & e){
 		throw e;
 	}
