@@ -21,10 +21,11 @@
 class Square;
 
 class Board {
-	//friend istream& operator>>(istream& in, Board b);
-	//friend ostream& operator<<(ostream& in, Board b);
+	friend std::istream& operator>>(std::istream& in, Board b);
+	friend std::ostream& operator<<(std::ostream& out, Board b);
 	std::vector<std::shared_ptr<Square>> squares;
 	std::vector<std::shared_ptr<Player>> players;
+	std::vector<std::shared_ptr<Property>> properties;
 	int currplayer = 0;
 	int numplayers = 0;
 public:
@@ -38,8 +39,8 @@ public:
 	std::shared_ptr<Square> getSquare(int i);
 };
 
-//std::istream& operator>>(std::istream& in, Board b);
+std::istream& operator>>(std::istream& in, Board b);
 
-//std::ostream& operator<<(std::ostream& in, Board b);
+std::ostream& operator<<(std::ostream& out, Board b);
 
 #endif
