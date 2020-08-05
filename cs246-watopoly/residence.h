@@ -10,6 +10,8 @@ class Residence : public Property {
 public:
 	Residence(std::string name);
 	int getRent();
+	int getImprovements() override;
+	void setImprovements(int improvement) override;
 	void playerEffect(Player&);
 };
 

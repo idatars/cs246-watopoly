@@ -17,6 +17,10 @@ int Upgradable::getImprovements() {
     return improvements;
 }
 
+void Upgradable::setImprovements(int improvement) {
+	improvements = improvement;
+}
+
 int Upgradable::getTuition() {
     for (std::vector<std::shared_ptr<Upgradable>>::iterator it = getOwner()->getUpgradables().begin(); it != getOwner()->getUpgradables().end(); ++it) {
         if ((*it)->getOwner()->getName() != getOwner()->getName()) return tuition[0];

@@ -32,3 +32,8 @@ void Gym::playerEffect(Player& p) {
 		p.withdrawMoney(usageFees());
 	}
 }
+
+int Gym::getImprovements() {
+	return 0;
+}
+void Gym::setImprovements(int improvements) {}

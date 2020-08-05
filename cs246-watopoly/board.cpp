@@ -2,7 +2,7 @@
 #include <string>
 #include "monopolyblock.h"
 
-void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
+void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.clear();
 	players.clear();
 	players = p;
@@ -111,36 +111,101 @@ std::shared_ptr<Square> Board::getSquare(int i) {
 	return squares[i];
 }
 
-std::istream& operator>>(std::istream& in, Board b) {
+std::istream& operator>>(std::istream& in, Board &b) {
+	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
+	std::vector<std::shared_ptr<Player>> newPlayers;
+	in >> b.numplayers;
 
-}// load
-
-std::ostream& operator<<(std::ostream& in, Board b) {
-	in << b.numplayers << std::endl;
+	std::string name;
+	char piece;
+	int cups = 0;
+	int money = 0;
+	int position = 0;
+	int inTimsLine = 0;
+	int turnsInTims = -1;
 	for (int i = 0; i < b.numplayers; ++i) {
-		in << b.players[i]->getName() << " " << b.players[i]->getPiece() << " ";
-		in << b.players[i]->getCups() << " " << b.players[i]->getMoney() << " ";
-		in << b.players[i]->getPos() << " ";
-		if (b.players[i]->getPos() == 10) {
-			if (b.players[i]->inTims()) {
-				in << "1 " << b.players[i]->turnsinTims();
-			}
-			else {
-				in << " 0";
+		in >> name;
+		in >> piece;
+		in >> cups;
+		in >> money;
+		in >> position;
+
+		if (position == 10) {
+			in >> inTimsLine;
+			if (inTimsLine == 1) {
+				in >> turnsInTims;
 			}
 		}
-		in << std::endl;
-	}//printing all the players and their locations and other info to the file
+		std::shared_ptr<Player> newPlayer = std::make_shared<Player>(name, piece);
+		newPlayer->setPos(position);
+		newPlayer->withdrawMoney(1500);
+		newPlayer->addMoney(money);
+		for (int i = 0; i < cups; ++i) {
+			newPlayer->addCup();
+		}
+		newPlayers.emplace_back(newPlayer);
+	}//making all the players!
+	b.newBoard(newPlayers);
+
+	std::string property;
+	std::string owner;
+	int improvementLevel;
 
 	for (int i = 0; i < b.properties.size(); ++i) {
-		in << b.properties[i]->getName() << " ";
-		if (b.properties[i]->getOwner() == nullptr) {
-			in << "BANK ";
+		in >> property;
+		in >> owner;
+		in >> improvementLevel;
+		std::shared_ptr<Player> getPlayer;
+		for (int i = 0; i < b.players.size(); ++i) {
+			if (b.players[i]->getName() == owner) {
+				getPlayer = b.players[i];
+				break;
+			}
 		}
+		b.properties[i]->setOwner(*getPlayer);
+		b.properties[i]->setImprovements(improvementLevel);
+		/*if (i == 28 || i == 12) {
+			getPlayer->buyGym(*(std::dynamic_pointer_cast<Gym>(b.properties[i])));
+		}//if its a gym
+		else if (i == 5 || i == 15 || i == 25 || i == 35) {
+			//getPlayer->buyResidence();
+		}//if its a rez
 		else {
-			in << b.properties[i]->getOwner()->getName() << " ";
-		}
-		
+			//getPlayer->buyUpgradable();
+		}*/
+		//add net worth, add monopoly blocks
 	}
 	return in;
+}// load
+
+std::ostream& operator<<(std::ostream& out, Board &b) {
+	out << b.numplayers << std::endl;
+	for (int i = 0; i < b.numplayers; ++i) {
+		out << b.players[i]->getName() << " " << b.players[i]->getPiece() << " ";
+		out << b.players[i]->getCups() << " " << b.players[i]->getMoney() << " ";
+		out << b.players[i]->getPos() << " ";
+		if (b.players[i]->getPos() == 10) {
+			if (b.players[i]->inTims()) {
+				out << "1 " << b.players[i]->turnsinTims();
+			}
+			else {
+				out << " 0";
+			}
+		}
+		out << std::endl;
+	}//printing all the players and their locations and other info to the file
+
+	out << b.currentPlayer()->getName() << std::endl; //who's turn it will be when the game resumes/loaded
+	for (int i = 0; i < b.properties.size(); ++i) {
+		out << b.properties[i]->getName() << " ";
+		if (b.properties[i]->getOwner() == nullptr) {
+			out << "BANK ";
+		}
+		else {
+			out << b.properties[i]->getOwner()->getName() << " ";
+		}
+		out << b.properties[i]->getImprovements() << std::endl;
+		//needs to be fixed up here to show improvements as -1 if property mortgaged
+	}
+	return out;
 }//save

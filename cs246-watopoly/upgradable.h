@@ -15,7 +15,8 @@ class Upgradable : public Property {
 public:
 	Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b);
 	int getImprovementCost();
-	int getImprovements();
+	int getImprovements() override;
+	void setImprovements(int improvement) override;
 	int getTuition();
 	void playerEffect(Player&);
 };

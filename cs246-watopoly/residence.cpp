@@ -31,3 +31,9 @@ void Residence::playerEffect(Player& p) {
 		p.withdrawMoney(getRent());
 	}
 }
+
+int Residence::getImprovements() {
+	return 0;
+}
+
+void Residence::setImprovements(int improvement) {}

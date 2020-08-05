@@ -20,6 +20,8 @@ public:
 	void setOwner(Player&);
 	int getMortgage();
 	virtual void playerEffect(Player&) = 0;
+	virtual int getImprovements() = 0;
+	virtual void setImprovements(int improvement) = 0;
 };
 
 class Auction {
