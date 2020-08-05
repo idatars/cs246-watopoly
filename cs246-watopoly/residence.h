@@ -11,8 +11,8 @@ public:
 	Residence(std::string name);
 	int getRent();
 	void playerEffect(Player&);
-	void mortage(Player * player) override;
-	void unmortage(Player * player) override;
+	void mortgageBy(Player * player) override;
+	void unmortgageBy(Player * player) override;
 };
 
 #endif
