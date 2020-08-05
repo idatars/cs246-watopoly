@@ -26,8 +26,8 @@ public:
 	//imporve the building
 	void improve(Player * player);
 	void playerEffect(Player&) override;
-	void mortage(Player * player) override;
-	void unmortage(Player * player) override; 
+	void mortgageBy(Player * player) override;
+	void unmortgageBy(Player * player) override; 
 };
 
 #endif
