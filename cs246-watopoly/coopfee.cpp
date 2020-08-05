@@ -4,7 +4,7 @@ CoopFee::CoopFee() : NonProperty("Co-op Fee")
 {
 }
 
-void CoopFee::playerEffect(Player& p)
+void CoopFee::playerEffect(std::shared_ptr<Player> p)
 {
-	p.withdrawMoney(150);
+	p->withdrawMoney(150);
 }

@@ -1,20 +1,21 @@
 #include "residence.h"
 #include <iostream>
+#include "exception.h"
 
-Residence::Residence(std::string name) : Property(name, 200) {}
+Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {}
 
 int Residence::getRent() {
     return rent[getOwner()->getRez().size()];
 }
 
-void Residence::playerEffect(Player& p) {
+void Residence::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Residence) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyResidence(*this);
+				p->buyResidence(*this);
 				break;
 			}
 			else if (answer == "no") {
@@ -26,14 +27,38 @@ void Residence::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(getRent());
+		p->withdrawMoney(getRent());
 	}
 }
 
+<<<<<<< HEAD
 int Residence::getImprovements() {
 	return 0;
 }
 
 void Residence::setImprovements(int improvement) {}
+=======
+void Residence::mortgageBy(Player * player){
+	if(this->isMortgaged()){
+		throw(Exception{"You have already mortgaged the property."});
+	}try{
+		player->addMoney(this->getMortgage());
+		this->setMortgaged();
+	}catch(Exception & e){
+		throw(e);
+	}
+}
+
+void Residence::unmortgageBy(Player * player){
+	if(!this->isMortgaged()){
+		throw(Exception{"You have already unmortgaged the property."});
+	}try{
+		player->withdrawMoney(this->getMortgage() * 6 / 5);
+		this->setUnmortgaged();
+	}catch(Exception & e){
+		throw(e);
+	}
+}
+>>>>>>> 0e52b58418b97fca2b539f421348d294fe7ccf57

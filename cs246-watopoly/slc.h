@@ -11,7 +11,7 @@ class SLC : public NonProperty {
 	Board* b;
 public:
 	SLC(Board& b);
-	void playerEffect(Player&) override;
+	void playerEffect(std::shared_ptr<Player>) override;
 };
 
 #endif

@@ -5,7 +5,7 @@
 class Tuition : public NonProperty {
 public:
 	Tuition();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 };
 
 

@@ -35,7 +35,7 @@ class Board {
 	void move(int i); // currplayer rolls dice, moves squares, and as the effect of the square applied on them
 	std::string peek(int); // returns the name of the square at i
 	std::shared_ptr<Player> currentPlayer();
-	//void endturn();
+	void endturn();
 	std::shared_ptr<Square> getSquare(int i);
 };
 
