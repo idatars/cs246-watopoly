@@ -2,5 +2,5 @@
 
 OSAP::OSAP() : NonProperty("Collect OSAP") {}
 
-void OSAP::playerEffect(Player&) {
+void OSAP::playerEffect(std::shared_ptr<Player>) {
 }

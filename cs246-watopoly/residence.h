@@ -10,7 +10,7 @@ class Residence : public Property {
 public:
 	Residence(std::string name);
 	int getRent();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 	void mortage(Player * player) override;
 	void unmortage(Player * player) override;
 };

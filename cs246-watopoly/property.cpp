@@ -14,7 +14,7 @@ Player* Property::getOwner() {
     return owner;
 }
 
-void Property::setOwner(Player& newowner) {
+void Property::setOwner(std::shared_ptr<Player> newowner) {
     owner = &newowner;
 }
 

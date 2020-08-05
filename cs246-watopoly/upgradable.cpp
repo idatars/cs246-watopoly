@@ -26,7 +26,7 @@ int Upgradable::getTuition() {
     return tuition[improvements];
 }
 
-void Upgradable::playerEffect(Player& p) {
+void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Academic Building) for $" << getCost() << "? ";

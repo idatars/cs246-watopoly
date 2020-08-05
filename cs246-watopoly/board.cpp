@@ -64,7 +64,10 @@ void Board::setPlayers(std::vector<std::shared_ptr<Player>> p){
 }
 
 void Board::move(int i) {
-
+	if (i + players[currplayer]->getPos() <= 39) {
+		players[currplayer]->setPos(players[currplayer]->getPos() + i);
+		squares[players[currplayer]->getPos()]->playerEffect(players[currplayer]);
+	}
 }
 
 std::string Board::peek(int i) {

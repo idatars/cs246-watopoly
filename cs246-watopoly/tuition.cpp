@@ -3,7 +3,7 @@
 
 Tuition::Tuition() : NonProperty("Tuition") {}
 
-void Tuition::playerEffect(Player& p) {
+void Tuition::playerEffect(std::shared_ptr<Player> p) {
 	std::string answer;
 	std::cout << "Would you like to pay (a) $300 or (b) 10% of your total worth? ";
 	while (1) {

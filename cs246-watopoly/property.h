@@ -14,13 +14,14 @@ class Property : public Square {
 	bool mortaged= false;
 	int mortgage;
 	std::vector<Property*> monopolyBlock;
+
 public:
 	Property(std::string& name, int c);
 	int getCost();
 	Player* getOwner();
 	void setOwner(Player&);
 	int getMortgage();
-	virtual void playerEffect(Player&) = 0;
+	virtual void playerEffect(std::shared_ptr<Player>) = 0;
 	bool isMortaged();
 	void setMortaged();
 	void setUnmortaged();

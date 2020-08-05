@@ -4,5 +4,5 @@
 class GoToTims : public NonProperty {
 public:
 	GoToTims();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 };

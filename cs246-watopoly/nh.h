@@ -4,5 +4,5 @@
 class NH : public NonProperty {
 public:
 	NH();
-	void playerEffect(Player&) override;
+	void playerEffect(std::shared_ptr<Player>) override;
 };

@@ -9,14 +9,14 @@ int Gym::usageFees() {
 	else return 4 * (rand() % 6 + 1 + rand() % 6 + 1);
 }
 
-void Gym::playerEffect(Player& p) {
+void Gym::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Gym) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyGym(*this);
+				p->buyGym(*this);
 				break;
 			}
 			else if (answer == "no") {
@@ -28,9 +28,9 @@ void Gym::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(usageFees());
+		p->withdrawMoney(usageFees());
 	}
 }
 
