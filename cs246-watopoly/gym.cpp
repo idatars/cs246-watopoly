@@ -5,7 +5,9 @@
 Gym::Gym(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 150, b) {}
 
 int Gym::usageFees() {
-	if (getOwner()->getGyms().size() == 2) return 10 * (rand() % 6 + 1 + rand() % 6 + 1);
+	if (getBlock()->countOwner(getOwner()) == 2) {
+		return 10 * (rand() % 6 + 1 + rand() % 6 + 1);
+	}
 	else return 4 * (rand() % 6 + 1 + rand() % 6 + 1);
 }
 
@@ -16,7 +18,8 @@ void Gym::playerEffect(std::shared_ptr<Player> p) {
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p->buyGym(*this);
+				p->withdrawMoney(this->getCost());
+				this->setOwner(p);
 				break;
 			}
 			else if (answer == "no") {

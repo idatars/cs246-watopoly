@@ -39,8 +39,8 @@ void SLC::playerEffect(std::shared_ptr<Player> p) {
 	}
 	else if (n == 22) { // go to tim's line
 		p->setPos(10);
+		p->setInTims(true);
 		std::cout << "You have been moved to DC Tim's Line!\n";
-		///
 	}
 	else { // collect osap
 		p->setPos(0);

@@ -27,6 +27,7 @@ class Board {
 	std::vector<std::shared_ptr<Player>> players;
 	int currplayer = 0;
 	int numplayers = 0;
+	int totalcups = 0;
 public:
 	//Board();
 	void newBoard(std::vector<std::shared_ptr<Player>> p);
@@ -36,6 +37,8 @@ public:
 	std::shared_ptr<Player> currentPlayer();
 	void endturn();
 	std::shared_ptr<Square> getSquare(int i);
+	void addCup();
+	void useCup();
 };
 
 //std::istream& operator>>(std::istream& in, Board b);

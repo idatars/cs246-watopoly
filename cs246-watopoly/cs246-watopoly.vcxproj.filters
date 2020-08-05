@@ -22,6 +22,9 @@
     <Filter Include="Header Files\Squares\NonProperty">
       <UniqueIdentifier>{15991581-086f-4b9d-bdad-38dc74762252}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Squares">
+      <UniqueIdentifier>{0e37cc29-2eba-4004-ab96-9e39098ffcc5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="board.h">
@@ -80,58 +83,13 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="timsline.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="tuition.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="upgradable.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="board.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="coopfee.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="goosenesting.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gototims.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="gym.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cc">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="monopolyblock.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nh.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="nonproperty.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="osap.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="player.cc">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="property.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="residence.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="slc.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="square.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="test.cc">
@@ -142,6 +100,51 @@
     </ClCompile>
     <ClCompile Include="exception.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="coopfee.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="goosenesting.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="gototims.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="gym.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="monopolyblock.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="nh.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="nonproperty.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="osap.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="property.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="residence.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="slc.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="square.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="timsline.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="tuition.cpp">
+      <Filter>Source Files\Squares</Filter>
+    </ClCompile>
+    <ClCompile Include="upgradable.cpp">
+      <Filter>Source Files\Squares</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

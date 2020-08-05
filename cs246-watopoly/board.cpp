@@ -96,3 +96,13 @@ void Board::endturn() {
 std::shared_ptr<Square> Board::getSquare(int i) {
 	return squares[i];
 }
+
+void Board::addCup()
+{
+	++totalcups;
+}
+
+void Board::useCup()
+{
+	--totalcups;
+}

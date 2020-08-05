@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
+						b.currentPlayer()->stayinTims();
 					}
 					break;
 				}
@@ -132,6 +133,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
+						b.currentPlayer()->stayinTims();
 					}
 					break;
 				}
@@ -166,6 +168,8 @@ int main(int argc, char *argv[]) {
 				b.endturn();
 				break;
 			}
+			else if (arg == "bankrupt") { std::cout << "You do not have access to this command right now!\n"; }
+
 		}
 	}
 }

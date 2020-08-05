@@ -8,18 +8,20 @@
 
 class Player;
 class Square;
+class MonopolyBlock;
 
 class Property : public Square {
 	int cost;
-	Player * owner = nullptr;
+	std::shared_ptr<Player> owner = nullptr;
 	bool mortgaged= false;
 	int mortgage;
 	std::shared_ptr<MonopolyBlock> block;
 public:
 	Property(std::string& name, int c, std::shared_ptr<MonopolyBlock> b);
 	int getCost();
-	Player* getOwner();
-	void setOwner(Player&);
+	std::shared_ptr<Player> getOwner();
+	void setOwner(std::shared_ptr<Player>);
+	std::shared_ptr<MonopolyBlock> getBlock();
 	int getMortgage();
 	virtual void playerEffect(std::shared_ptr<Player>) = 0;
 	bool isMortgaged();

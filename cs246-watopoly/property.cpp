@@ -11,12 +11,17 @@ int Property::getCost() {
     return cost;
 }
 
-Player* Property::getOwner() {
+std::shared_ptr<Player> Property::getOwner() {
     return owner;
 }
 
-void Property::setOwner(Player& newowner) {
-    owner = &newowner;
+void Property::setOwner(std::shared_ptr<Player> newowner) {
+    owner = newowner;
+}
+
+std::shared_ptr<MonopolyBlock> Property::getBlock()
+{
+    return block;
 }
 
 int Property::getMortgage() {

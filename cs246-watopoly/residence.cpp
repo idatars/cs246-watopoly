@@ -5,7 +5,7 @@
 Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {}
 
 int Residence::getRent() {
-    return rent[getOwner()->getRez().size()];
+    return rent[getBlock()->countOwner(getOwner())];
 }
 
 void Residence::playerEffect(std::shared_ptr<Player> p) {
@@ -15,7 +15,8 @@ void Residence::playerEffect(std::shared_ptr<Player> p) {
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p->buyResidence(*this);
+				p->withdrawMoney(this->getCost());
+				this->setOwner(p);
 				break;
 			}
 			else if (answer == "no") {

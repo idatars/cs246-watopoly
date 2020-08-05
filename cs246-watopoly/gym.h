@@ -5,6 +5,7 @@
 #include <random>
 
 class Gym : public Property {
+
 public:
 	Gym(std::string name, std::shared_ptr<MonopolyBlock> b);
 	int usageFees();
