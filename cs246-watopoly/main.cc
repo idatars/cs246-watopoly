@@ -46,7 +46,7 @@ int main(int argc, char *argv[]) {
 		b.newBoard(players);
 	}
 
-
+	return 0;
 	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;

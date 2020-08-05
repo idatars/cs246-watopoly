@@ -16,19 +16,17 @@ public:
 	Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b);
 	//return the cost for the next improvement
 	int getImprovementCost();
-<<<<<<< HEAD
 	int getImprovements() override;
 	void setImprovements(int improvement) override;
-=======
 	//returns the number of improvements
 	int getImprovements();
 	//returns the tuition needs to be paid
->>>>>>> 0e52b58418b97fca2b539f421348d294fe7ccf57
 	int getTuition();
 	//returns true if the owener of the upgradable forms a monopoly and false otherwise
 	bool ownMonopoly();
 	//imporve the building
 	void improve(Player * player);
+	void playerEffect(Player&) override;
 	void playerEffect(std::shared_ptr<Player>) override;
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override; 
