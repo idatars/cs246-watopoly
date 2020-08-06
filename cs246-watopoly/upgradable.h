@@ -17,7 +17,8 @@ public:
 	//return the cost for the next improvement
 	int getImprovementCost();
 	//returns the number of improvements
-	int getImprovements();
+	int getImprovements() override;
+	void setImprovements(int level) override;
 	//returns the tuition needs to be paid
 	int getTuition();
 	//returns true if the owener of the upgradable forms a monopoly and false otherwise

@@ -56,3 +56,8 @@ void Gym::unmortgageBy(Player * player){
 	}
 }
 
+int Gym::getImprovements() {
+    return 0;
+}
+
+void Gym::setImprovements(int level) {}

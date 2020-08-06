@@ -56,7 +56,11 @@ void Player::buyGym(Gym&) {
 }
 
 int Player::worth() {
-	return 0;
+	return netWorth;
+}
+
+void Player::addToWorth(int worth) {
+	netWorth += worth;
 }
 
 void Player::setInTims(bool b) {
