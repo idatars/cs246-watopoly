@@ -2,7 +2,7 @@
 #include <string>
 #include "monopolyblock.h"
 
-void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
+void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.clear();
 	players.clear();
 	players = p;
@@ -60,9 +60,38 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
 	squares.emplace_back(new Upgradable("MC", 350, 200, 35, 175, 500, 1100, 1300, 1500, Math)); // 37
 	squares.emplace_back(new CoopFee()); // 38
 	squares.emplace_back(new Upgradable("DC", 400, 200, 50, 200, 600, 1400, 1700, 2000, Math)); // 39
+
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[1]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[3]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[5]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[6]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[8]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[9]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[11]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[12]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[13]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[14]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[15]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[16]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[18]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[19]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[21]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[23]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[24]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[25]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[26]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[27]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[28]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[29]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[31]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[32]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[34]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[35]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[37]));
+	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[39]));
 }
 
-void Board::setPlayers(std::vector<std::shared_ptr<Player>> p){
+void Board::setPlayers(std::vector<std::shared_ptr<Player>> &p){
 	players = p;
 }
 
@@ -106,3 +135,121 @@ void Board::useCup()
 {
 	--totalcups;
 }
+std::istream& operator>>(std::istream& in, Board &b) {
+	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
+	std::vector<std::shared_ptr<Player>> newPlayers;
+	in >> b.numplayers;
+
+	std::string name;
+	int totalCups = 4; // ADD THIS IN LATER (done)
+	char piece;
+	int cups = 0; // you can only have 4 cups
+	int money = 0;
+	int position = 0;
+	int inTimsLine = 0;
+	int turnsInTims = -1;
+	for (int i = 0; i < b.numplayers; ++i) {
+		in >> name;
+		in >> piece;
+		in >> cups;
+		in >> money;
+		in >> position;
+
+		if (position == 10) {
+			in >> inTimsLine;
+			if (inTimsLine == 1) {
+				in >> turnsInTims;
+			}
+		}
+		std::shared_ptr<Player> newPlayer = std::make_shared<Player>(name, piece);
+		newPlayer->setPos(position);
+		newPlayer->withdrawMoney(1500);
+		newPlayer->addMoney(money); 
+		for (int i = 0; i < cups; ++i) {
+			if (totalCups == 0) {
+				break;
+			}
+			newPlayer->addCup();
+			--totalCups;
+		}
+		newPlayers.emplace_back(newPlayer);
+	}//making all the players!
+	b.newBoard(newPlayers);
+
+	std::string property;
+	std::string owner;
+	int improvementLevel;
+
+	for (int i = 0; i < b.properties.size(); ++i) {
+		in >> property;
+		in >> owner;
+		in >> improvementLevel;
+		std::shared_ptr<Player> getPlayer;
+		for (int i = 0; i < b.players.size(); ++i) {
+			if (b.players[i]->getName() == owner) {
+				getPlayer = b.players[i];
+				break;
+			}
+		}
+		if (owner != "BANK"){
+			b.properties[i]->setOwner(*getPlayer);
+			getPlayer->addToWorth(b.properties[i]->getCost());
+			b.properties[i]->setImprovements(improvementLevel);
+		}
+		/*if (i == 28 || i == 12) {
+			getPlayer->buyGym(*(std::dynamic_pointer_cast<Gym>(b.properties[i])));
+		}//if its a gym
+		else if (i == 5 || i == 15 || i == 25 || i == 35) {
+			//getPlayer->buyResidence();
+		}//if its a rez
+		else {
+			//getPlayer->buyUpgradable();
+		}*/
+		//add net worth, add monopoly blocks
+	}
+	return in;
+}// load
+
+std::ostream& operator<<(std::ostream& out, Board &b) {
+	out << b.numplayers << std::endl;
+	int currPlayer = b.currplayer;
+	int counter = 0;
+	while (counter < b.numplayers) {
+		if (currPlayer == b.numplayers) {
+			currPlayer = 0;
+		}
+		else {
+			out << b.players[currPlayer]->getName() << " " << b.players[currPlayer]->getPiece() << " ";
+			out << b.players[currPlayer]->getCups() << " " << b.players[currPlayer]->getMoney() << " ";
+			out << b.players[currPlayer]->getPos() << " ";
+			if (b.players[currPlayer]->getPos() == 10) {
+				if (b.players[currPlayer]->inTims()) {
+					out << "1 " << b.players[currPlayer]->turnsinTims();
+				}
+				else {
+					out << " 0";
+				}
+			}
+			out << std::endl;
+			++counter;
+			++currPlayer;
+		}
+	}
+	for (int i = 0; i < b.properties.size(); ++i) {
+		out << b.properties[i]->getName() << " ";
+		if (b.properties[i]->getOwner() == nullptr) {
+			out << "BANK ";
+		}
+		else {
+			out << b.properties[i]->getOwner()->getName() << " ";
+		}
+		if (b.properties[i]->isMortgaged()) {
+			out << "-1" << std::endl;
+		}
+		else {
+			out << b.properties[i]->getImprovements() << std::endl;
+		}
+	}
+	return out;
+}//save
+

@@ -55,3 +55,9 @@ void Residence::unmortgageBy(Player * player){
 		throw(e);
 	}
 }
+
+int Residence::getImprovements() {
+    return 0;
+}
+
+void Residence::setImprovements(int level) {}

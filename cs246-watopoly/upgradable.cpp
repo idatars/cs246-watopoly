@@ -17,6 +17,10 @@ int Upgradable::getImprovements() {
     return improvements;
 }
 
+void Upgradable::setImprovements(int level) {
+	improvements = level;
+}
+
 int Upgradable::getTuition() {
     if (ownMonopoly() && getImprovements() == 0) return 2 * tuition[0];
     return tuition[improvements];
