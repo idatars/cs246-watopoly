@@ -40,6 +40,11 @@ public:
 	std::shared_ptr<Square> getSquare(int i);
 	void addCup();
 	void useCup();
+	// if trade() return false, ask p1 if he wants to trade again
+	bool trade(std::shared_ptr<Player> &p1,std::shared_ptr<Player> &p2); 
+	void printAssets(std::shared_ptr<Player> &p1);
+	std::vector<std::string> getAssets(std::shared_ptr<Player> &p1);
+	std::shared_ptr<Property> getProperty(std::string &name);
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

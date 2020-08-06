@@ -1,7 +1,8 @@
 #include "board.h"
 #include <string>
 #include "monopolyblock.h"
-
+#include <sstream>
+#include <algorithm>
 void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.clear();
 	players.clear();
@@ -135,6 +136,135 @@ void Board::useCup()
 {
 	--totalcups;
 }
+
+bool Board::trade(std::shared_ptr<Player> &p1,std::shared_ptr<Player> &p2) {
+	//p1 is asking for a trade
+	std::string p1Name, p2Name;
+	p1Name = p1->getName();
+	p2Name = p2->getName();
+	std::vector<std::string> p1Assets = getAssets(p1);
+	std::vector<std::string> p2Assets = getAssets(p2);
+	printAssets(p1);
+	printAssets(p2);
+
+	//start by getting the items that player 1 wants.
+	std::cout << p1Name <<", please enter properties (separated by spaces) from the assets of " << p2Name;
+	std::cout << " that you would like to ask for, or type in \"No\" to stop trading:" << std::endl;
+	std::string property;
+	std::vector<std::string> askForThese;
+	bool restart = false;
+	while (true) {
+		std::getline(std::cin, property);
+		if (property == "No") {
+			std::cout << "Trade has been stopped" << std::endl;
+			return true;
+		}
+		std::istringstream listOfProperties(property);
+		do {
+			std::string temp;
+			listOfProperties >> temp;
+			int countProperty = count(p2Assets.begin() , p2Assets.end() , temp);
+			if (countProperty == 0) {
+				std::cout << p2Name << " does not own "<< temp <<", please enter new properties (separated by spaces) from assets of "<< p2Name <<", or type in \"No\" to stop trading." << std::endl;
+				restart = true;
+				break;
+			}
+			askForThese.emplace_back(temp);
+		} while (listOfProperties);
+		if (!restart) {
+			break;
+		} 
+		askForThese.clear();
+	}
+
+	//get the properties the player 1 is offering!
+	std::cout << p1Name <<", please enter the properties (separated by spaces) from your assets that you would like to give in return, ";
+	std::cout << "or type in \"No\" to stop trading:" << std::endl;
+	std::vector<std::string> giveThese;
+	restart = false;
+	while (true) {
+		std::getline(std::cin, property);
+		if (property == "No") {
+			std::cout << "Trade has been stopped" << std::endl;
+			return true;
+		}
+		std::istringstream listOfProperties(property);
+		do {
+			std::string temp;
+			listOfProperties >> temp;
+			int countProperty = count(p1Assets.begin() , p1Assets.end() , temp);
+			if (countProperty == 0) {
+				std::cout << p1Name << ", you do not own "<< temp <<", please enter new properties (separated by spaces) from your assets , or type in \"No\" to stop trading." << std::endl;
+				restart = true;
+				break;
+			}
+			giveThese.emplace_back(temp);
+		} while (listOfProperties);
+		if (!restart) {
+			break;
+		} 
+		giveThese.clear();
+	}
+	std::cout << "Trade Offer:" << std::endl;
+	std::cout << p1Name << " will recieve the following properties: " << std::endl;
+	for (auto p : askForThese) {
+		std::cout << p << " ";
+	}
+	std::cout << std::endl;
+	std::cout << p2Name << " will recieve the following properties: " << std::endl;
+	for (auto p : giveThese) {
+		std::cout << p << " ";
+	}
+	std::cout << std::endl;
+	std::cout << p2Name << ", would you like to accept this trade offer? Enter \"Yes\" or \"No\":" << std::endl;
+	
+	while (true) {
+		std::cin >> property;
+		if (property == "Yes") {
+			for (auto i : askForThese) {
+				getProperty(i)->setOwner(p1);
+			}
+			for (auto i : giveThese) {
+				getProperty(i)->setOwner(p2);
+			}
+			return true;
+		}
+		else if (property == "No") {
+			return false;
+		}
+		else {
+			std::cout << "Please enter \"Yes\" or \"No\":" << std::endl;
+		}
+	}
+}
+
+std::shared_ptr<Property> Board::getProperty(std::string &name) {
+	for (auto property : properties) {
+		if (property->getName() == name) {
+			return property;
+		}
+	}
+}
+
+void Board::printAssets(std::shared_ptr<Player> &p1) {
+	std::cout << p1->getName() <<" owns the following properties:" << std::endl;
+	for (int i = 0; i < properties.size(); ++i) {
+		if (properties[i]->getOwner()->getName() == p1->getName()) {
+			std::cout << properties[i]->getName() << std::endl;
+		}
+	}
+}
+
+std::vector<std::string> Board::getAssets(std::shared_ptr<Player> &p1) {
+	std::vector<std::string> assets; 
+	for (int i = 0; i < properties.size(); ++i) {
+		if (properties[i]->getOwner()->getName() == p1->getName()) {
+			assets.emplace_back(properties[i]->getName());
+		}
+	}
+	return assets;
+}
+
 std::istream& operator>>(std::istream& in, Board &b) {
 	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
 	std::vector<std::shared_ptr<Player>> newPlayers;
