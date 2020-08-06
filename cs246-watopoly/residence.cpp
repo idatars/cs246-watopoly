@@ -2,20 +2,21 @@
 #include <iostream>
 #include "exception.h"
 
-Residence::Residence(std::string name) : Property(name, 200) {}
+Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {}
 
 int Residence::getRent() {
-    return rent[getOwner()->getRez().size()];
+    return rent[getBlock()->countOwner(getOwner())];
 }
 
-void Residence::playerEffect(Player& p) {
+void Residence::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Residence) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyResidence(*this);
+				p->withdrawMoney(this->getCost());
+				this->setOwner(p);
 				break;
 			}
 			else if (answer == "no") {
@@ -27,9 +28,9 @@ void Residence::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(getRent());
+		p->withdrawMoney(getRent());
 	}
 }
 

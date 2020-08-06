@@ -11,7 +11,6 @@ class Upgradable : public Property {
 	int tuition[6];
 	int improvements = 0;
 	std::shared_ptr<Player> owner = nullptr;
-	std::shared_ptr<MonopolyBlock> block;
 public:
 	//constructor
 	Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b);
@@ -25,7 +24,7 @@ public:
 	bool ownMonopoly();
 	//imporve the building
 	void improve(Player * player);
-	void playerEffect(Player&) override;
+	void playerEffect(std::shared_ptr<Player>) override;
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override; 
 };

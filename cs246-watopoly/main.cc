@@ -99,6 +99,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
+						b.currentPlayer()->stayinTims();
 					}
 					break;
 				}
@@ -132,6 +133,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
+						b.currentPlayer()->stayinTims();
 					}
 					break;
 				}
@@ -146,14 +148,28 @@ int main(int argc, char *argv[]) {
 		}
 
 		std::cin >> arg;
-		if (arg == "roll") {
-			if (!b.currentPlayer()->inTims()) {
-				int roll = rand() % 6 + 1 + rand() % 6 + 1;
-				b.move(roll);
+		while (1) {
+			if (arg == "roll") {
+				if (!b.currentPlayer()->inTims()) {
+					int roll = rand() % 6 + 1 + rand() % 6 + 1;
+					try { b.move(roll); }
+					catch (Auction) {
+
+					}
+					catch (outOfMoney) {
+
+					}
+				}
+				else {
+					std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+				}
 			}
-			else {
-				std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+			else if (arg == "next") {
+				b.endturn();
+				break;
 			}
+			else if (arg == "bankrupt") { std::cout << "You do not have access to this command right now!\n"; }
+
 		}
 	}
 }

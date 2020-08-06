@@ -4,5 +4,5 @@
 class CoopFee : public NonProperty {
 public:
 	CoopFee();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 };

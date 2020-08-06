@@ -4,6 +4,6 @@
 class TimsLine : public NonProperty {
 public:
 	TimsLine();
-	void playerEffect(Player&);
+	void playerEffect(std::shared_ptr<Player>);
 };
 

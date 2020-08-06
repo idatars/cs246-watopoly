@@ -15,9 +15,6 @@ class Player {
 	char piece;
 	int pos = 0;
 	int money = 1500;
-	std::vector<std::shared_ptr<Residence>> rez;
-	std::vector<std::shared_ptr<Upgradable>> upgradables;
-	std::vector<std::shared_ptr<Gym>> gyms;
 	int cups = 0;
 	bool tims = false;
 	int turnsInTims = 0;
@@ -33,13 +30,6 @@ public:
 	void withdrawMoney(int);
 	void addMoney(int);
 
-	std::vector<std::shared_ptr<Residence>> getRez();
-	std::vector<std::shared_ptr<Upgradable>> getUpgradables();
-	std::vector<std::shared_ptr<Gym>> getGyms();
-	void buyUpgradable(Upgradable&);
-	void buyResidence(Residence&);
-	void buyGym(Gym&);
-
 	int getCups();
 	void addCup();
 	void useCup();
@@ -47,6 +37,7 @@ public:
 	bool inTims();
 	int turnsinTims();
 	void resetTims();
+	void stayinTims();
 
 	int worth();
 

@@ -27,6 +27,7 @@ class Board {
 	std::vector<std::shared_ptr<Player>> players;
 	int currplayer = 0;
 	int numplayers = 0;
+	int totalcups = 0;
 public:
 	//Board();
 	void newBoard(std::vector<std::shared_ptr<Player>> p);
@@ -34,8 +35,10 @@ public:
 	void move(int i); // currplayer rolls dice, moves squares, and as the effect of the square applied on them
 	std::string peek(int); // returns the name of the square at i
 	std::shared_ptr<Player> currentPlayer();
-	//void endturn();
+	void endturn();
 	std::shared_ptr<Square> getSquare(int i);
+	void addCup();
+	void useCup();
 };
 
 //std::istream& operator>>(std::istream& in, Board b);

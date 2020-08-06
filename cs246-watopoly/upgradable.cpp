@@ -4,10 +4,9 @@
 #include <algorithm>
 
 Upgradable::Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b) :
-    Property(name, c),
+    Property(name, c, b),
     improvementCost{ ic },
-    tuition{ t0, t1, t2, t3, t4, t5 },
-	block{ b } {
+    tuition{ t0, t1, t2, t3, t4, t5 } {
 	b->getMembers().push_back(this);
 }
 
@@ -20,21 +19,19 @@ int Upgradable::getImprovements() {
 }
 
 int Upgradable::getTuition() {
-    for (std::vector<std::shared_ptr<Upgradable>>::iterator it = getOwner()->getUpgradables().begin(); it != getOwner()->getUpgradables().end(); ++it) {
-        if ((*it)->getOwner()->getName() != getOwner()->getName()) return tuition[0];
-    }
-    if (getImprovements() == 0) return 2 * tuition[0];
+    if (ownMonopoly() && getImprovements() == 0) return 2 * tuition[0];
     return tuition[improvements];
 }
 
-void Upgradable::playerEffect(Player& p) {
+void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Academic Building) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyUpgradable(*this);
+				p->withdrawMoney(this->getCost());
+				this->setOwner(p);
 				break;
 			}
 			else if (answer == "no") {
@@ -46,15 +43,17 @@ void Upgradable::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(getTuition());
+		p->withdrawMoney(getTuition());
 	}
 }
 
 //returns true if the owener of the upgradable forms a monopoly and false otherwise
 bool Upgradable::ownMonopoly(){
-	Player * owner =  this->getOwner(); 
+	return getBlock()->countOwner(getOwner()) == getBlock()->getMembers().size();
+	
+	/*Player * owner =  this->getOwner(); 
 	if(owner==nullptr){
 		return false;
 	}
@@ -78,13 +77,13 @@ bool Upgradable::ownMonopoly(){
 		if(!has_upgradable){
 			return false;
 		}
-	}
+	}*/
 	return true;
 }
 
 //imporve the building
 void Upgradable::improve(Player * player){
-	if(player != this->getOwner()){
+	if(player != this->getOwner().get()){
 		throw(Exception{"This building is not yours :("}); // not ur property
 	}else if(!this->ownMonopoly()){
 		throw(Exception{"You do not own the monopoly, keep tring!"}); // does not own monopoly

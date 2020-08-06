@@ -4,5 +4,5 @@
 class OSAP : public NonProperty {
 public:
 	OSAP();
-	void playerEffect(Player&) override;
+	void playerEffect(std::shared_ptr<Player>) override;
 };

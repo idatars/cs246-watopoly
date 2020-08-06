@@ -2,5 +2,5 @@
 
 TimsLine::TimsLine() : NonProperty("DC Tim's Line") {}
 
-void TimsLine::playerEffect(Player& p) {
+void TimsLine::playerEffect(std::shared_ptr<Player> p) {
 }

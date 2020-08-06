@@ -33,12 +33,6 @@ void Player::withdrawMoney(int i) {
 
 void Player::addMoney(int i) { money += i; }
 
-std::vector<std::shared_ptr<Residence>> Player::getRez() { return rez; }
-
-std::vector<std::shared_ptr<Upgradable>> Player::getUpgradables() { return upgradables; }
-
-std::vector<std::shared_ptr<Gym>> Player::getGyms() { return gyms; }
-
 int Player::getCups() { return cups; }
 
 void Player::addCup() { ++cups; }
@@ -46,18 +40,6 @@ void Player::addCup() { ++cups; }
 void Player::useCup()
 {
 	--cups;
-}
-
-void Player::buyUpgradable(Upgradable&) {
-
-}
-
-void Player::buyResidence(Residence&) {
-
-}
-
-void Player::buyGym(Gym&) {
-
 }
 
 int Player::worth() {
@@ -84,6 +66,11 @@ void Player::resetTims()
 	tims = false;
 }
 
+void Player::stayinTims()
+{
+	++turnsInTims;
+}
+
 void Player::buyImprovement(Upgradable * up){
 	try{
 		up->improve(this);
@@ -93,7 +80,7 @@ void Player::buyImprovement(Upgradable * up){
 }
 
 void Player::getMortgage(Property * p){
-	if(p->getOwner() != this){
+	if(p->getOwner().get() != this){
 		throw(Exception{"You are not the owner of this property."});
 	}try{
 		p->mortgageBy(this);
@@ -103,7 +90,7 @@ void Player::getMortgage(Property * p){
 }
 
 void Player::getUnmortgage(Property * p){
-	if(p->getOwner() != this){
+	if(p->getOwner().get() != this){
 		throw(Exception{"You are not the owner of this property."});
 	}try{
 		p->unmortgageBy(this);

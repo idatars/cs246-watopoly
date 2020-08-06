@@ -2,21 +2,24 @@
 #include "exception.h"
 #include <iostream>
 
-Gym::Gym(std::string name) : Property(name, 150) {}
+Gym::Gym(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 150, b) {}
 
 int Gym::usageFees() {
-	if (getOwner()->getGyms().size() == 2) return 10 * (rand() % 6 + 1 + rand() % 6 + 1);
+	if (getBlock()->countOwner(getOwner()) == 2) {
+		return 10 * (rand() % 6 + 1 + rand() % 6 + 1);
+	}
 	else return 4 * (rand() % 6 + 1 + rand() % 6 + 1);
 }
 
-void Gym::playerEffect(Player& p) {
+void Gym::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		std::cout << "Would you like to purchase " << getName() << " (Gym) for $" << getCost() << "? ";
 		while (1) {
 			std::cin >> answer;
 			if (answer == "yes") {
-				p.buyGym(*this);
+				p->withdrawMoney(this->getCost());
+				this->setOwner(p);
 				break;
 			}
 			else if (answer == "no") {
@@ -28,9 +31,9 @@ void Gym::playerEffect(Player& p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p.getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p.withdrawMoney(usageFees());
+		p->withdrawMoney(usageFees());
 	}
 }
 

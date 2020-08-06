@@ -4,14 +4,17 @@
 
 #include <vector>
 #include <memory>
+#include "player.h"
+#include "property.h"
 
-class Upgradable;
+class Property;
 
 class MonopolyBlock {
-	std::vector<Upgradable*> members;
+	std::vector<Property*> members;
 public:
 	MonopolyBlock() {}
-	std::vector<Upgradable*> getMembers();
+	int countOwner(std::shared_ptr<Player>);
+	std::vector<Property*> getMembers();
 };
 
 #endif
