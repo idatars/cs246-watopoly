@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
-	std::string infile = "savetest1.txt";
+	std::string infile = "testsave1.txt";
 
 	for (int i = 0; i < argc; ++i) {
 		if (argv[i] == "-testing") testing = true;
