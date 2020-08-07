@@ -41,7 +41,7 @@ public:
 	void addCup();
 	void useCup();
 	// if trade() return false, ask p1 if he wants to trade again
-	bool trade(std::shared_ptr<Player> &p1,std::shared_ptr<Player> &p2); 
+	bool trade(std::string &from, std::string &to, std::string &give, std::string &receive); 
 	void printAssets(std::shared_ptr<Player> &p1);
 	std::vector<std::string> getAssets(std::shared_ptr<Player> &p1);
 	std::shared_ptr<Property> getProperty(std::string &name);
