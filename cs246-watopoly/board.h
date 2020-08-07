@@ -22,7 +22,7 @@ class Square;
 
 class Board {
 	//friend istream& operator>>(istream& in, Board b);
-	//friend ostream& operator<<(ostream& in, Board b);
+	friend std::ostream& operator<<(std::ostream& in, Board b);
 	std::vector<std::shared_ptr<Square>> squares;
 	std::vector<std::shared_ptr<Player>> players;
 	int currplayer = 0;
@@ -43,6 +43,22 @@ public:
 
 //std::istream& operator>>(std::istream& in, Board b);
 
-//std::ostream& operator<<(std::ostream& in, Board b);
+std::ostream& operator<<(std::ostream& in, Board b);
 
+std::string firstline_print(std::shared_ptr<NonProperty> np); // Name print
+std::string firstline_print(std::shared_ptr<Upgradable> up); //improvement print
+std::string firstline_print(std::shared_ptr<Residence> res); // Name print
+std::string firstline_print(std::shared_ptr<Gym> gym); // Name print
+
+std::string secondline_print(std::shared_ptr<NonProperty> np); // Name print
+std::string secondline_print(std::shared_ptr<Upgradable> up); //'-' print
+std::string secondline_print(std::shared_ptr<Residence> res); // space print
+std::string secondline_print(std::shared_ptr<Gym> gym); // space print
+
+std::string thirdline_print(std::shared_ptr<Square> sq); // space print
+std::string thirdline_print(std::shared_ptr<Upgradable> up); // name print
+
+std::string fourthline_print(std::shared_ptr<Square> sq); // space print
+
+std::string mult_string(std::string s, int n);
 #endif

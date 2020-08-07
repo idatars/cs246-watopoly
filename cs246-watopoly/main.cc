@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 			players.emplace_back(new Player(name, c));
 		}
 		b.newBoard(players);
+		std::cout << b;
 	}
 
 

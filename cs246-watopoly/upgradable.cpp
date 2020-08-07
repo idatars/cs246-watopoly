@@ -62,23 +62,18 @@ bool Upgradable::ownMonopoly(){
 	for(auto it=monopoly_members.begin(); it!=monopoly_members.end();++it){
 		//if owner does not own one of the buildings in the monopoly
 		bool has_upgradable = false;
-<<<<<<< HEAD
 		for(auto it2=player_owned.begin(); it2!=player_owned.end();++it2){
 			if((*it2)->getName() == (*it)->getName()){
 				has_upgradable = true;
 				break;
-=======
-		for(auto it2=player_owned.begin();it2!=player_owned.end();++it2){
-			if((*it)->getName() == (*it2)->getName()){
-				has_upgradable = true;
->>>>>>> improve_mortage
 			}
 		}
 		if(!has_upgradable){
 			return false;
 		}
-	}*/
+	}
 	return true;
+	*/
 }
 
 //imporve the building
@@ -101,11 +96,7 @@ void Upgradable::improve(Player * player){
 
 void Upgradable::mortgageBy(Player * player){
 	if(this->isMortgaged()){
-<<<<<<< HEAD
 		throw(Exception{"You have already mortaged the property."});
-=======
-		throw(Exception{"You have already mortgaged the property."});
->>>>>>> improve_mortage
 	}else if(improvements != 0){
 		throw(Exception{"You need to sale all the improvements."});
 	}try{
@@ -118,11 +109,7 @@ void Upgradable::mortgageBy(Player * player){
 
 void Upgradable::unmortgageBy(Player * player){
 	if(!this->isMortgaged()){
-<<<<<<< HEAD
 		throw(Exception{"You have already unmortaged the property."});
-=======
-		throw(Exception{"You have already unmortgaged the property."});
->>>>>>> improve_mortage
 	}try{
 		player->withdrawMoney(this->getMortgage() * 6 / 5);
 		this->setUnmortgaged();

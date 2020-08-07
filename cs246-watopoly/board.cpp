@@ -1,5 +1,8 @@
 #include "board.h"
 #include <string>
+#include <vector>
+#include <iostream>
+#include <algorithm>
 #include "monopolyblock.h"
 
 void Board::newBoard(std::vector<std::shared_ptr<Player>> p) {
@@ -106,3 +109,374 @@ void Board::useCup()
 {
 	--totalcups;
 }
+
+
+
+////////////////////////Functions Outside of Class////////////////////////////
+std::ostream& operator<<(std::ostream& in, Board b){
+	
+/*
+ #   #  ##  #####  ###   ###   ###  #   #   #
+ #   # #  #   #   #   #  #  # #   # #   #   # 
+ # # # ####   #   #   #  ###  #   # #    # #
+ # # # #  #   #   #   #  #    #   # #     #
+ ##### #  #   #    ###   #     ###  ## #  #
+*/
+	//20 - 30
+	in << mult_string("-",100) << std::endl; // 100 '-' by word count
+	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(20))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(21))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(22))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(23))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(24))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(25))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(26))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(27))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(28))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(29))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(30))) << "|" << std::endl;
+	in << "|" << secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(20))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(21))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(22))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(23))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(24))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(25))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(26))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(27))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(28))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(29))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(30))) << "|" << std::endl;
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(20))) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(21))) << "|" << 
+		thirdline_print(b.getSquare(22)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(23))) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(24))) << "|" << 
+		thirdline_print(b.getSquare(25)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(26))) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(27))) << "|" << 
+		thirdline_print(b.getSquare(28)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(29))) << "|" << 
+		thirdline_print(b.getSquare(30)) << "|" << std::endl;
+	in << "|" << fourthline_print(b.getSquare(20)) << "|" << 
+		fourthline_print(b.getSquare(21)) << "|" << 
+		fourthline_print(b.getSquare(22)) << "|" << 
+		fourthline_print(b.getSquare(23)) << "|" << 
+		fourthline_print(b.getSquare(24)) << "|" << 
+		fourthline_print(b.getSquare(25)) << "|" << 
+		fourthline_print(b.getSquare(26)) << "|" << 
+		fourthline_print(b.getSquare(27)) << "|" << 
+		fourthline_print(b.getSquare(28)) << "|" << 
+		fourthline_print(b.getSquare(29)) << "|" << 
+		fourthline_print(b.getSquare(30)) << "|" << std::endl;
+	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << std::endl;
+	// 19 31
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(19))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(31))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(19))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(31))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(19))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(31))) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(19)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(31)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	// 18 32
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(32))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(32))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(32))) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(18)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(32)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	// 17 33
+	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(17))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(33))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(17))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(33))) << "|" << std::endl; 
+	in << "|" << thirdline_print(b.getSquare(17)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(b.getSquare(33)) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(17)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(33)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	//16 34
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(34))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(34))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(34))) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(16)) << "|" <<
+		mult_string(" ",17) << mult_string("-",46) << mult_string(" ",17) << "|" << 
+		 fourthline_print(b.getSquare(34)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << 
+		mult_string(" ",16) << "|" << mult_string(" ",46) << "|" << mult_string(" ",16) << "|"  <<
+		mult_string("-",8) << "|" << std::endl;
+	//15 35 
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(15))) << "|" <<
+		mult_string(" ",16) << "|" << 
+		" #   #  ##  #####  ###   ###   ###  #   #   # " << 
+		"|" << mult_string(" ",16) << "|"  <<
+		 firstline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(35))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(15))) << "|" <<
+		mult_string(" ",16) << "|" << 
+		" #   # #  #   #   #   #  #  # #   # #   #   # " << 
+		"|" << mult_string(" ",16) << "|"  <<
+		 secondline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(35))) << "|" << std::endl; 
+	in << "|" << thirdline_print(b.getSquare(15)) << "|" <<
+		mult_string(" ",16) << "|" << 
+		" # # # ####   #   #   #  ###  #   # #    # #  " << 
+		"|" << mult_string(" ",16) << "|"  <<
+		 thirdline_print(b.getSquare(35)) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(15)) << "|" <<
+		mult_string(" ",16) << "|" << 
+		" # # # #  #   #   #   #  #    #   # #     #   " << 
+		"|" << mult_string(" ",16) << "|"  <<
+		 fourthline_print(b.getSquare(35)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << 
+		mult_string(" ",16) << "|" << 
+		" ##### #  #   #    ###   #     ###  ## #  #   " << 
+		"|" << mult_string(" ",16) << "|"  <<
+		mult_string("-",8) << "|" << std::endl;
+	// 14 36 
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
+		mult_string(" ",16) << "|" << mult_string("-",46) << "|" << mult_string(" ",16) << "|" <<
+		 firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(36))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(36))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(b.getSquare(36)) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(14)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(36)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	//13 37
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(37))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(37))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(37))) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(13)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(37)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	//12 38
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(12))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(38))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(12))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(38))) << "|" << std::endl; 
+	in << "|" << thirdline_print(b.getSquare(12)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(b.getSquare(38)) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(12)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(38)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	//11 39
+	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(39))) << "|" << std::endl; 
+	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(39))) << "|" << std::endl; 
+	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(39))) << "|" << std::endl; 
+	in << "|" << fourthline_print(b.getSquare(11)) << "|" <<
+		mult_string(" ",80) << "|" << 
+		 fourthline_print(b.getSquare(39)) << "|" << std::endl; 
+	in << "|" << mult_string("-",8) << "|" << mult_string("-",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	//10 - 0
+	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(10))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(9))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(8))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(7))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(6))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(5))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(4))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(3))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(2))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(1))) << "|" << 
+		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(0))) << "|" << std::endl;
+	in << "|" << secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(10))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(9))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(8))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(7))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(6))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(5))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(4))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(3))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(2))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(1))) << "|" << 
+		secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(0))) << "|" << std::endl;
+	in << "|" << thirdline_print(b.getSquare(10)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(9))) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(8))) << "|" << 
+		thirdline_print(b.getSquare(7)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(6))) << "|" << 
+		thirdline_print(b.getSquare(5)) << "|" << 
+		thirdline_print(b.getSquare(4)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(3))) << "|" << 
+		thirdline_print(b.getSquare(2)) << "|" << 
+		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(1))) << "|" << 
+		thirdline_print(b.getSquare(0)) << "|" << std::endl;
+	in << "|" << fourthline_print(b.getSquare(10)) << "|" << 
+		fourthline_print(b.getSquare(9)) << "|" << 
+		fourthline_print(b.getSquare(8)) << "|" << 
+		fourthline_print(b.getSquare(7)) << "|" << 
+		fourthline_print(b.getSquare(6)) << "|" << 
+		fourthline_print(b.getSquare(5)) << "|" << 
+		fourthline_print(b.getSquare(4)) << "|" << 
+		fourthline_print(b.getSquare(3)) << "|" << 
+		fourthline_print(b.getSquare(2)) << "|" << 
+		fourthline_print(b.getSquare(1)) << "|" << 
+		fourthline_print(b.getSquare(0)) << "|" << std::endl;
+	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
+		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << std::endl;
+	return in;
+}
+
+std::string mult_string(std::string s, int n){
+	if(n == 0){
+		return "";
+	}
+	std::string tmp = "";
+	while(n > 0){
+		tmp += s;
+		--n;
+	}
+	return tmp;
+}
+
+std::string firstline_print(std::shared_ptr<NonProperty> np){
+	std::string name = np->getName();
+	if(name == "Goose Nesting"){
+		return "GOOSE   ";
+	}else if(name == "NH"){
+		return "NEEDLES ";
+	}else if(name == "Go To Tims"){
+		return "GO TO   ";
+	}else if(name == "Co-op Fee"){
+		return "CO-OP   ";
+	}else if(name == "DC Tim's Line"){
+		return "DC TIMS ";
+	}else if(name == "Collect OSAP"){
+		return "COLLECT ";
+	}else{
+		return "TUITION ";
+	}
+}// Name print
+
+std::string firstline_print(std::shared_ptr<Upgradable> up){
+	int num = up->getImprovements();
+	std::string result_s = "";
+	for(int n = 0; n < num; ++n){
+		result_s += "I";
+	}for(int n = 0; n < 8 - num; ++n){
+		result_s += " ";
+	}
+	return result_s;
+} //improvement print
+
+std::string firstline_print(std::shared_ptr<Residence> res){
+	std::string name = res->getName();
+	if(name == "MKV"){
+		return "MKV     ";
+	}else if(name == "UWP"){
+		return "UWP     ";
+	}else if(name == "V1"){
+		return "V1      ";
+	}else{
+		return "REV     ";
+	}
+} // Name print
+
+std::string firstline_print(std::shared_ptr<Gym> gym){
+	std::string name = gym->getName();
+	if(name == "PAC"){
+		return "PAC     ";
+	}else{
+		return "CIF     ";
+	}
+} // Name print
+
+std::string secondline_print(std::shared_ptr<NonProperty> np){
+		std::string name = np->getName();
+	if(name == "Goose Nesting"){
+		return "NESTING ";
+	}else if(name == "NH"){
+		return "HALL    ";
+	}else if(name == "Go To Tims"){
+		return "TIMS    ";
+	}else if(name == "Co-op Fee"){
+		return "FEE     ";
+	}else if(name == "DC Tim's Line"){
+		return "LINE    ";
+	}else if(name == "Collect OSAP"){
+		return "OSAP    ";
+	}else{
+		return "        ";
+	}
+}// Name print
+
+std::string secondline_print(std::shared_ptr<Upgradable> up){
+	return mult_string("-",8);
+} //'-' print
+
+std::string secondline_print(std::shared_ptr<Residence> res){
+	return mult_string(" ",8);
+} // space print
+std::string secondline_print(std::shared_ptr<Gym> gym){
+	return mult_string(" ",8);
+} // space print
+
+std::string thirdline_print(std::shared_ptr<Square>){
+	return mult_string(" ",8);
+} // space print
+std::string thirdline_print(std::shared_ptr<Upgradable> up){
+	std::string name = up->getName();
+	return name + mult_string(" ",8-name.length());
+} // name print
+
+
+std::string fourthline_print(std::shared_ptr<Square> sq){
+	std::vector<char> player_names = {'G','B', 'D','P','S','$','L','T'};
+	std::vector<Player *> players = sq->getPlayers();
+	std::string tmp = "";
+	for(auto it=players.begin();it!=players.end();++it){
+		char name = (*it)->getPiece();
+		if(std::find(player_names.begin(),player_names.end(),name)!=player_names.end()){
+			std::string str_name(1,name);
+			tmp += str_name;
+		}
+	}
+	return tmp + mult_string(" ",8 - players.size());
+} // player print
