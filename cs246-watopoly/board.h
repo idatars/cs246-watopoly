@@ -44,7 +44,10 @@ public:
 	bool trade(std::string &from, std::string &to, std::string &give, std::string &receive); 
 	void printAssets(std::shared_ptr<Player> &p1);
 	std::vector<std::string> getAssets(std::shared_ptr<Player> &p1);
+	void getAllAssets();
+	void bankrupt();
 	std::shared_ptr<Property> getProperty(std::string &name);
+	void startAuction(std::string &property);
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

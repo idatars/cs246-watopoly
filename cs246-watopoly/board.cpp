@@ -213,11 +213,17 @@ bool Board::trade(std::string &from, std::string &to, std::string &give, std::st
 
 	std::cout << to << ", would you like to accept this offer? Enter \"Yes\" or \"No\":" << std::endl;
 	std::string input;
-	std::cin >> input;
 	while (true) {
+		std::cin >> input;
 		if (input == "Yes" || input == "yes") {
 			giving->setOwner(tradingTo);
+			tradingFrom->addToWorth(-1 * giving->getCost());
+			tradingTo->addToWorth(giving->getCost());
+
 			receivingProperty->setOwner(tradingFrom);
+			tradingFrom->addToWorth(receivingProperty->getCost());
+			tradingTo->addToWorth(-1 * receivingProperty->getCost());
+
 			std::cout << "The trade has been accepted!" << std::endl;
 			std::cout << to << " has received the following:" << std::endl;
 			if (givingMoney == true) {
@@ -272,6 +278,124 @@ std::vector<std::string> Board::getAssets(std::shared_ptr<Player> &p1) {
 		}
 	}
 	return assets;
+}
+
+void Board::getAllAssets() {
+	for (auto p : players) {
+		std::cout << "Money: $" << p->getMoney() << std::endl;
+		std::cout << "Roll Up the Rim Cups: " << p->getCups() << std::endl;
+		//listing properties of player now
+		for (auto property : properties) {
+			if (property->getOwner()->getName() == p->getName()) {
+				std::cout << property->getName() << std::endl;
+			}
+		}
+		std::cout << "Total Worth: $" << p->worth() << std::endl;
+	}
+}
+
+void Board::bankrupt(){
+	std::shared_ptr<Player> player = currentPlayer();
+	player->withdrawMoney(player->getMoney());
+	totalcups += player->getCups();
+	while (player->getCups() != 0) {
+		player->useCup();
+	}
+	for (auto p : properties) {
+		if (p->getOwner()->getName() == player->getName()) {
+			p->setOwner(nullptr);
+		}
+	}
+	std::cout << player->getName() << ", you are now bankrupt. Thanks for playing!" << std::endl;
+	auto itToPlayer = find(players.begin(), players.end(), player);
+	players.erase(itToPlayer);
+}
+
+void Board::startAuction(std::string &property) {
+	std::shared_ptr<Property> prop = getProperty(property);
+	int highestBid = 0;
+	int currWinner;
+	int playersLeft = numplayers;
+	bool stillIn[numplayers];
+	
+	//initializing players who can participate in auction
+	std::cout << "The auction will now begin for: " << property << "." << std::endl;
+	std::cout << "All players are able to participate and the bidding will start at: $" << highestBid << "." << std::endl;
+	
+	for (int i = 0; i < numplayers; ++i) {
+		stillIn[i] = true;
+	}
+
+	bool won = false;
+	bool tryAgain = false;
+	while (!won) {
+		int curr = currplayer;
+		int counter = 0;
+		while (counter < numplayers) {
+			if (curr == numplayers) {
+				curr = 0;
+			}
+			if (stillIn[curr] == true){
+				if (players[curr]->getMoney() < highestBid) {
+					std::cout << players[curr]->getName() << ", you have been automatically withdrawn from this auction due to a lack of funds." << std::endl;
+					stillIn[curr] = false;
+					break;
+				}
+				std::cout << players[curr]->getName() << ", it is your turn. The current bid is: $" << highestBid << std::endl;
+				std::cout << "Place your bid or enter \"Withdraw\" to withdraw from this auction:" << std::endl;
+				std::string input;
+				while (true) {
+					try {
+						std::cin >> input;
+						if (input == "Withdraw" || input == "withdraw") {
+							stillIn[curr] = false;
+							--playersLeft;
+							std::cout << players[curr]->getName() << ", you have withdrawed from this auction." << std::endl;
+						}
+						else {
+							int bid = std::stoi(input);
+							if (bid > highestBid) {
+								if (bid > players[curr]->getMoney()) {
+									std::cout << "The bid you have placed is higher than your balance." << std::endl;
+									tryAgain = true;
+									throw;
+								}
+								currWinner = curr;
+								highestBid = bid;
+								std::cout << players[curr]->getName()  << ", you have the current highest bid of: $" << highestBid << std::endl;
+								break;
+							}
+							else {
+								std::cout << "Your bid is not higher than the currect highest bid." << std::endl;
+								tryAgain = true;
+								throw;
+							}
+						}
+					}
+					catch(...) {
+						if (tryAgain == true) {
+							std::cout << "Enter a new bid or enter \"Withdraw\" to withdraw from this auction:" << std::endl;
+							tryAgain = false;
+						}
+						else {
+							std::cout << "That is not a correct input!" << std::endl;
+							std::cout << "Place your bid or enter \"Withdraw\" to withdraw from this auction:" << std::endl;
+						}
+					}		
+				}
+			}
+			if (playersLeft == 1) { // if one player left then they wins
+				won = true;
+				break;
+			}
+			++counter;
+			++curr;
+		}
+	}
+	std::cout << players[currWinner] << "has won the auction for " << property << " at a bid of: $" << highestBid << std::endl;
+	players[currWinner]->withdrawMoney(highestBid);
+	players[currWinner]->addToWorth(prop->getCost());
+	prop->setOwner(players[currWinner]);
 }
 
 std::istream& operator>>(std::istream& in, Board &b) {
