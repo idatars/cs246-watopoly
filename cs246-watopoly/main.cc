@@ -53,7 +53,6 @@ int main(int argc, char *argv[]) {
 	std::cin >> file;
 	outFile.open(file);
 	outFile << b;*/
-	return 0;
 	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;
@@ -170,6 +169,9 @@ int main(int argc, char *argv[]) {
 				else {
 					std::cout << "You are in the DC Tim's Line and cannot roll!\n";
 				}
+			}
+			else if(arg == "p"){
+				displayBoard(b);
 			}
 			else if (arg == "next") {
 				b.endturn();

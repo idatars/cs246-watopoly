@@ -36,6 +36,7 @@ public:
 	void move(int i); // currplayer rolls dice, moves squares, and as the effect of the square applied on them
 	std::string peek(int); // returns the name of the square at i
 	std::shared_ptr<Player> currentPlayer();
+	std::vector<std::shared_ptr<Player>> allPlayers();
 	void endturn();
 	std::shared_ptr<Square> getSquare(int i);
 	void addCup();
@@ -60,7 +61,7 @@ std::string secondline_print(std::shared_ptr<Gym> gym); // space print
 std::string thirdline_print(std::shared_ptr<Square> sq); // space print
 std::string thirdline_print(std::shared_ptr<Upgradable> up); // name print
 
-std::string fourthline_print(std::shared_ptr<Square> sq); // space print
+std::string fourthline_print(std::shared_ptr<Square> sq, Board & b); // space print
 
 std::string mult_string(std::string s, int n);
 #endif

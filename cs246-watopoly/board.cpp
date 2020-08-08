@@ -122,6 +122,10 @@ std::shared_ptr<Player> Board::currentPlayer() {
 	return players[currplayer];
 }
 
+std::vector<std::shared_ptr<Player>> Board::allPlayers(){
+	return players;
+}//return all players
+
 void Board::endturn() {
 	currplayer = (currplayer + 1) % numplayers;
 }
@@ -188,17 +192,17 @@ void displayBoard(Board &b){
 		thirdline_print(b.getSquare(28)) << "|" << 
 		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(29))) << "|" << 
 		thirdline_print(b.getSquare(30)) << "|" << std::endl;
-	in << "|" << fourthline_print(b.getSquare(20)) << "|" << 
-		fourthline_print(b.getSquare(21)) << "|" << 
-		fourthline_print(b.getSquare(22)) << "|" << 
-		fourthline_print(b.getSquare(23)) << "|" << 
-		fourthline_print(b.getSquare(24)) << "|" << 
-		fourthline_print(b.getSquare(25)) << "|" << 
-		fourthline_print(b.getSquare(26)) << "|" << 
-		fourthline_print(b.getSquare(27)) << "|" << 
-		fourthline_print(b.getSquare(28)) << "|" << 
-		fourthline_print(b.getSquare(29)) << "|" << 
-		fourthline_print(b.getSquare(30)) << "|" << std::endl;
+	in << "|" << fourthline_print(b.getSquare(20),b) << "|" << 
+		fourthline_print(b.getSquare(21),b) << "|" << 
+		fourthline_print(b.getSquare(22),b) << "|" << 
+		fourthline_print(b.getSquare(23),b) << "|" << 
+		fourthline_print(b.getSquare(24),b) << "|" << 
+		fourthline_print(b.getSquare(25),b) << "|" << 
+		fourthline_print(b.getSquare(26),b) << "|" << 
+		fourthline_print(b.getSquare(27),b) << "|" << 
+		fourthline_print(b.getSquare(28),b) << "|" << 
+		fourthline_print(b.getSquare(29),b) << "|" << 
+		fourthline_print(b.getSquare(30),b) << "|" << std::endl;
 	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
@@ -213,9 +217,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(19))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(31))) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(19)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(19),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(31)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(31),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	// 18 32
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
@@ -227,9 +231,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(32))) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(18)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(18),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(32)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(32),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	// 17 33
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(17))) << "|" <<
@@ -241,9 +245,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(b.getSquare(17)) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(b.getSquare(33)) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(17)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(17),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(33)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(33),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	//16 34
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
@@ -255,9 +259,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(34))) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(16)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(16),b) << "|" <<
 		mult_string(" ",17) << mult_string("-",46) << mult_string(" ",17) << "|" << 
-		 fourthline_print(b.getSquare(34)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(34),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << 
 		mult_string(" ",16) << "|" << mult_string(" ",46) << "|" << mult_string(" ",16) << "|"  <<
 		mult_string("-",8) << "|" << std::endl;
@@ -277,11 +281,11 @@ void displayBoard(Board &b){
 		" # # # ####   #   #   #  ###  #   # #    # #  " << 
 		"|" << mult_string(" ",16) << "|"  <<
 		 thirdline_print(b.getSquare(35)) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(15)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(15),b) << "|" <<
 		mult_string(" ",16) << "|" << 
 		" # # # #  #   #   #   #  #    #   # #     #   " << 
 		"|" << mult_string(" ",16) << "|"  <<
-		 fourthline_print(b.getSquare(35)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(35),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << 
 		mult_string(" ",16) << "|" << 
 		" ##### #  #   #    ###   #     ###  ## #  #   " << 
@@ -297,9 +301,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(b.getSquare(36)) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(14)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(14),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(36)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(36),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	//13 37
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
@@ -311,9 +315,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(37))) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(13)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(13),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(37)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(37),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	//12 38
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(12))) << "|" <<
@@ -325,9 +329,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(b.getSquare(12)) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(b.getSquare(38)) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(12)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(12),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(38)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(38),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	//11 39
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
@@ -339,9 +343,9 @@ void displayBoard(Board &b){
 	in << "|" << thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(39))) << "|" << std::endl; 
-	in << "|" << fourthline_print(b.getSquare(11)) << "|" <<
+	in << "|" << fourthline_print(b.getSquare(11),b) << "|" <<
 		mult_string(" ",80) << "|" << 
-		 fourthline_print(b.getSquare(39)) << "|" << std::endl; 
+		 fourthline_print(b.getSquare(39),b) << "|" << std::endl; 
 	in << "|" << mult_string("-",8) << "|" << mult_string("-",80) << "|" << mult_string("-",8) << "|" << std::endl;
 	//10 - 0
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(10))) << "|" << 
@@ -377,17 +381,17 @@ void displayBoard(Board &b){
 		thirdline_print(b.getSquare(2)) << "|" << 
 		thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(1))) << "|" << 
 		thirdline_print(b.getSquare(0)) << "|" << std::endl;
-	in << "|" << fourthline_print(b.getSquare(10)) << "|" << 
-		fourthline_print(b.getSquare(9)) << "|" << 
-		fourthline_print(b.getSquare(8)) << "|" << 
-		fourthline_print(b.getSquare(7)) << "|" << 
-		fourthline_print(b.getSquare(6)) << "|" << 
-		fourthline_print(b.getSquare(5)) << "|" << 
-		fourthline_print(b.getSquare(4)) << "|" << 
-		fourthline_print(b.getSquare(3)) << "|" << 
-		fourthline_print(b.getSquare(2)) << "|" << 
-		fourthline_print(b.getSquare(1)) << "|" << 
-		fourthline_print(b.getSquare(0)) << "|" << std::endl;
+	in << "|" << fourthline_print(b.getSquare(10),b) << "|" << 
+		fourthline_print(b.getSquare(9),b) << "|" << 
+		fourthline_print(b.getSquare(8),b) << "|" << 
+		fourthline_print(b.getSquare(7),b) << "|" << 
+		fourthline_print(b.getSquare(6),b) << "|" << 
+		fourthline_print(b.getSquare(5),b) << "|" << 
+		fourthline_print(b.getSquare(4),b) << "|" << 
+		fourthline_print(b.getSquare(3),b) << "|" << 
+		fourthline_print(b.getSquare(2),b) << "|" << 
+		fourthline_print(b.getSquare(1),b) << "|" << 
+		fourthline_print(b.getSquare(0),b) << "|" << std::endl;
 	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
@@ -497,18 +501,20 @@ std::string thirdline_print(std::shared_ptr<Upgradable> up){
 } // name print
 
 
-std::string fourthline_print(std::shared_ptr<Square> sq){
-	std::vector<char> player_names = {'G','B', 'D','P','S','$','L','T'};
-	std::vector<Player *> players = sq->getPlayers();
+std::string fourthline_print(std::shared_ptr<Square> sq, Board & b){
+	std::vector<std::shared_ptr<Player>> players = b.allPlayers();
 	std::string tmp = "";
+	int max_player_num = 8;
 	for(auto it=players.begin();it!=players.end();++it){
 		char name = (*it)->getPiece();
-		if(std::find(player_names.begin(),player_names.end(),name)!=player_names.end()){
+		int pos = (*it)->getPos();
+		if(b.getSquare(pos) == sq){
 			std::string str_name(1,name);
 			tmp += str_name;
+			--max_player_num;
 		}
 	}
-	return tmp + mult_string(" ",8 - players.size());
+	return tmp + mult_string(" ",max_player_num);
 } // player print
 
 std::istream& operator>>(std::istream& in, Board &b) {
