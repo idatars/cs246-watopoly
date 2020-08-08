@@ -140,11 +140,10 @@ void Board::useCup()
 	--totalcups;
 }
 
-<<<<<<< HEAD
 
 
 ////////////////////////Functions Outside of Class////////////////////////////
-std::ostream& operator<<(std::ostream& in, Board b){
+void displayBoard(Board &b){
 	
 /*
  #   #  ##  #####  ###   ###   ###  #   #   #
@@ -154,6 +153,7 @@ std::ostream& operator<<(std::ostream& in, Board b){
  ##### #  #   #    ###   #     ###  ## #  #
 */
 	//20 - 30
+	std::ostream& in = std::cout;
 	in << mult_string("-",100) << std::endl; // 100 '-' by word count
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(20))) << "|" << 
 		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(21))) << "|" << 
@@ -392,7 +392,6 @@ std::ostream& operator<<(std::ostream& in, Board b){
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
 		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << std::endl;
-	return in;
 }
 
 std::string mult_string(std::string s, int n){
@@ -511,7 +510,7 @@ std::string fourthline_print(std::shared_ptr<Square> sq){
 	}
 	return tmp + mult_string(" ",8 - players.size());
 } // player print
-=======
+
 std::istream& operator>>(std::istream& in, Board &b) {
 	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
 	std::vector<std::shared_ptr<Player>> newPlayers;
@@ -630,4 +629,3 @@ std::ostream& operator<<(std::ostream& out, Board &b) {
 	return out;
 }//save
 
->>>>>>> 03ab80ba07b241b3b247390cb43124f50e861748

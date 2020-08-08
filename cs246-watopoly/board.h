@@ -21,13 +21,8 @@
 class Square;
 
 class Board {
-<<<<<<< HEAD
-	//friend istream& operator>>(istream& in, Board b);
-	friend std::ostream& operator<<(std::ostream& in, Board b);
-=======
 	friend std::istream& operator>>(std::istream& in, Board &b);
 	friend std::ostream& operator<<(std::ostream& out, Board &b);
->>>>>>> 03ab80ba07b241b3b247390cb43124f50e861748
 	std::vector<std::shared_ptr<Square>> squares;
 	std::vector<std::shared_ptr<Player>> players;
 	std::vector<std::shared_ptr<Property>> properties;
@@ -48,12 +43,9 @@ public:
 };
 
 std::istream& operator>>(std::istream& in, Board &b);
-
-<<<<<<< HEAD
-std::ostream& operator<<(std::ostream& in, Board b);
-=======
 std::ostream& operator<<(std::ostream& out, Board &b);
->>>>>>> 03ab80ba07b241b3b247390cb43124f50e861748
+
+void displayBoard(Board &b);
 
 std::string firstline_print(std::shared_ptr<NonProperty> np); // Name print
 std::string firstline_print(std::shared_ptr<Upgradable> up); //improvement print

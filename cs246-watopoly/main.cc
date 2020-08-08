@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
-	std::string infile = "testsave1.txt";
+	std::string infile = "";
 
 	for (int i = 0; i < argc; ++i) {
 		if (argv[i] == "-testing") testing = true;
@@ -44,7 +44,7 @@ int main(int argc, char *argv[]) {
 			players.emplace_back(new Player(name, c));
 		}
 		b.newBoard(players);
-		std::cout << b;
+		displayBoard(b);
 	}
 
 	/*std::ofstream outFile;
