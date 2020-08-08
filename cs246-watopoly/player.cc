@@ -78,6 +78,14 @@ void Player::buyImprovement(Upgradable * up){
 	}
 }
 
+void Player::sellImprovement(Upgradable * up){
+	try{
+		up->sellImprove(this);
+	}catch(Exception & e){
+		throw(e);
+	}
+} // player sell improvement of 'up'
+
 void Player::getMortgage(Property * p){
 	if(p->getOwner().get() != this){
 		throw(Exception{"You are not the owner of this property."});

@@ -60,7 +60,12 @@ void Gym::unmortgageBy(Player * player){
 }
 
 int Gym::getImprovements() {
-    return 0;
+    throw Exception{"Error, this building cannot be improved."};
+	return 0;
 }
 
 void Gym::setImprovements(int level) {}
+
+void Gym::sellImprove(Player * player){
+	throw(Exception{"This building cannot be imrpoved"});
+}

@@ -97,6 +97,20 @@ void Upgradable::improve(Player * player){
 		}
 	}
 }
+void Upgradable::sellImprove(Player * player){
+	if(player != this->getOwner().get()){
+		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(improvements == 0){
+		throw(Exception{"You do not have enough improvements to sell"}); //no improvement
+	}else{
+		try{
+			player->addMoney(improvementCost);
+			improvements -= 1;
+		}catch(Exception & e){
+			throw(e);
+		}	
+	}
+}
 
 void Upgradable::mortgageBy(Player * player){
 	if(this->isMortgaged()){
