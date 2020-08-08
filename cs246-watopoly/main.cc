@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
-	std::string infile = "";
+	std::string infile = "testsave1.txt";
 
 	for (int i = 0; i < argc; ++i) {
 		if (argv[i] == "-testing") testing = true;
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 		std::ifstream ifs;
 		ifs.open(infile);
 		playersnum = ifs.peek() - '0';
-		//ifs >> b;
+		ifs >> b;
 	}
 	else {
 		std::cout << "Please enter the number of players: ";
@@ -47,7 +47,13 @@ int main(int argc, char *argv[]) {
 		std::cout << b;
 	}
 
-
+	/*std::ofstream outFile;
+	std::string file;
+	std::cout<< "enter save file name: ";
+	std::cin >> file;
+	outFile.open(file);
+	outFile << b;*/
+	return 0;
 	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;

@@ -18,6 +18,7 @@ class Player {
 	int cups = 0;
 	bool tims = false;
 	int turnsInTims = 0;
+	int netWorth = 0;
 public:
 	Player(std::string& name, char piece);
 	std::string getName();
@@ -40,6 +41,7 @@ public:
 	void stayinTims();
 
 	int worth();
+	void addToWorth(int worth);
 
 	void buyImprovement(Upgradable * up); // player improves 'up'
 	void getMortgage(Property * p); // mortage a building

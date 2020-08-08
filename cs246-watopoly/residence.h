@@ -13,6 +13,8 @@ public:
 	void playerEffect(std::shared_ptr<Player>);
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override;
+	int getImprovements() override;
+	void setImprovements(int level) override;
 };
 
 #endif
