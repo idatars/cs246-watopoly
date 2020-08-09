@@ -144,6 +144,29 @@ void Board::useCup()
 	--totalcups;
 }
 
+void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to)
+{
+	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
+		if ((*it)->getOwner()->getName() == from->getName()) {
+			(*it)->setOwner(from);
+			from->addToWorth((*it)->getCost());
+		}
+	}
+	for (int i = 0; i < from->getCups(); ++i) {
+		to->addCup();
+	}
+}
+
+void Board::dropout()
+{
+	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
+		if ((*it)->getOwner()->getName() == players[currplayer]->getName()) {
+			// auction property, make sure to set improvements to 0, unmortgage them
+		}
+	}
+	totalcups -= players[currplayer]->getCups();
+}
+
 
 
 ////////////////////////Functions Outside of Class////////////////////////////

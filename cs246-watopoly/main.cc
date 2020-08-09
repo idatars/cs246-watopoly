@@ -181,7 +181,7 @@ int main(int argc, char *argv[]) {
 							std::cin >> ans;
 							if (ans == "a") {
 								if (p.playerowed == nullptr) { // player owes the bank
-
+									b.dropout();
 								}
 								else { // player owes another player
 									b.transferAssets(b.currentPlayer(), p.playerowed);
@@ -207,8 +207,48 @@ int main(int argc, char *argv[]) {
 				b.endturn();
 				break;
 			}
-			else if (arg == "bankrupt") { std::cout << "You do not have access to this command right now!\n"; }
+			else if (arg == "trade") {
+				std::string name;
+				getline(std::cin, name, ' ');
+				std::string give;
+				getline(std::cin, give, ' ');
+				std::string receive;
+				getline(std::cin, receive, ' ');
 
+			}
+			else if (arg == "improve") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+				std::string option;
+				getline(std::cin, option, ' ');
+				if (option == "buy") {
+
+				}
+				else if (option == "sell") {
+
+				}
+				else std::cout << "Invalid command\n";
+			}
+			else if (arg == "mortgage") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+
+			}
+			else if (arg == "unmortgage") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+
+			}
+			else if (arg == "bankrupt") std::cout << "You do not have access to this command right now!\n";
+			else if (arg == "assets") {
+
+			}
+			else if (arg == "all") {
+
+			}
+			else if (arg == "save") {
+
+			}
 		}
 	}
 }

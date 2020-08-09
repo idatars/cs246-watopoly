@@ -42,6 +42,7 @@ public:
 	void addCup();
 	void useCup();
 	void transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to);
+	void dropout(); // current player drops out
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

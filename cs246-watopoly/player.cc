@@ -21,7 +21,7 @@ int Player::getMoney() { return money; }
 
 void Player::withdrawMoney(int i) {
 	if (i > money) {
-		throw outOfMoney();
+		throw outOfMoney(nullptr);
 	}
 	money -= i;
 }
