@@ -41,6 +41,7 @@ public:
 	std::shared_ptr<Square> getSquare(int i);
 	void addCup();
 	void useCup();
+	void transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to);
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

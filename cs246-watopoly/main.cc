@@ -153,17 +153,47 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		std::cin >> arg;
 		while (1) {
+			getline(std::cin, arg, ' ');
 			if (arg == "roll") {
-				if (!b.currentPlayer()->inTims()) {
-					int roll = rand() % 6 + 1 + rand() % 6 + 1;
-					try { b.move(roll); }
-					catch (Auction) {
-
+				if (!b.currentPlayer()->inTims()) { // if player is not in jail
+					int roll = 0;
+					if (testing) {
+						try {
+							getline(std::cin, arg, ' ');
+							roll += stoi(arg);
+							getline(std::cin, arg, ' ');
+							roll += stoi(arg);
+						}
+						catch(std::invalid_argument){
+							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
+						}
 					}
-					catch (outOfMoney) {
+					else roll = rand() % 6 + 1 + rand() % 6 + 1;
+					try { b.move(roll); }
+					catch (Auction p) {
+						
+					}
+					catch (outOfMoney p) {
+						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
+						std::string ans;
+						while (1) {
+							std::cin >> ans;
+							if (ans == "a") {
+								if (p.playerowed == nullptr) { // player owes the bank
 
+								}
+								else { // player owes another player
+									b.transferAssets(b.currentPlayer(), p.playerowed);
+								}
+								break;
+							}
+							else if (ans == "b") {
+
+								break;
+							}
+							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
+						}
 					}
 				}
 				else {
