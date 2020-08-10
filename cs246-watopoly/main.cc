@@ -172,7 +172,7 @@ int main(int argc, char *argv[]) {
 					else roll = rand() % 6 + 1 + rand() % 6 + 1;
 					try { b.move(roll); }
 					catch (Auction p) {
-						
+					
 					}
 					catch (outOfMoney p) {
 						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
@@ -214,7 +214,7 @@ int main(int argc, char *argv[]) {
 				getline(std::cin, give, ' ');
 				std::string receive;
 				getline(std::cin, receive, ' ');
-
+				// call trade(...) here
 			}
 			else if (arg == "improve") {
 				std::string prop;
