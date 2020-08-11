@@ -476,7 +476,7 @@ void displayBoard(Board &b){
 */
 	//20 - 30
 	std::ostream& in = std::cout;
-	in << mult_string("-",100) << std::endl; // 100 '-' by word count
+	in << mult_string("_",100) << std::endl; // 100 '-' by word count
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(20))) << "|" << 
 		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(21))) << "|" << 
 		firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(22))) << "|" << 
@@ -521,10 +521,10 @@ void displayBoard(Board &b){
 		fourthline_print(b.getSquare(28),b) << "|" << 
 		fourthline_print(b.getSquare(29),b) << "|" << 
 		fourthline_print(b.getSquare(30),b) << "|" << std::endl;
-	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << std::endl;
 	// 19 31
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(19))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -538,7 +538,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(19),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(31),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	// 18 32
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(18))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -552,7 +552,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(18),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(32),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	// 17 33
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(17))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -566,7 +566,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(17),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(33),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	//16 34
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(16))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -578,11 +578,11 @@ void displayBoard(Board &b){
 		mult_string(" ",80) << "|" << 
 		 thirdline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(34))) << "|" << std::endl; 
 	in << "|" << fourthline_print(b.getSquare(16),b) << "|" <<
-		mult_string(" ",17) << mult_string("-",46) << mult_string(" ",17) << "|" << 
+		mult_string(" ",17) << mult_string("_",46) << mult_string(" ",17) << "|" << 
 		 fourthline_print(b.getSquare(34),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << 
+	in << "|" << mult_string("_",8) << "|" << 
 		mult_string(" ",16) << "|" << mult_string(" ",46) << "|" << mult_string(" ",16) << "|"  <<
-		mult_string("-",8) << "|" << std::endl;
+		mult_string("_",8) << "|" << std::endl;
 	//15 35 
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Residence>(b.getSquare(15))) << "|" <<
 		mult_string(" ",16) << "|" << 
@@ -604,14 +604,14 @@ void displayBoard(Board &b){
 		" # # # #  #   #   #   #  #    #   # #     #   " << 
 		"|" << mult_string(" ",16) << "|"  <<
 		 fourthline_print(b.getSquare(35),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << 
+	in << "|" << mult_string("_",8) << "|" << 
 		mult_string(" ",16) << "|" << 
 		" ##### #  #   #    ###   #     ###  ## #  #   " << 
 		"|" << mult_string(" ",16) << "|"  <<
-		mult_string("-",8) << "|" << std::endl;
+		mult_string("_",8) << "|" << std::endl;
 	// 14 36 
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
-		mult_string(" ",16) << "|" << mult_string("-",46) << "|" << mult_string(" ",16) << "|" <<
+		mult_string(" ",16) << "|" << mult_string("_",46) << "|" << mult_string(" ",16) << "|" <<
 		 firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(36))) << "|" << std::endl; 
 	in << "|" << secondline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(14))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -622,7 +622,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(14),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(36),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	//13 37
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(13))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -636,7 +636,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(13),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(37),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	//12 38
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Gym>(b.getSquare(12))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -650,7 +650,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(12),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(38),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string(" ",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string(" ",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	//11 39
 	in << "|" << firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(11))) << "|" <<
 		mult_string(" ",80) << "|" << 
@@ -664,7 +664,7 @@ void displayBoard(Board &b){
 	in << "|" << fourthline_print(b.getSquare(11),b) << "|" <<
 		mult_string(" ",80) << "|" << 
 		 fourthline_print(b.getSquare(39),b) << "|" << std::endl; 
-	in << "|" << mult_string("-",8) << "|" << mult_string("-",80) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string("_",80) << "|" << mult_string("_",8) << "|" << std::endl;
 	//10 - 0
 	in << "|" << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare(10))) << "|" << 
 		firstline_print(std::dynamic_pointer_cast<Upgradable>(b.getSquare(9))) << "|" << 
@@ -710,10 +710,10 @@ void displayBoard(Board &b){
 		fourthline_print(b.getSquare(2),b) << "|" << 
 		fourthline_print(b.getSquare(1),b) << "|" << 
 		fourthline_print(b.getSquare(0),b) << "|" << std::endl;
-	in << "|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << mult_string("-",8) << 
-		"|" << mult_string("-",8) << "|" << mult_string("-",8) << "|" << std::endl;
+	in << "|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << std::endl;
 }
 
 std::string mult_string(std::string s, int n){
