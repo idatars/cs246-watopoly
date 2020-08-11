@@ -78,7 +78,7 @@ void Player::buyImprovement(Property * up){
 	}
 }
 
-void Player::sellImprovement(Upgradable * up){
+void Player::sellImprovement(Property * up){
 	try{
 		up->sellImprove(this);
 	}catch(Exception & e){
