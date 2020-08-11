@@ -57,7 +57,16 @@ void Residence::unmortgageBy(Player * player){
 }
 
 int Residence::getImprovements() {
-    return 0;
+    throw Exception{"Error, this building cannot be improved."};
+	return 0;
 }
 
 void Residence::setImprovements(int level) {}
+
+void Residence::sellImprove(Player * player){
+	throw(Exception{"This building cannot be imrpoved"});
+}
+
+void Residence::improve(Player * player){
+	throw(Exception{"This building cannot be imrpoved"});
+}

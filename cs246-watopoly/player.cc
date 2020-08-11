@@ -1,8 +1,8 @@
 #include "player.h"
 #include <iostream>
 #include "exception.h"
-#include "upgradable.h"
 #include "property.h"
+#include "upgradable.h"
 
 Player::Player(std::string& name, char piece) {
 	this->name = name;
@@ -21,7 +21,7 @@ int Player::getMoney() { return money; }
 
 void Player::withdrawMoney(int i) {
 	if (i > money) {
-		throw outOfMoney();
+		throw outOfMoney(nullptr);
 	}
 	money -= i;
 }
@@ -70,13 +70,21 @@ void Player::stayinTims()
 	++turnsInTims;
 }
 
-void Player::buyImprovement(Upgradable * up){
+void Player::buyImprovement(Property * up){
 	try{
 		up->improve(this);
 	}catch(Exception & e){
 		throw(e);
 	}
 }
+
+void Player::sellImprovement(Property * up){
+	try{
+		up->sellImprove(this);
+	}catch(Exception & e){
+		throw(e);
+	}
+} // player sell improvement of 'up'
 
 void Player::getMortgage(Property * p){
 	if(p->getOwner().get() != this){

@@ -30,8 +30,8 @@ public:
 	virtual void mortgageBy(Player * player) = 0; // property mortaged by player
 	virtual void unmortgageBy(Player * player) = 0; // property unmortaged by plater
 	virtual int getImprovements() = 0;
-	virtual void setImprovements(int level) = 0; // need for loading
+	virtual void setImprovements(int level) = 0;
+	virtual void sellImprove(Player * player) = 0; // player sell improvement of this building
 };
-
 #endif
 

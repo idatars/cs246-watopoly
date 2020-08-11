@@ -7,7 +7,7 @@
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
-	std::string infile = "testsave1.txt";
+	std::string infile = "";
 
 	for (int i = 0; i < argc; ++i) {
 		if (argv[i] == "-testing") testing = true;
@@ -44,6 +44,7 @@ int main(int argc, char *argv[]) {
 			players.emplace_back(new Player(name, c));
 		}
 		b.newBoard(players);
+		displayBoard(b);
 	}
 
 	/*std::ofstream outFile;
@@ -52,7 +53,6 @@ int main(int argc, char *argv[]) {
 	std::cin >> file;
 	outFile.open(file);
 	outFile << b;*/
-	return 0;
 	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;
@@ -153,29 +153,102 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
-		std::cin >> arg;
 		while (1) {
+			getline(std::cin, arg, ' ');
 			if (arg == "roll") {
-				if (!b.currentPlayer()->inTims()) {
-					int roll = rand() % 6 + 1 + rand() % 6 + 1;
-					/*try { b.move(roll); }
-					catch (Auction) {
-
+				if (!b.currentPlayer()->inTims()) { // if player is not in jail
+					int roll = 0;
+					if (testing) {
+						try {
+							getline(std::cin, arg, ' ');
+							roll += stoi(arg);
+							getline(std::cin, arg, ' ');
+							roll += stoi(arg);
+						}
+						catch(std::invalid_argument){
+							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
+						}
 					}
-					catch (outOfMoney) {
+					else roll = rand() % 6 + 1 + rand() % 6 + 1;
+					try { b.move(roll); }
+					catch (Auction p) {
+					
+					}
+					catch (outOfMoney p) {
+						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
+						std::string ans;
+						while (1) {
+							std::cin >> ans;
+							if (ans == "a") {
+								if (p.playerowed == nullptr) { // player owes the bank
+									b.dropout();
+								}
+								else { // player owes another player
+									b.transferAssets(b.currentPlayer(), p.playerowed);
+								}
+								break;
+							}
+							else if (ans == "b") {
 
-					}*/
+								break;
+							}
+							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
+						}
+					}
 				}
 				else {
 					std::cout << "You are in the DC Tim's Line and cannot roll!\n";
 				}
 			}
+			else if(arg == "p"){
+				displayBoard(b);
+			}
 			else if (arg == "next") {
 				b.endturn();
 				break;
 			}
-			else if (arg == "bankrupt") { std::cout << "You do not have access to this command right now!\n"; }
+			else if (arg == "trade") {
+				std::string name;
+				getline(std::cin, name, ' ');
+				std::string give;
+				getline(std::cin, give, ' ');
+				std::string receive;
+				getline(std::cin, receive, ' ');
+				// call trade(...) here
+			}
+			else if (arg == "improve") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+				std::string option;
+				getline(std::cin, option, ' ');
+				if (option == "buy") {
 
+				}
+				else if (option == "sell") {
+
+				}
+				else std::cout << "Invalid command\n";
+			}
+			else if (arg == "mortgage") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+
+			}
+			else if (arg == "unmortgage") {
+				std::string prop;
+				getline(std::cin, prop, ' ');
+
+			}
+			else if (arg == "bankrupt") std::cout << "You do not have access to this command right now!\n";
+			else if (arg == "assets") {
+
+			}
+			else if (arg == "all") {
+
+			}
+			else if (arg == "save") {
+
+			}
 		}
 	}
 }

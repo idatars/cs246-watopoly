@@ -1,6 +1,7 @@
 #include "upgradable.h"
 #include <iostream>
 #include "exception.h"
+#include <algorithm>
 
 Upgradable::Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, int t3, int t4, int t5, std::shared_ptr<MonopolyBlock> b) :
     Property(name, c, b),
@@ -65,16 +66,18 @@ bool Upgradable::ownMonopoly(){
 	for(auto it=monopoly_members.begin(); it!=monopoly_members.end();++it){
 		//if owner does not own one of the buildings in the monopoly
 		bool has_upgradable = false;
-		for(auto it2=player_owned.begin();it2!=player_owned.end();++it2){
-			if((*it)->getName() == (*it2)->getName()){
+		for(auto it2=player_owned.begin(); it2!=player_owned.end();++it2){
+			if((*it2)->getName() == (*it)->getName()){
 				has_upgradable = true;
+				break;
 			}
 		}
 		if(!has_upgradable){
 			return false;
 		}
-	}*/
+	}
 	return true;
+	*/
 }
 
 //imporve the building
@@ -92,6 +95,20 @@ void Upgradable::improve(Player * player){
 		}catch(Exception & e){
 			throw(e);
 		}
+	}
+}
+void Upgradable::sellImprove(Player * player){
+	if(player != this->getOwner().get()){
+		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(improvements == 0){
+		throw(Exception{"You do not have enough improvements to sell"}); //no improvement
+	}else{
+		try{
+			player->addMoney(improvementCost);
+			improvements -= 1;
+		}catch(Exception & e){
+			throw(e);
+		}	
 	}
 }
 

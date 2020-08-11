@@ -36,6 +36,7 @@ public:
 	void move(int i); // currplayer rolls dice, moves squares, and as the effect of the square applied on them
 	std::string peek(int); // returns the name of the square at i
 	std::shared_ptr<Player> currentPlayer();
+	std::vector<std::shared_ptr<Player>> allPlayers();
 	void endturn();
 	std::shared_ptr<Square> getSquare(int i);
 	void addCup();
@@ -48,10 +49,30 @@ public:
 	void bankrupt();
 	std::shared_ptr<Property> getProperty(std::string &name);
 	void startAuction(std::string &property);
+	void transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to);
+	void dropout(); // current player drops out
+	std::shared_ptr<Property> findProperty(std::string prop_name); //find property with a given name
 };
 
 std::istream& operator>>(std::istream& in, Board &b);
-
 std::ostream& operator<<(std::ostream& out, Board &b);
 
+void displayBoard(Board &b);
+
+std::string firstline_print(std::shared_ptr<NonProperty> np); // Name print
+std::string firstline_print(std::shared_ptr<Upgradable> up); //improvement print
+std::string firstline_print(std::shared_ptr<Residence> res); // Name print
+std::string firstline_print(std::shared_ptr<Gym> gym); // Name print
+
+std::string secondline_print(std::shared_ptr<NonProperty> np); // Name print
+std::string secondline_print(std::shared_ptr<Upgradable> up); //'-' print
+std::string secondline_print(std::shared_ptr<Residence> res); // space print
+std::string secondline_print(std::shared_ptr<Gym> gym); // space print
+
+std::string thirdline_print(std::shared_ptr<Square> sq); // space print
+std::string thirdline_print(std::shared_ptr<Upgradable> up); // name print
+
+std::string fourthline_print(std::shared_ptr<Square> sq, Board & b); // space print
+
+std::string mult_string(std::string s, int n);
 #endif

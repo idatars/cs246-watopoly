@@ -14,6 +14,8 @@ public:
 	void unmortgageBy(Player * player) override;
 	int getImprovements() override;
 	void setImprovements(int level) override;
+	void sellImprove(Player * player) override;
+	void improve(Player * player) override;
 };
 
 #endif

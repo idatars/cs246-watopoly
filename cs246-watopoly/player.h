@@ -43,13 +43,16 @@ public:
 	int worth();
 	void addToWorth(int worth);
 
-	void buyImprovement(Upgradable * up); // player improves 'up'
+	void buyImprovement(Property * up); // player improves 'up'
+	void sellImprovement(Property * up); // player sell improvement of 'up'
 	void getMortgage(Property * p); // mortage a building
 	void getUnmortgage(Property * p); // unmortage a building 
 };
 
 class outOfMoney {
-
+public :
+	std::shared_ptr<Player> playerowed = nullptr;
+	outOfMoney(std::shared_ptr<Player> p) { playerowed = p; }
 };
 
 #endif
