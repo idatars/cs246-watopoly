@@ -5,13 +5,8 @@
 #include <iostream>
 #include <algorithm>
 #include "monopolyblock.h"
-<<<<<<< HEAD
-#include <sstream>
-#include <algorithm>
-=======
 #include <algorithm>
 #include <sstream>
->>>>>>> 808b7fe33631b896485957395cb4121b32234db3
 void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.clear();
 	players.clear();
@@ -150,7 +145,6 @@ void Board::useCup()
 	--totalcups;
 }
 
-<<<<<<< HEAD
 bool Board::trade(std::string &from, std::string &to, std::string &give, std::string &receive) {
 	std::shared_ptr<Player> tradingTo;
 	std::shared_ptr<Player> tradingFrom;
@@ -411,7 +405,6 @@ void Board::startAuction(std::string &property) {
 	players[currWinner]->addToWorth(prop->getCost());
 	prop->setOwner(players[currWinner]);
 }
-=======
 void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to)
 {
 	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
@@ -816,7 +809,6 @@ std::string fourthline_print(std::shared_ptr<Square> sq, Board & b){
 	}
 	return tmp + mult_string(" ",max_player_num);
 } // player print
->>>>>>> 808b7fe33631b896485957395cb4121b32234db3
 
 std::istream& operator>>(std::istream& in, Board &b) {
 	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
