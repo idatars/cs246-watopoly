@@ -447,8 +447,10 @@ std::string firstline_print(std::shared_ptr<NonProperty> np){
 		return "DC TIMS ";
 	}else if(name == "Collect OSAP"){
 		return "COLLECT ";
-	}else{
+	}else if (name == "Tuition"){
 		return "TUITION ";
+	}else{
+		return "SLC     ";
 	}
 }// Name print
 
