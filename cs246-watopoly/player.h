@@ -43,7 +43,7 @@ public:
 	int worth();
 	void addToWorth(int worth);
 
-	void buyImprovement(Upgradable * up); // player improves 'up'
+	void buyImprovement(Property * up); // player improves 'up'
 	void sellImprovement(Upgradable * up); // player sell improvement of 'up'
 	void getMortgage(Property * p); // mortage a building
 	void getUnmortgage(Property * p); // unmortage a building 

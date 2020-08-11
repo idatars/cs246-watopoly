@@ -43,6 +43,7 @@ public:
 	void useCup();
 	void transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to);
 	void dropout(); // current player drops out
+	std::shared_ptr<Property> findProperty(std::string prop_name); //find property with a given name
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

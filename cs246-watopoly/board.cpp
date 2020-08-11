@@ -1,4 +1,5 @@
 #include "board.h"
+#include "exception.h"
 #include <string>
 #include <vector>
 #include <iostream>
@@ -167,7 +168,14 @@ void Board::dropout()
 	totalcups -= players[currplayer]->getCups();
 }
 
-
+std::shared_ptr<Property> Board::findProperty(std::string prop_name){
+	for(auto it=properties.begin();it!=properties.end();++it){
+		if((*it)->getName()==prop_name){
+			return *it;
+		}
+	}
+	throw(Exception{"I cannot find this property."});
+} //find property with a given name
 
 ////////////////////////Functions Outside of Class////////////////////////////
 void displayBoard(Board &b){

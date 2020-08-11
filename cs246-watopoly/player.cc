@@ -70,7 +70,7 @@ void Player::stayinTims()
 	++turnsInTims;
 }
 
-void Player::buyImprovement(Upgradable * up){
+void Player::buyImprovement(Property * up){
 	try{
 		up->improve(this);
 	}catch(Exception & e){
