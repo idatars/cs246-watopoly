@@ -94,6 +94,7 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[35]));
 	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[37]));
 	properties.emplace_back(std::dynamic_pointer_cast<Property>(squares[39]));
+
 }
 
 void Board::setPlayers(std::vector<std::shared_ptr<Player>> &p){
@@ -145,7 +146,7 @@ void Board::useCup()
 	--totalcups;
 }
 
-bool Board::trade(std::string &from, std::string &to, std::string &give, std::string &receive) {
+bool Board::trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive) {
 	std::shared_ptr<Player> tradingTo;
 	std::shared_ptr<Player> tradingFrom;
 	for (auto player : players){
@@ -204,6 +205,7 @@ bool Board::trade(std::string &from, std::string &to, std::string &give, std::st
 			std::cout << to << "'s balance: $" << tradingTo->getMoney() << std::endl;
 			return false;
 		}
+		receivedMoney = true;
 	}
 	catch (...) {
 		receiveProperty = receive;
@@ -224,14 +226,25 @@ bool Board::trade(std::string &from, std::string &to, std::string &give, std::st
 	while (true) {
 		std::cin >> input;
 		if (input == "Yes" || input == "yes") {
-			giving->setOwner(tradingTo);
-			tradingFrom->addToWorth(-1 * giving->getCost());
-			tradingTo->addToWorth(giving->getCost());
+			if (givingMoney == true) {
+				tradingTo->addMoney(given);
+				tradingFrom->withdrawMoney(given);
+			}
+			else {
+				giving->setOwner(tradingTo);
+				tradingFrom->addToWorth(-1 * giving->getCost());
+				tradingTo->addToWorth(giving->getCost());
+			}
 
-			receivingProperty->setOwner(tradingFrom);
-			tradingFrom->addToWorth(receivingProperty->getCost());
-			tradingTo->addToWorth(-1 * receivingProperty->getCost());
-
+			if (receivedMoney == true) {
+				tradingFrom->addMoney(receiving);
+				tradingFrom->withdrawMoney(receiving);
+			}
+			else {
+				receivingProperty->setOwner(tradingFrom);
+				tradingFrom->addToWorth(receivingProperty->getCost());
+				tradingTo->addToWorth(-1 * receivingProperty->getCost());
+			}
 			std::cout << "The trade has been accepted!" << std::endl;
 			std::cout << to << " has received the following:" << std::endl;
 			if (givingMoney == true) {
@@ -281,24 +294,35 @@ void Board::printAssets(std::shared_ptr<Player> &p1) {
 std::vector<std::string> Board::getAssets(std::shared_ptr<Player> &p1) {
 	std::vector<std::string> assets; 
 	for (auto i : properties) {
-		if (i->getOwner()->getName() == p1->getName()) {
-			assets.emplace_back(i->getName());
-		}
+		if (i->getOwner() != nullptr) {
+			if (i->getOwner()->getName() == p1->getName()) {
+				assets.emplace_back(i->getName());
+			}
+		}	
 	}
 	return assets;
 }
 
 void Board::getAllAssets() {
+	int count = 0;
 	for (auto p : players) {
-		std::cout << "Money: $" << p->getMoney() << std::endl;
-		std::cout << "Roll Up the Rim Cups: " << p->getCups() << std::endl;
+		std::cout << "Assets of " << p->getName() << ":" << std::endl;
+		std::cout << "  Money: $" << p->getMoney() << std::endl;
+		std::cout << "  Roll Up the Rim Cups: " << p->getCups() << std::endl;
+		std::cout << "  Properties Owned:" << std::endl;
 		//listing properties of player now
 		for (auto property : properties) {
-			if (property->getOwner()->getName() == p->getName()) {
-				std::cout << property->getName() << std::endl;
+			if (property->getOwner() != nullptr) {
+				if (property->getOwner()->getName() == p->getName()) {
+					std::cout << "    " << property->getName() << std::endl;
+				}
 			}
 		}
-		std::cout << "Total Worth: $" << p->worth() << std::endl;
+		std::cout << "  Total Worth: $" << p->worth() << std::endl;
+		if (count != numplayers - 1){
+			std::cout<<std::endl;
+		}
+		++count;
 	}
 }
 
@@ -349,7 +373,8 @@ void Board::startAuction(std::string &property) {
 					stillIn[curr] = false;
 					break;
 				}
-				std::cout << players[curr]->getName() << ", it is your turn. The current bid is: $" << highestBid << std::endl;
+				std::cout << std::endl;
+				std::cout << players[curr]->getName() << ", it is your turn. The current highest bid is: $" << highestBid << std::endl;
 				std::cout << "Place your bid or enter \"Withdraw\" to withdraw from this auction:" << std::endl;
 				std::string input;
 				while (true) {
@@ -358,7 +383,8 @@ void Board::startAuction(std::string &property) {
 						if (input == "Withdraw" || input == "withdraw") {
 							stillIn[curr] = false;
 							--playersLeft;
-							std::cout << players[curr]->getName() << ", you have withdrawed from this auction." << std::endl;
+							std::cout << players[curr]->getName() << ", you have withdrawn from this auction." << std::endl;
+							break;
 						}
 						else {
 							int bid = std::stoi(input);
@@ -366,7 +392,7 @@ void Board::startAuction(std::string &property) {
 								if (bid > players[curr]->getMoney()) {
 									std::cout << "The bid you have placed is higher than your balance." << std::endl;
 									tryAgain = true;
-									throw;
+									throw std::runtime_error("lol");
 								}
 								currWinner = curr;
 								highestBid = bid;
@@ -376,7 +402,7 @@ void Board::startAuction(std::string &property) {
 							else {
 								std::cout << "Your bid is not higher than the currect highest bid." << std::endl;
 								tryAgain = true;
-								throw;
+								throw std::runtime_error("lol");
 							}
 						}
 					}
@@ -400,7 +426,8 @@ void Board::startAuction(std::string &property) {
 			++curr;
 		}
 	}
-	std::cout << players[currWinner] << "has won the auction for " << property << " at a bid of: $" << highestBid << std::endl;
+	std::cout << std::endl;
+	std::cout << players[currWinner]->getName() << " has won the auction for " << property << " at a bid of: $" << highestBid << std::endl;
 	players[currWinner]->withdrawMoney(highestBid);
 	players[currWinner]->addToWorth(prop->getCost());
 	prop->setOwner(players[currWinner]);
