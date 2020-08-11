@@ -158,13 +158,13 @@ int main(int argc, char *argv[]) {
 			if (arg == "roll") {
 				if (!b.currentPlayer()->inTims()) {
 					int roll = rand() % 6 + 1 + rand() % 6 + 1;
-					try { b.move(roll); }
+					/*try { b.move(roll); }
 					catch (Auction) {
 
 					}
 					catch (outOfMoney) {
 
-					}
+					}*/
 				}
 				else {
 					std::cout << "You are in the DC Tim's Line and cannot roll!\n";

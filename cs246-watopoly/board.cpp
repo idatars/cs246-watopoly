@@ -294,7 +294,7 @@ void Board::getAllAssets() {
 	}
 }
 
-void Board::bankrupt(){
+/*void Board::bankrupt(){
 	std::shared_ptr<Player> player = currentPlayer();
 	player->withdrawMoney(player->getMoney());
 	totalcups += player->getCups();
@@ -309,7 +309,7 @@ void Board::bankrupt(){
 	std::cout << player->getName() << ", you are now bankrupt. Thanks for playing!" << std::endl;
 	auto itToPlayer = find(players.begin(), players.end(), player);
 	players.erase(itToPlayer);
-}
+}*/
 
 void Board::startAuction(std::string &property) {
 	std::shared_ptr<Property> prop = getProperty(property);
