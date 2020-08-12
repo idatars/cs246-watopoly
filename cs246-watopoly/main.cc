@@ -34,7 +34,7 @@ int main(int argc, char *argv[]) {
 	else {
 		std::cout << "Please enter the number of players: ";
 		std::cin >> playersnum;
-		while (playersnum < 2) {
+		while (playersnum < 2 && !testing) {
 			std::cout << "Error: number of players must be greater than 2\nPlease enter the number of players: ";
 			std::cin >> playersnum;
 		}
@@ -149,11 +149,11 @@ int main(int argc, char *argv[]) {
 			}
 		}
 
+		bool rolled = false;
 		while (1) {
-			bool rolled = false;
 			std::cin >> arg;
 			if (arg == "roll") {
-				if (!b.currentPlayer()->inTims() || rolled != true) { // if player is not in jail
+				if (!b.currentPlayer()->inTims() && !rolled) { // if player is not in jail
 					int roll = 0;
 					if (testing) {
 						try {
@@ -166,7 +166,10 @@ int main(int argc, char *argv[]) {
 							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
 						}
 					}
-					else roll = rand() % 6 + 1 + rand() % 6 + 1;
+					else {
+						roll = rand() % 6 + rand() % 6 + 2;
+						std::cout << "You have rolled a " << roll << '\n';
+					}
 					rolled = true;
 					try { b.move(roll); }
 					catch (Auction p) {
