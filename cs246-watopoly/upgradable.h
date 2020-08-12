@@ -24,7 +24,7 @@ public:
 	//returns true if the owener of the upgradable forms a monopoly and false otherwise
 	bool ownMonopoly();
 	//imporve the building
-	void improve(Player * player);
+	void improve(Player * player) override;
 	void playerEffect(std::shared_ptr<Player>) override;
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override; 
