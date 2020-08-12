@@ -62,7 +62,6 @@ int main(int argc, char *argv[]) {
 			while (1) {
 				getline(std::cin, c);
 				char piece;
-				std::cout << c << std::endl;
 				piece = b.getPiece(c);
 				if (piece == '0') {
 					std::cout << "Please choose a valid character: ";
@@ -80,6 +79,7 @@ int main(int argc, char *argv[]) {
 					
 				}
 			}
+			std::cout << "\n";
 		}
 		b.newBoard(players);
 		displayBoard(b);

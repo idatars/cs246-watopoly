@@ -892,7 +892,6 @@ char Board::getPiece(std::string &c) {
 	for (auto i : c) {
 		newstr += std::tolower(i);
 	}
-	std::cout << newstr << std::endl;
 	if (newstr == "goose") {
 		return 'G';
 	}
