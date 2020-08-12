@@ -33,7 +33,6 @@ public:
 	virtual void setImprovements(int level) = 0;
 	virtual void improve(Player * player) = 0;
 	virtual void sellImprove(Player * player) = 0; // player sell improvement of this building
-	virtual void improve(Player * player) = 0;
 };
 
 class Auction {
