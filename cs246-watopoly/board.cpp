@@ -146,17 +146,52 @@ void Board::useCup()
 	--totalcups;
 }
 
-bool Board::trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive) {
+void Board::trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive) {
 	std::shared_ptr<Player> tradingTo;
 	std::shared_ptr<Player> tradingFrom;
+	bool playFromFound = false;
+	bool playToFound = false;
+
 	for (auto player : players){
 		if (player->getName() == to) {
 			tradingTo = player;
+			playToFound = true;
 		}
 		if (player->getName() == from) {
 			tradingFrom = player;
+			playFromFound = true;
 		}
 	}
+	if (playFromFound != true) {
+		std::cout << "player " << from << " does not exist!" << std::endl;
+		return;
+	}
+	if (playToFound != true) {
+		std::cout << "player " << to << " does not exist!" << std::endl;
+		return;
+	}
+
+	bool giveFound = false;
+	bool receiveFound = false;
+
+	for (auto p : properties) {
+		if (p->getName() == give) {
+			giveFound == true;
+		}
+		if (p->getName() == receive) {
+			receiveFound == true;
+		}
+	}
+
+	if (giveFound != true) {
+		std::cout << give << " does not exist!" << std::endl;
+		return; 
+	}
+	if (receiveFound != true) {
+		std::cout << receive << " does not exist!" << std::endl;
+		return;
+	}
+
 	std::vector<std::string> propertyOfTradingTo = getAssets(tradingTo);
 	std::vector<std::string> propertyOfTradingFrom = getAssets(tradingFrom);
 
@@ -171,7 +206,7 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 		if (given > tradingFrom->getMoney()) {
 			std::cout << "You do not have enough money to offer this trade!" << std::endl;
 			std::cout << "Your balace is: $" << tradingFrom->getMoney() << std::endl; 
-			return false;
+			return;
 		}
 		givingMoney = true;
 	}
@@ -180,12 +215,12 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 		int owned = count(propertyOfTradingFrom.begin(), propertyOfTradingFrom.end(), giveProperty);
 		if (owned != 1) {
 			std::cout << "You do not own " << give << "." << std::endl;
-			return false;
+			return;
 		}
 		giving = getProperty(giveProperty);
 		if (giving->getImprovements() != 0) {
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
-			return false;
+			return;
 		}
 	}
 	
@@ -198,12 +233,12 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 		receiving = std::stoi(receive);
 		if (givingMoney == true) {
 			std::cout << "You cannot trade money for money." << std::endl;
-			return false;
+			return;
 		}
 		if (receiving > tradingTo->getMoney()) {
 			std::cout << to << " does not have enough money." << std::endl;
 			std::cout << to << "'s balance: $" << tradingTo->getMoney() << std::endl;
-			return false;
+			return;
 		}
 		receivedMoney = true;
 	}
@@ -212,12 +247,12 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 		int owned = count(propertyOfTradingTo.begin(), propertyOfTradingTo.end(), receiveProperty);
 		if (owned != 1) {
 			std::cout << to << " does not own " << give << "." << std::endl;
-			return false;
+			return;
 		}
 		receivingProperty = getProperty(receiveProperty);
 		if (receivingProperty->getImprovements() != 0) {
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
-			return false;
+			return;
 		}
 	}
 
@@ -261,10 +296,11 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 			else {
 				std::cout << "Property: " << receive << std::endl;
 			}
-			return true;
+			return;
 		}
 		else if (input == "No" || input == "No") {
-			return false;
+			std::cout << "The trade has been declined!" << std::endl;
+			return;
 		}
 		else {
 			std::cout << "Please enter \"Yes\" or \"No\":" << std::endl;
@@ -325,23 +361,6 @@ void Board::getAllAssets() {
 		++count;
 	}
 }
-
-/*void Board::bankrupt(){
-	std::shared_ptr<Player> player = currentPlayer();
-	player->withdrawMoney(player->getMoney());
-	totalcups += player->getCups();
-	while (player->getCups() != 0) {
-		player->useCup();
-	}
-	for (auto p : properties) {
-		if (p->getOwner()->getName() == player->getName()) {
-			p->setOwner(nullptr);
-		}
-	}
-	std::cout << player->getName() << ", you are now bankrupt. Thanks for playing!" << std::endl;
-	auto itToPlayer = find(players.begin(), players.end(), player);
-	players.erase(itToPlayer);
-}*/
 
 void Board::startAuction(std::string &property) {
 	std::shared_ptr<Property> prop = getProperty(property);

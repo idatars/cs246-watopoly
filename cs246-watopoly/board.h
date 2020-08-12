@@ -42,7 +42,7 @@ public:
 	void addCup();
 	void useCup();
 	// if trade() return false, ask p1 if he wants to trade again
-	bool trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive); 
+	void trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive); 
 	void printAssets(std::shared_ptr<Player> &p1);
 	std::vector<std::string> getAssets(std::shared_ptr<Player> &p1);
 	void getAllAssets();

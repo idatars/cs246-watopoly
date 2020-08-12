@@ -47,15 +47,6 @@ int main(int argc, char *argv[]) {
 		displayBoard(b);
 	}
 
-	std::string prop = "AL";
-	b.startAuction(prop);
-	b.getAllAssets();
-	/*std::ofstream outFile;
-	std::string file;
-	std::cout<< "enter save file name: ";
-	std::cin >> file;
-	outFile.open(file);
-	outFile << b;*/
 	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;
@@ -217,7 +208,7 @@ int main(int argc, char *argv[]) {
 				getline(std::cin, give, ' ');
 				std::string receive;
 				getline(std::cin, receive, ' ');
-				// call trade(...) here
+				b.trade(b.currentPlayer()->getName(), name, give, receive);
 			}
 			else if (arg == "improve") {
 				std::string prop;
@@ -247,10 +238,15 @@ int main(int argc, char *argv[]) {
 
 			}
 			else if (arg == "all") {
-
+				b.getAllAssets();
 			}
 			else if (arg == "save") {
-
+				std::string file;
+				getline(std::cin, file);
+				std::ofstream outFile;
+				outFile.open(file);
+				outFile << b;
+				std::cout << "Your game has been saved to the following file: " << file << std::endl;
 			}
 		}
 	}
