@@ -43,13 +43,14 @@ public:
 	void useCup();
 	// if trade() return false, ask p1 if he wants to trade again
 	void trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive); 
-	void printAssets(); // prints assets of current player
+	void printAssets(std::shared_ptr<Player> p); // prints assets of current player
 	std::vector<std::string> getAssets(std::shared_ptr<Player> p);
 	void getAllAssets();
 	void startAuction(Property*);
 	void transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to);
 	void dropout(); // current player drops out
 	std::shared_ptr<Property> findProperty(std::string prop_name); //find property with a given name
+	char getPiece(std::string &c);
 };
 
 std::istream& operator>>(std::istream& in, Board &b);

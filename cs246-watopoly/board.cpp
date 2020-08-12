@@ -336,20 +336,25 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 	}
 }
 
-void Board::printAssets() {
-	std::cout << currentPlayer()->getName() <<" owns the following properties:" << std::endl;
-	for (auto i : properties) {
-		if (i->getOwner()->getName() == currentPlayer()->getName()) {
-			std::cout << i->getName() << std::endl;
+void Board::printAssets(std::shared_ptr<Player> p) {
+	std::cout << "ASSETS OF " << p->getName() << ":" << std::endl;
+		std::cout << "  Money: $" << p->getMoney() << std::endl;
+		std::cout << "  Roll Up the Rim Cups: " << p->getCups() << std::endl;
+		std::cout << "  Properties Owned:" << std::endl;
+		//listing properties of player now
+		for (auto property : properties) {
+			if (property->getOwner() == p) {
+				std::cout << "    " << property->getName() << std::endl;
+			}
 		}
-	}
+		std::cout << "  Total Worth: $" << p->worth() << std::endl;
 }
 
 std::vector<std::string> Board::getAssets(std::shared_ptr<Player> p) {
 	std::vector<std::string> assets; 
 	for (auto i : properties) {
 		if (i->getOwner() != nullptr) {
-			if (i->getOwner()->getName() == p->getName()) {
+			if (i->getOwner() == p) {
 				assets.emplace_back(i->getName());
 			}
 		}	
@@ -360,19 +365,7 @@ std::vector<std::string> Board::getAssets(std::shared_ptr<Player> p) {
 void Board::getAllAssets() {
 	int count = 0;
 	for (auto p : players) {
-		std::cout << "Assets of " << p->getName() << ":" << std::endl;
-		std::cout << "  Money: $" << p->getMoney() << std::endl;
-		std::cout << "  Roll Up the Rim Cups: " << p->getCups() << std::endl;
-		std::cout << "  Properties Owned:" << std::endl;
-		//listing properties of player now
-		for (auto property : properties) {
-			if (property->getOwner() != nullptr) {
-				if (property->getOwner()->getName() == p->getName()) {
-					std::cout << "    " << property->getName() << std::endl;
-				}
-			}
-		}
-		std::cout << "  Total Worth: $" << p->worth() << std::endl;
+		printAssets(p);
 		if (count != numplayers - 1){
 			std::cout<<std::endl;
 		}
@@ -471,10 +464,29 @@ void Board::startAuction(Property* prop) {
 }
 void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player> to)
 {
-	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
-		if ((*it)->getOwner()->getName() == from->getName()) {
-			(*it)->setOwner(from);
-			from->addToWorth((*it)->getCost());
+	for (auto it : properties) {
+		if (it->getOwner() == from) {
+			it->setOwner(from);
+			if (it->isMortgaged()) {
+				int mortCost = it->getCost() / 2;
+				std::cout << it->getName() <<" is a mortgaged property," << to->getName() << ", would you like to unmortgage it now? Choosing to mortgage it \
+					later will cost 10% more! Enter either \"Yes\" or \"No\": ";
+				std::string input;
+				while (1) {
+					std::cin >> input;
+					if (input == "yes" || input == "Yes") {
+						it->setUnmortgaged();
+						from->addToWorth(it->getCost());
+						std::cout << it->getName() << " has been unmortgaged!" << std::endl;
+					}
+					else if(input == "no" || input == "No") {
+						std::cout << it->getName() << " will remain mortgaged!" << std::endl;
+					}
+				}
+			}
+			else {
+				from->addToWorth(it->getCost());
+			}
 		}
 	}
 	for (int i = 0; i < from->getCups(); ++i) {
@@ -484,9 +496,10 @@ void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player>
 
 void Board::dropout()
 {
-	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
-		if ((*it)->getOwner()->getName() == players[currplayer]->getName()) {
-			startAuction((*it).get());
+	auto dropoutPlayer = players[currplayer];
+	for (auto it : properties) {
+		if (it->getOwner() == dropoutPlayer) {
+			startAuction(it.get());
 		}
 	}
 	totalcups -= players[currplayer]->getCups();
@@ -873,6 +886,41 @@ std::string fourthline_print(std::shared_ptr<Square> sq, Board & b){
 	}
 	return tmp + mult_string(" ",max_player_num);
 } // player print
+
+char Board::getPiece(std::string &c) {
+	std::string newstr;
+	for (auto i : c) {
+		newstr += std::tolower(i);
+	}
+	std::cout << newstr << std::endl;
+	if (newstr == "goose") {
+		return 'G';
+	}
+	else if (newstr == "grt bus") {
+		return 'B';
+	}
+	else if (newstr == "tim hortons doughnut") {
+		return 'D';
+	}
+	else if (newstr == "professor") {
+		return 'P';
+	}
+	else if (newstr == "student") {
+		return 'S';
+	}
+	else if (newstr == "money") {
+		return '$';
+	}
+	else if (newstr == "laptop") {
+		return 'L';
+	}
+	else if (newstr == "pink tie") {
+		return 'T';
+	}
+	else {
+		return '0';
+	}
+}
 
 std::istream& operator>>(std::istream& in, Board &b) {
 	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 

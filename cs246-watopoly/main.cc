@@ -5,7 +5,7 @@
 #include "player.h"
 #include "board.h"
 #include "exception.h"
-
+#include <algorithm>
 int main(int argc, char *argv[]) {
 	bool testing = false;
 	std::string infile = "";
@@ -32,20 +32,54 @@ int main(int argc, char *argv[]) {
 		ifs >> b;
 	}
 	else {
-		std::cout << "Please enter the number of players: ";
-		std::cin >> playersnum;
-		while (playersnum < 2 && !testing) {
-			std::cout << "Error: number of players must be greater than 2\nPlease enter the number of players: ";
-			std::cin >> playersnum;
+		std::cout << "Please enter the number of players (Minimum of 2 players required): ";
+		std::string input;
+		while (1) {
+			try {
+				std::cin >> input;
+				playersnum = std::stoi(input);
+				if (playersnum < 2) {
+					std::cout << "Please enter a number greater than 1: ";
+				}
+				else {
+					break;
+				}
+			}
+			catch (...) {
+				std::cout << "Please enter a number greater than 1: ";
+			}
 		}
 		std::string name;
-		char c;
+		std::string c;
+		std::vector<char> pieces;
 		for (int i = 1; i <= playersnum; ++i) {
 			std::cout << "Player" << i << ", please enter your name: ";
 			std::cin >> name;
-			std::cout << "Player" << i << ", please enter your character: ";
-			std::cin >> c;
-			players.emplace_back(new Player(name, c));
+			std::cout << "\n";
+			std::cout << "Please choose your character from the following:" << std::endl;
+			std::cout << "	Goose | GRT Bus | Tim Hortons Doughnut | Professor | Student | Money | Laptop | Pink Tie:" << std::endl;
+			std::cin.ignore();
+			while (1) {
+				getline(std::cin, c);
+				char piece;
+				std::cout << c << std::endl;
+				piece = b.getPiece(c);
+				if (piece == '0') {
+					std::cout << "Please choose a valid character: ";
+				}
+				else {
+					int counter = count(pieces.begin(), pieces.end(), piece);
+					if (counter == 0) {
+						pieces.emplace_back(piece);
+						players.emplace_back(new Player(name, piece));
+						break;
+					}
+					else {
+						std::cout << "This piece is already being used, please select a new one!" << std::endl;
+					}
+					
+				}
+			}
 		}
 		b.newBoard(players);
 		displayBoard(b);
@@ -150,8 +184,24 @@ int main(int argc, char *argv[]) {
 		}
 
 		bool rolled = false;
+		bool rentToPlayer = false;
+		std::shared_ptr<Player> owedTo = nullptr;
+		bool moneyOwed = false;
+		int amtOwed;
 		while (1) {
 			std::cin >> arg;
+			if (moneyOwed == true) {
+				if (b.currentPlayer()->getMoney() >= amtOwed) {
+					b.currentPlayer()->withdrawMoney(amtOwed);
+					if (rentToPlayer == true) {
+						owedTo->addMoney(amtOwed);
+					}
+					std::cout << "Your amount owed has been paid!" << std::endl;
+				}
+				else {
+					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
+				}
+			}
 			if (arg == "roll") {
 				if (!b.currentPlayer()->inTims() && !rolled) { // if player is not in jail
 					int roll = 0;
@@ -176,29 +226,21 @@ int main(int argc, char *argv[]) {
 						b.startAuction(p.p);
 					}
 					catch (outOfMoney p) {
-						/*int worth = b.currentPlayer()->worth();
-						int moneyOwed;
-						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
-						std::string ans;
-						while (1) {
-							std::cin >> ans;
-							if (ans == "a") {
-								if (p.playerowed == nullptr) { // player owes the bank
-									b.dropout();
-								}
-								else { // player owes another player
-									b.transferAssets(b.currentPlayer(), p.playerowed);
-								}
-								break;
-							}
-							else if (ans == "b") {
-								std::cout << "You may now attempt to mortgage properties and sell improvements. Or, enter 'end' to drop out\n";
-								break;
-							}
-							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
-						}*/
-						std::cout << b.currentPlayer()->getName() << ", you owe $" << std::endl;
-						
+						amtOwed = p.amountowed;
+						if (p.playerowed != nullptr) {
+							rentToPlayer = true;
+							owedTo = p.playerowed;
+							std::cout << b.currentPlayer()->getName() << ", you owe $"<< amtOwed << " to " << p.playerowed->getName() << std::endl;
+						}
+						else {
+							std::cout << b.currentPlayer()->getName() << ", you owe $"<< amtOwed << " to the bank."<< std::endl;
+						}
+						moneyOwed = true;
+						std::cout << "You can choose to delcare bankruptcy by calling the bankrupt command. You can also choose to \
+							mortgage/sell your properties to raise enough money to pay the money you owe." << std::endl;
+						std::cout << "Note: If you choose to raise money, once it has been raised it will automatically be deducted from your balance." << std::endl;
+						std::cout << "You can only use the following commands while you owe money:" << std::endl;
+						std::cout << "  improve (sell only)\n  trade\n  mortgage\n  bankrupt\n  assets\n  all" << std::endl;
 					}
 				}
 				else {
@@ -214,8 +256,14 @@ int main(int argc, char *argv[]) {
 				displayBoard(b);
 			}
 			else if (arg == "next") {
-				b.endturn();
-				break;
+				if (moneyOwed == true) {
+					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before ending your turn." << std::endl;
+				}
+				else {
+					b.endturn();
+					break;
+				}
+				
 			}
 			else if (arg == "trade") {
 				std::string name;
@@ -232,6 +280,10 @@ int main(int argc, char *argv[]) {
 				std::string option;
 				std::cin >> option;
 				if (option == "buy") {
+					if (moneyOwed == true) {
+						std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
+						continue;
+					}
 					try {
 						b.findProperty(prop)->improve(b.currentPlayer().get());
 					}
@@ -260,6 +312,10 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			else if (arg == "unmortgage") {
+				if (moneyOwed == true) {
+					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
+					continue;
+				}
 				std::string prop;
 				std::cin >> prop;
 				try {
@@ -269,17 +325,56 @@ int main(int argc, char *argv[]) {
 					std::cout << e.getMessage();
 				}
 			}
-			else if (arg == "bankrupt") std::cout << "You do not have access to this command right now!\n";
+			else if (arg == "bankrupt") {
+				if (moneyOwed == true) {
+					std::cout << "You owe $" << amtOwed << " to";
+					if (owedTo != nullptr) {
+						std::cout << owedTo->getName() << "."<< std::endl;
+					}
+					else {
+						std::cout << "the bank."<< std::endl;
+					}
+					std::cout << "You can (a) declare bankruptcy, or (b) try and raise money:";
+					std::string input;
+					while (1) {
+						std::cin >> input;
+						if (input == "a" || input == "A") {
+							if (owedTo != nullptr) {
+								b.transferAssets(b.currentPlayer(), owedTo);
+							}
+							else {
+								b.dropout();
+							}
+							std::cout << "Thanks for playing!" << std::endl;
+							break;
+						}
+						else if (input == "b" || input == "B") {
+
+							break;
+						}
+						else {
+							std::cout << "This is an invalid answer, please enter either 'a' or 'b':";
+						}
+					}
+				}
+				else {
+					std::cout<< "You don't owe anyone money, you cannot call bankrupt!" << std::endl;
+				}
+			}
 			else if (arg == "assets") {
-				b.printAssets();
+				b.printAssets(b.currentPlayer());
 			}
 			else if (arg == "all") {
 				b.getAllAssets();
 			}
 			else if (arg == "save") {
+				if (moneyOwed == true) {
+					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
+					continue;
+				}
 				std::ofstream outFile;
 				std::string file;
-				std::cout << "enter save file name: ";
+				std::cout << "Enter the name of the file you would like to save to: ";
 				std::cin >> file;
 				outFile.open(file);
 				outFile << b;
