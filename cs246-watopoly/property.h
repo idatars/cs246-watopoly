@@ -32,7 +32,7 @@ public:
 	virtual int getImprovements() = 0;
 	virtual void setImprovements(int level) = 0;
 	virtual void improve(Player * player) = 0;
-	virtual void sellImprove(Player * player) = 0; // player sell improvement of this building
+	virtual void sellimprove(Player * player) = 0; // player sell improvement of this building
 };
 
 class Auction {

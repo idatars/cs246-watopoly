@@ -4,16 +4,20 @@
 #include <string>
 #include "player.h"
 #include "board.h"
+#include "exception.h"
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
 	std::string infile = "";
 
 	for (int i = 0; i < argc; ++i) {
-		if (argv[i] == "-testing") testing = true;
-		if (argv[i] == "-load") {
+		std::string arg = argv[i];
+		if (arg == "-testing") {
+			testing = true;
+		}
+		if (arg == "-load") {
 			if (i + 1 < argc) infile = argv[i + 1];
-			else std::cerr << "No input file given";
+			else std::cerr << "No input file given" << std::endl;
 		}
 	}
 
@@ -46,8 +50,6 @@ int main(int argc, char *argv[]) {
 		b.newBoard(players);
 		displayBoard(b);
 	}
-
-	// GAMEPLAY ////////////////////////////////
 
 	int currPlayer = 0;
 	while (playersnum > 1) {
@@ -148,25 +150,27 @@ int main(int argc, char *argv[]) {
 		}
 
 		while (1) {
-			getline(std::cin, arg, ' ');
+			bool rolled = false;
+			std::cin >> arg;
 			if (arg == "roll") {
-				if (!b.currentPlayer()->inTims()) { // if player is not in jail
+				if (!b.currentPlayer()->inTims() || rolled != true) { // if player is not in jail
 					int roll = 0;
 					if (testing) {
 						try {
-							getline(std::cin, arg, ' ');
+							std::cin >> arg;
 							roll += stoi(arg);
-							getline(std::cin, arg, ' ');
+							std::cin >> arg;
 							roll += stoi(arg);
 						}
-						catch(std::invalid_argument){
+						catch(std::invalid_argument) {
 							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
 						}
 					}
 					else roll = rand() % 6 + 1 + rand() % 6 + 1;
+					rolled = true;
 					try { b.move(roll); }
 					catch (Auction p) {
-					
+						b.startAuction(p.p);
 					}
 					catch (outOfMoney p) {
 						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
@@ -183,7 +187,7 @@ int main(int argc, char *argv[]) {
 								break;
 							}
 							else if (ans == "b") {
-
+								std::cout << "You may now attempt to mortgage properties and sell improvements. Or, enter 'end' to drop out\n";
 								break;
 							}
 							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
@@ -191,7 +195,12 @@ int main(int argc, char *argv[]) {
 					}
 				}
 				else {
-					std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+					if (b.currentPlayer()->inTims()) {
+						std::cout << "You are in the DC Tim's Line and cannot roll!\n";
+					}
+					else {
+						std::cout << "You have already rolled!" << std::endl;
+					}
 				}
 			}
 			else if(arg == "p"){
@@ -203,51 +212,74 @@ int main(int argc, char *argv[]) {
 			}
 			else if (arg == "trade") {
 				std::string name;
-				getline(std::cin, name, ' ');
+				std::cin >> name;
 				std::string give;
-				getline(std::cin, give, ' ');
+				std::cin >> give;
 				std::string receive;
-				getline(std::cin, receive, ' ');
+				std::cin >> receive;
 				b.trade(b.currentPlayer()->getName(), name, give, receive);
 			}
 			else if (arg == "improve") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
+				std::cin >> prop;
 				std::string option;
-				getline(std::cin, option, ' ');
+				std::cin >> option;
 				if (option == "buy") {
-
+					try {
+						b.findProperty(prop)->improve(b.currentPlayer().get());
+					}
+					catch (Exception e) {
+						std::cout << e.getMessage();
+					}
 				}
 				else if (option == "sell") {
-
+					try {
+						b.findProperty(prop)->sellimprove(b.currentPlayer().get());
+					}
+					catch (Exception e) {
+						std::cout << e.getMessage();
+					}
 				}
 				else std::cout << "Invalid command\n";
 			}
 			else if (arg == "mortgage") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
-
+				std::cin >> prop;
+				try {
+					b.findProperty(prop)->mortgageBy(b.currentPlayer().get());
+				}
+				catch (Exception e) {
+					std::cout << e.getMessage();
+				}
 			}
 			else if (arg == "unmortgage") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
-
+				std::cin >> prop;
+				try {
+					b.findProperty(prop)->unmortgageBy(b.currentPlayer().get());
+				}
+				catch (Exception e) {
+					std::cout << e.getMessage();
+				}
 			}
 			else if (arg == "bankrupt") std::cout << "You do not have access to this command right now!\n";
 			else if (arg == "assets") {
-
+				b.printAssets();
 			}
 			else if (arg == "all") {
 				b.getAllAssets();
 			}
 			else if (arg == "save") {
-				std::string file;
-				getline(std::cin, file);
 				std::ofstream outFile;
+				std::string file;
+				std::cout << "enter save file name: ";
+				std::cin >> file;
 				outFile.open(file);
 				outFile << b;
-				std::cout << "Your game has been saved to the following file: " << file << std::endl;
+				playersnum = 0;
+				break;
 			}
 		}
 	}
+	std::cout << "Thanks for playing!\n";
 }
