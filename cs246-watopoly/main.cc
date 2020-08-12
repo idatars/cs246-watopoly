@@ -285,7 +285,8 @@ int main(int argc, char *argv[]) {
 						continue;
 					}
 					try {
-						b.findProperty(prop)->improve(b.currentPlayer().get());
+						auto property = b.findProperty(prop);
+						b.currentPlayer()->buyImprovement(property.get());
 					}
 					catch (Exception e) {
 						std::cout << e.getMessage();
@@ -293,7 +294,8 @@ int main(int argc, char *argv[]) {
 				}
 				else if (option == "sell") {
 					try {
-						b.findProperty(prop)->sellimprove(b.currentPlayer().get());
+						auto property = b.findProperty(prop);
+						b.currentPlayer()->sellImprovement(property.get());
 					}
 					catch (Exception e) {
 						std::cout << e.getMessage();
@@ -305,7 +307,8 @@ int main(int argc, char *argv[]) {
 				std::string prop;
 				std::cin >> prop;
 				try {
-					b.findProperty(prop)->mortgageBy(b.currentPlayer().get());
+					auto property = b.findProperty(prop);
+					b.currentPlayer()->getMortgage(property.get());
 				}
 				catch (Exception e) {
 					std::cout << e.getMessage();
@@ -319,7 +322,8 @@ int main(int argc, char *argv[]) {
 				std::string prop;
 				std::cin >> prop;
 				try {
-					b.findProperty(prop)->unmortgageBy(b.currentPlayer().get());
+					auto property = b.findProperty(prop);
+					b.currentPlayer()->getUnmortgage(property.get());
 				}
 				catch (Exception e) {
 					std::cout << e.getMessage();
