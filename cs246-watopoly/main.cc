@@ -4,6 +4,7 @@
 #include <string>
 #include "player.h"
 #include "board.h"
+#include "exception.h"
 
 int main(int argc, char *argv[]) {
 	bool testing = false;
@@ -47,9 +48,6 @@ int main(int argc, char *argv[]) {
 		displayBoard(b);
 	}
 
-	std::string prop = "AL";
-	b.startAuction(prop);
-	b.getAllAssets();
 	/*std::ofstream outFile;
 	std::string file;
 	std::cout<< "enter save file name: ";
@@ -157,25 +155,25 @@ int main(int argc, char *argv[]) {
 		}
 
 		while (1) {
-			getline(std::cin, arg, ' ');
+			std::cin >> arg;
 			if (arg == "roll") {
 				if (!b.currentPlayer()->inTims()) { // if player is not in jail
 					int roll = 0;
 					if (testing) {
 						try {
-							getline(std::cin, arg, ' ');
+							std::cin >> arg;
 							roll += stoi(arg);
-							getline(std::cin, arg, ' ');
+							std::cin >> arg;
 							roll += stoi(arg);
 						}
-						catch(std::invalid_argument){
+						catch(std::invalid_argument) {
 							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
 						}
 					}
 					else roll = rand() % 6 + 1 + rand() % 6 + 1;
 					try { b.move(roll); }
 					catch (Auction p) {
-					
+						b.startAuction(p.p);
 					}
 					catch (outOfMoney p) {
 						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
@@ -192,7 +190,7 @@ int main(int argc, char *argv[]) {
 								break;
 							}
 							else if (ans == "b") {
-
+								std::cout << "You may now attempt to mortgage properties and sell improvements. Or, enter 'end' to drop out\n";
 								break;
 							}
 							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
@@ -212,46 +210,74 @@ int main(int argc, char *argv[]) {
 			}
 			else if (arg == "trade") {
 				std::string name;
-				getline(std::cin, name, ' ');
+				std::cin >> name;
 				std::string give;
-				getline(std::cin, give, ' ');
+				std::cin >> give;
 				std::string receive;
-				getline(std::cin, receive, ' ');
+				std::cin >> receive;
 				// call trade(...) here
 			}
 			else if (arg == "improve") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
+				std::cin >> prop;
 				std::string option;
-				getline(std::cin, option, ' ');
+				std::cin >> option;
 				if (option == "buy") {
-
+					try {
+						b.findProperty(prop)->improve(b.currentPlayer().get());
+					}
+					catch (Exception e) {
+						std::cout << e.getMessage();
+					}
 				}
 				else if (option == "sell") {
-
+					try {
+						b.findProperty(prop)->sellimprove(b.currentPlayer().get());
+					}
+					catch (Exception e) {
+						std::cout << e.getMessage();
+					}
 				}
 				else std::cout << "Invalid command\n";
 			}
 			else if (arg == "mortgage") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
-
+				std::cin >> prop;
+				try {
+					b.findProperty(prop)->mortgageBy(b.currentPlayer().get());
+				}
+				catch (Exception e) {
+					std::cout << e.getMessage();
+				}
 			}
 			else if (arg == "unmortgage") {
 				std::string prop;
-				getline(std::cin, prop, ' ');
-
+				std::cin >> prop;
+				try {
+					b.findProperty(prop)->unmortgageBy(b.currentPlayer().get());
+				}
+				catch (Exception e) {
+					std::cout << e.getMessage();
+				}
 			}
 			else if (arg == "bankrupt") std::cout << "You do not have access to this command right now!\n";
 			else if (arg == "assets") {
-
+				b.printAssets();
 			}
 			else if (arg == "all") {
-
+				b.getAllAssets();
 			}
 			else if (arg == "save") {
-
+				std::ofstream outFile;
+				std::string file;
+				std::cout << "enter save file name: ";
+				std::cin >> file;
+				outFile.open(file);
+				outFile << b;
+				playersnum = 0;
+				break;
 			}
 		}
 	}
+	std::cout << "Thanks for playing!\n";
 }

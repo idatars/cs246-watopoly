@@ -80,7 +80,7 @@ void Player::buyImprovement(Property * up){
 
 void Player::sellImprovement(Property * up){
 	try{
-		up->sellImprove(this);
+		up->sellimprove(this);
 	}catch(Exception & e){
 		throw(e);
 	}

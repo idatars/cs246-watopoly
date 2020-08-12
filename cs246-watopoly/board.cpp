@@ -263,7 +263,7 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 			}
 			return true;
 		}
-		else if (input == "No" || input == "No") {
+		else if (input == "No" || input == "no") {
 			return false;
 		}
 		else {
@@ -274,7 +274,7 @@ bool Board::trade(const std::string &from, const std::string &to, const std::str
 
 }
 
-std::shared_ptr<Property> Board::getProperty(std::string &name) {
+std::shared_ptr<Property> Board::getProperty(const std::string &name) {
 	for (auto property : properties) {
 		if (property->getName() == name) {
 			return property;
@@ -282,20 +282,20 @@ std::shared_ptr<Property> Board::getProperty(std::string &name) {
 	}
 }
 
-void Board::printAssets(std::shared_ptr<Player> &p1) {
-	std::cout << p1->getName() <<" owns the following properties:" << std::endl;
+void Board::printAssets() {
+	std::cout << currentPlayer()->getName() <<" owns the following properties:" << std::endl;
 	for (auto i : properties) {
-		if (i->getOwner()->getName() == p1->getName()) {
+		if (i->getOwner()->getName() == currentPlayer()->getName()) {
 			std::cout << i->getName() << std::endl;
 		}
 	}
 }
 
-std::vector<std::string> Board::getAssets(std::shared_ptr<Player> &p1) {
+std::vector<std::string> Board::getAssets(std::shared_ptr<Player> p) {
 	std::vector<std::string> assets; 
 	for (auto i : properties) {
 		if (i->getOwner() != nullptr) {
-			if (i->getOwner()->getName() == p1->getName()) {
+			if (i->getOwner()->getName() == p->getName()) {
 				assets.emplace_back(i->getName());
 			}
 		}	
@@ -343,16 +343,15 @@ void Board::getAllAssets() {
 	players.erase(itToPlayer);
 }*/
 
-void Board::startAuction(std::string &property) {
-	std::shared_ptr<Property> prop = getProperty(property);
+void Board::startAuction(Property* prop) {
 	int highestBid = 0;
-	int currWinner;
+	int currWinner = 0;
 	int playersLeft = numplayers;
 	//bool stillIn[numplayers];
 	std::vector<int> stillIn;
 
 	//initializing players who can participate in auction
-	std::cout << "The auction will now begin for: " << property << "." << std::endl;
+	std::cout << "The auction will now begin for: " << prop->getName() << "." << std::endl;
 	std::cout << "All players are able to participate and the bidding will start at: $" << highestBid << "." << std::endl;
 	
 	for (int i = 0; i < numplayers; ++i) {
@@ -428,7 +427,7 @@ void Board::startAuction(std::string &property) {
 		}
 	}
 	std::cout << std::endl;
-	std::cout << players[currWinner]->getName() << " has won the auction for " << property << " at a bid of: $" << highestBid << std::endl;
+	std::cout << players[currWinner]->getName() << " has won the auction for " << prop->getName() << " at a bid of: $" << highestBid << std::endl;
 	players[currWinner]->withdrawMoney(highestBid);
 	players[currWinner]->addToWorth(prop->getCost());
 	prop->setOwner(players[currWinner]);
@@ -450,7 +449,7 @@ void Board::dropout()
 {
 	for (std::vector<std::shared_ptr<Property>>::iterator it = properties.begin(); it != properties.end(); ++it) {
 		if ((*it)->getOwner()->getName() == players[currplayer]->getName()) {
-			// auction property, make sure to set improvements to 0, unmortgage them
+			startAuction((*it).get());
 		}
 	}
 	totalcups -= players[currplayer]->getCups();

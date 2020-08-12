@@ -28,7 +28,7 @@ public:
 	void playerEffect(std::shared_ptr<Player>) override;
 	void mortgageBy(Player * player) override;
 	void unmortgageBy(Player * player) override; 
-	void sellImprove(Player * player) override;
+	void sellimprove(Player * player) override;
 };
 
 #endif

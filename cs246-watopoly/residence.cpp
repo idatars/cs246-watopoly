@@ -63,7 +63,7 @@ int Residence::getImprovements() {
 
 void Residence::setImprovements(int level) {}
 
-void Residence::sellImprove(Player * player){
+void Residence::sellimprove(Player * player){
 	throw(Exception{"This building cannot be imrpoved"});
 }
 
