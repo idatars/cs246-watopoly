@@ -348,14 +348,15 @@ void Board::startAuction(std::string &property) {
 	int highestBid = 0;
 	int currWinner;
 	int playersLeft = numplayers;
-	bool stillIn[numplayers];
-	
+	//bool stillIn[numplayers];
+	std::vector<int> stillIn;
+
 	//initializing players who can participate in auction
 	std::cout << "The auction will now begin for: " << property << "." << std::endl;
 	std::cout << "All players are able to participate and the bidding will start at: $" << highestBid << "." << std::endl;
 	
 	for (int i = 0; i < numplayers; ++i) {
-		stillIn[i] = true;
+		stillIn.push_back(1);
 	}
 
 	bool won = false;
@@ -367,10 +368,10 @@ void Board::startAuction(std::string &property) {
 			if (curr == numplayers) {
 				curr = 0;
 			}
-			if (stillIn[curr] == true){
+			if (stillIn[curr] == 1){
 				if (players[curr]->getMoney() < highestBid) {
 					std::cout << players[curr]->getName() << ", you have been automatically withdrawn from this auction due to a lack of funds." << std::endl;
-					stillIn[curr] = false;
+					stillIn[curr] = 0;
 					break;
 				}
 				std::cout << std::endl;
@@ -381,7 +382,7 @@ void Board::startAuction(std::string &property) {
 					try {
 						std::cin >> input;
 						if (input == "Withdraw" || input == "withdraw") {
-							stillIn[curr] = false;
+							stillIn[curr] = 0;
 							--playersLeft;
 							std::cout << players[curr]->getName() << ", you have withdrawn from this auction." << std::endl;
 							break;
@@ -392,7 +393,7 @@ void Board::startAuction(std::string &property) {
 								if (bid > players[curr]->getMoney()) {
 									std::cout << "The bid you have placed is higher than your balance." << std::endl;
 									tryAgain = true;
-									throw std::runtime_error("lol");
+									throw std::runtime_error("");
 								}
 								currWinner = curr;
 								highestBid = bid;
@@ -400,9 +401,9 @@ void Board::startAuction(std::string &property) {
 								break;
 							}
 							else {
-								std::cout << "Your bid is not higher than the currect highest bid." << std::endl;
+								std::cout << "Your bid is not higher than the current highest bid." << std::endl;
 								tryAgain = true;
-								throw std::runtime_error("lol");
+								throw std::runtime_error("");
 							}
 						}
 					}

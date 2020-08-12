@@ -47,6 +47,9 @@ int main(int argc, char *argv[]) {
 		displayBoard(b);
 	}
 
+	std::string prop = "AL";
+	b.startAuction(prop);
+	b.getAllAssets();
 	/*std::ofstream outFile;
 	std::string file;
 	std::cout<< "enter save file name: ";
