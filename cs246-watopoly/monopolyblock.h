@@ -14,7 +14,7 @@ class MonopolyBlock {
 public:
 	MonopolyBlock() {}
 	int countOwner(std::shared_ptr<Player>);
-	std::vector<Property*> getMembers();
+	std::vector<Property*> * getMembers();
 };
 
 #endif

@@ -7,7 +7,7 @@ Upgradable::Upgradable(std::string name, int c, int ic, int t0, int t1, int t2, 
     Property(name, c, b),
     improvementCost{ ic },
     tuition{ t0, t1, t2, t3, t4, t5 } {
-	b->getMembers().push_back(this);
+	b->getMembers()->push_back(this);
 }
 
 int Upgradable::getImprovementCost() {
@@ -55,7 +55,7 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 
 //returns true if the owener of the upgradable forms a monopoly and false otherwise
 bool Upgradable::ownMonopoly(){
-	return getBlock()->countOwner(getOwner()) == getBlock()->getMembers().size();
+	return getBlock()->countOwner(getOwner()) == getBlock()->getMembers()->size();
 	
 	/*Player * owner =  this->getOwner(); 
 	if(owner==nullptr){
