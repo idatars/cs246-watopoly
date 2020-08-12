@@ -50,9 +50,10 @@ public:
 };
 
 class outOfMoney {
-public :
+public:
 	std::shared_ptr<Player> playerowed = nullptr;
-	outOfMoney(std::shared_ptr<Player> p) { playerowed = p; }
+	int amountowed = 0;
+	outOfMoney(std::shared_ptr<Player> p, int i) : playerowed{ p }, amountowed{ i } {}
 };
 
 #endif

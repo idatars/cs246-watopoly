@@ -180,10 +180,10 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 
 	for (auto p : properties) {
 		if (p->getName() == give) {
-			giveFound == true;
+			giveFound = true;
 		}
 		if (p->getName() == receive) {
-			receiveFound == true;
+			receiveFound = true;
 		}
 	}
 
@@ -312,7 +312,7 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 			}
 			return;
 		}
-		else if (input == "No" || input == "No") {
+		else if (input == "No" || input == "no") {
 			std::cout << "The trade has been declined!" << std::endl;
 			return;
 		}
