@@ -173,6 +173,8 @@ int main(int argc, char *argv[]) {
 						b.startAuction(p.p);
 					}
 					catch (outOfMoney p) {
+						/*int worth = b.currentPlayer()->worth();
+						int moneyOwed;
 						std::cout << "You are out of money! You can (a) declare bankruptcy, or (b) try and raise money: ";
 						std::string ans;
 						while (1) {
@@ -191,7 +193,9 @@ int main(int argc, char *argv[]) {
 								break;
 							}
 							else std::cout << "Invalid argument. Please enter either 'a' or 'b': ";
-						}
+						}*/
+						std::cout << b.currentPlayer()->getName() << ", you owe $" << std::endl;
+						
 					}
 				}
 				else {

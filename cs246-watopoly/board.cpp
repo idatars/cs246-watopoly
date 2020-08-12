@@ -180,16 +180,16 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 
 	for (auto p : properties) {
 		if (p->getName() == give) {
-			giveFound == true;
+			giveFound = true;
 		}
 		if (p->getName() == receive) {
-			receiveFound == true;
+			receiveFound = true;
 		}
 	}
 
 	if (giveFound != true) {
 		try {
-			int temp = std::stoi(from);
+			int temp = std::stoi(give);
 		}
 		catch(...) {
 			std::cout << give << " does not exist!" << std::endl;
@@ -198,7 +198,7 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 	}
 	if (receiveFound != true) {
 		try {
-			int temp = std::stoi(from);
+			int temp = std::stoi(receive);
 		}
 		catch(...) {
 			std::cout << receive << " does not exist!" << std::endl;
@@ -232,7 +232,14 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 			return;
 		}
 		giving = findProperty(giveProperty);
-		if (giving->getImprovements() != 0) {
+		int improvements;
+		try {
+			improvements = giving->getImprovements();
+		}
+		catch (Exception &e){
+			improvements = 0;
+		}
+		if (improvements != 0) {
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
 			return;
 		}
@@ -264,7 +271,14 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 			return;
 		}
 		receivingProperty = findProperty(receiveProperty);
-		if (receivingProperty->getImprovements() != 0) {
+		int improvements;
+		try {
+			improvements = giving->getImprovements();
+		}
+		catch (Exception &e){
+			improvements = 0;
+		}
+		if (improvements != 0) {
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
 			return;
 		}
