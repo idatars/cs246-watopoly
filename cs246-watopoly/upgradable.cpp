@@ -29,27 +29,37 @@ int Upgradable::getTuition() {
 
 void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
-		std::string answer;
-		std::cout << "Would you like to purchase " << getName() << " (Academic Building) for $" << getCost() << "? ";
-		while (1) {
-			std::cin >> answer;
-			if (answer == "yes") {
-				p->withdrawMoney(this->getCost());
-				this->setOwner(p);
-				break;
-			}
-			else if (answer == "no") {
-				throw Auction(*this);
-				break;
-			}
-			else {
-				std::cout << "Invalid input. Please enter either 'yes' or 'no':";
+		if (p->getMoney() < getCost()) {
+			std::cout << "You cannot purchase this because you do not have enought money!\n";
+			throw Auction(*this);
+		}
+		else {
+			std::string answer;
+			std::cout << "Would you like to purchase " << getName() << " (Academic Building) for $" << getCost() << "?\n";
+			std::cout << "You have $" << p->getMoney() << std::endl;
+			while (1) {
+				std::cin >> answer;
+				if (answer == "yes") {
+					p->withdrawMoney(this->getCost());
+					this->setOwner(p);
+					p->addToWorth(getCost());
+					std::cout << "You now own " << getName() << ", your updated balance is $" << p->getMoney() << '\n';
+					break;
+				}
+				else if (answer == "no") {
+					throw Auction(*this);
+					break;
+				}
+				else {
+					std::cout << "Invalid input. Please enter either 'yes' or 'no':";
+				}
 			}
 		}
 	}
 	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
 		p->withdrawMoney(getTuition());
+		std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in rent.\n";
 	}
 }
 
