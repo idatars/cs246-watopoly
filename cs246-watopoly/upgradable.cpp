@@ -92,8 +92,10 @@ bool Upgradable::ownMonopoly(){
 
 //imporve the building
 void Upgradable::improve(Player * player){
-	if(player->getName() != this->getOwner()->getName()){
+	if(this->getOwner() == nullptr || player->getName() != this->getOwner()->getName()){
 		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(this->isMortgaged()){
+		throw(Exception{"You have mortgaged this building."});
 	}else if(!this->ownMonopoly()){
 		throw(Exception{"You do not own the monopoly, keep tring!"}); // does not own monopoly
 	}else if(improvements == 5){ // improvement number is at max
@@ -108,8 +110,10 @@ void Upgradable::improve(Player * player){
 	}
 }
 void Upgradable::sellimprove(Player * player){
-	if(player->getName() != this->getOwner()->getName()){
+	if(this->getOwner() == nullptr || player->getName() != this->getOwner()->getName()){
 		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(this->isMortgaged()){
+		throw(Exception{"You have mortgaged this building."});
 	}else if(improvements == 0){
 		throw(Exception{"You do not have enough improvements to sell"}); //no improvement
 	}else{
