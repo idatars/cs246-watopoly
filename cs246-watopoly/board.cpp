@@ -243,6 +243,21 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
 			return;
 		}
+		auto block = giving->getBlock()->getMembers();
+		bool monopoly = true;
+		for (auto i : *block) {
+			int improvements;
+			try {
+				improvements = i->getImprovements();
+			}
+			catch (Exception &e){
+				improvements = 0;
+			}
+			if (improvements > 0) {
+				std::cout << "You can't trade a property where the other properties in its monopoly have improvements on them!" << std::endl;
+				return;
+			}
+		}
 	}
 	
 	//checking the receiving string
@@ -281,6 +296,21 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 		if (improvements != 0) {
 			std::cout << "You can't trade a property that has improvements on it!" << std::endl;
 			return;
+		}
+		auto block = receivingProperty->getBlock()->getMembers();
+		bool monopoly = true;
+		for (auto i : *block) {
+			int improvements;
+			try {
+				improvements = i->getImprovements();
+			}
+			catch (Exception &e){
+				improvements = 0;
+			}
+			if (improvements > 0) {
+				std::cout << "You can't trade a property where the other properties in its monopoly have improvements on them!" << std::endl;
+				return;
+			}
 		}
 	}
 
@@ -995,7 +1025,7 @@ std::istream& operator>>(std::istream& in, Board &b) {
 	in >> b.numplayers;
 
 	std::string name;
-	int totalCups = 4; // ADD THIS IN LATER (done)
+	int totalCups = 4;
 	char piece;
 	int cups = 0; // you can only have 4 cups
 	int money = 0;
@@ -1050,16 +1080,6 @@ std::istream& operator>>(std::istream& in, Board &b) {
 			getPlayer->addToWorth(b.properties[i]->getCost());
 			b.properties[i]->setImprovements(improvementLevel);
 		}
-		/*if (i == 28 || i == 12) {
-			getPlayer->buyGym(*(std::dynamic_pointer_cast<Gym>(b.properties[i])));
-		}//if its a gym
-		else if (i == 5 || i == 15 || i == 25 || i == 35) {
-			//getPlayer->buyResidence();
-		}//if its a rez
-		else {
-			//getPlayer->buyUpgradable();
-		}*/
-		//add net worth, add monopoly blocks
 	}
 	return in;
 }// load
