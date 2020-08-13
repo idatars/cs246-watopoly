@@ -387,5 +387,8 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
-	std::cout << "Thanks for playing!\n";
+	if (playersnum == 1) {
+		std::cout << players[1]->getName() << " is the winner!\nCongratulations, you win bragging rights and eternal glory!\n";
+	}
+	std::cout << "Thanks for playing! :D\n";
 }
