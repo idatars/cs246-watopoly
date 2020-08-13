@@ -187,6 +187,7 @@ int main(int argc, char *argv[]) {
 		bool rentToPlayer = false;
 		std::shared_ptr<Player> owedTo = nullptr;
 		bool moneyOwed = false;
+		bool saved = true;
 		int amtOwed;
 		while (1) {
 			std::cin >> arg;
@@ -217,7 +218,7 @@ int main(int argc, char *argv[]) {
 						}
 					}
 					else {
-						roll = rand() % 6 + rand() % 6 + 2;
+						roll = (rand() % 6 + 1) + (rand() % 6 + 1);
 						std::cout << "You have rolled a " << roll << '\n';
 					}
 					rolled = true;
@@ -256,7 +257,11 @@ int main(int argc, char *argv[]) {
 				displayBoard(b);
 			}
 			else if (arg == "next") {
-				if (moneyOwed == true) {
+				if (rolled == false) {
+					std::cout << "You haven't rolled yet! Roll first then end your turn." << std::endl;
+					continue;
+				}
+				else if (moneyOwed == true) {
 					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before ending your turn." << std::endl;
 				}
 				else {
@@ -376,16 +381,38 @@ int main(int argc, char *argv[]) {
 					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
 					continue;
 				}
+				b.endturn();
 				std::ofstream outFile;
 				std::string file;
-				std::cout << "Enter the name of the file you would like to save to: ";
 				std::cin >> file;
 				outFile.open(file);
 				outFile << b;
-				playersnum = 0;
-				break;
+				std::cout << "Your game has been saved to the following file: " << file << std::endl;
+			}
+			else if (arg == "quit") {
+				if (saved != true) {
+					std::cout << "You will be quitting without saving! Are you sure?: ";
+					std::string input;
+					while (1) {
+						std::cin >> input;
+						if (input == "yes" || input == "Yes") {
+							std::cout << "Thanks for playing!" << std::endl;
+							return 0;
+						}
+						else if(input == "no" || input == "No") {
+							std::cout << "You have chosen not to quit without saving." << std::endl;
+						}
+						else {
+							std::cout << "Incorrect input, please enter Yes or No: ";
+						}
+					}
+				}
+				else {
+					std::cout << "Thanks for playing!" << std::endl;
+					return 0;
+				}
 			}
 		}
 	}
-	std::cout << "Thanks for playing!\n";
+	return 0;
 }
