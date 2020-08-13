@@ -294,7 +294,7 @@ int main(int argc, char *argv[]) {
 						b.currentPlayer()->buyImprovement(property.get());
 					}
 					catch (Exception e) {
-						std::cout << e.getMessage();
+						std::cout << e.getMessage()<<std::endl;
 					}
 				}
 				else if (option == "sell") {
@@ -303,7 +303,7 @@ int main(int argc, char *argv[]) {
 						b.currentPlayer()->sellImprovement(property.get());
 					}
 					catch (Exception e) {
-						std::cout << e.getMessage();
+						std::cout << e.getMessage()<<std::endl;
 					}
 				}
 				else std::cout << "Invalid command\n";
@@ -316,7 +316,7 @@ int main(int argc, char *argv[]) {
 					b.currentPlayer()->getMortgage(property.get());
 				}
 				catch (Exception e) {
-					std::cout << e.getMessage();
+					std::cout << e.getMessage() << std::endl;
 				}
 			}
 			else if (arg == "unmortgage") {
@@ -331,7 +331,7 @@ int main(int argc, char *argv[]) {
 					b.currentPlayer()->getUnmortgage(property.get());
 				}
 				catch (Exception e) {
-					std::cout << e.getMessage();
+					std::cout << e.getMessage()<<std::endl;
 				}
 			}
 			else if (arg == "bankrupt") {
@@ -414,5 +414,9 @@ int main(int argc, char *argv[]) {
 			}
 		}
 	}
+	if (playersnum == 1) {
+		std::cout << players[1]->getName() << " is the winner!\nCongratulations, you win bragging rights and eternal glory!\n";
+	}
+	std::cout << "Thanks for playing! :D\n";
 	return 0;
 }

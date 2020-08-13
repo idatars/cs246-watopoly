@@ -831,6 +831,9 @@ std::string firstline_print(std::shared_ptr<NonProperty> np){
 
 std::string firstline_print(std::shared_ptr<Upgradable> up){
 	int num = up->getImprovements();
+	if(num < 0){
+		num = 0;
+	}
 	std::string result_s = "";
 	for(int n = 0; n < num; ++n){
 		result_s += "I";

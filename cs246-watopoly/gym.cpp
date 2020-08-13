@@ -42,8 +42,14 @@ void Gym::playerEffect(std::shared_ptr<Player> p) {
 	}
 	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p->withdrawMoney(usageFees());
-		std::cout << "You pay $" << usageFees() << " to " << getOwner()->getName() << " in rent.\n";
+		if(this->isMortgaged()){
+			return;
+		}try{
+			p->withdrawMoney(usageFees());
+			std::cout << "You pay $" << usageFees() << " to " << getOwner()->getName() << " in rent.\n";
+		}catch(outOfMoney & out){
+			throw(out);
+		}
 	}
 }
 
