@@ -766,6 +766,71 @@ void displayBoard(Board &b){
 		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << std::endl;
 }
 
+void displayStrip(Board &b, Player *player){
+	int player_pos = player->getPos();
+	std::cout << " " << mult_string("_", 71) << " " << std::endl;
+	//first line
+	for(int i = 0; i < 8; ++i){
+		std::cout << "|"; 
+		if(dynamic_cast<NonProperty *>(b.getSquare((player_pos - i + 4 + 40) % 40).get()) != nullptr){
+			std::cout << firstline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare((player_pos - i + 4 + 40) % 40)));
+		}
+		
+		else if(dynamic_cast<Property *>(b.getSquare((player_pos - i + 4 + 40) % 40).get()) != nullptr){
+			auto ptr = dynamic_cast<Property *>(b.getSquare((player_pos - i + 4 + 40) % 40).get());
+			if(dynamic_cast<Upgradable *>(ptr)!=nullptr){
+				std::cout << firstline_print(std::make_shared<Upgradable>(*dynamic_cast<Upgradable *>(ptr)));
+			}else if(dynamic_cast<Residence *>(ptr)!=nullptr){
+				std::cout << firstline_print(std::make_shared<Residence>(*dynamic_cast<Residence *>(ptr)));
+			}else if(dynamic_cast<Gym *>(ptr)!=nullptr){
+				std::cout << firstline_print(std::make_shared<Gym>(*dynamic_cast<Gym *>(ptr)));
+			}
+		}
+		
+	}
+	std::cout << "|" << std::endl; 
+	//second line
+	for(int i = 0; i < 8; ++i){
+		std::cout << "|"; 
+		if(dynamic_cast<NonProperty *>(b.getSquare((player_pos - i + 4 + 40) % 40).get()) != nullptr){
+			std::cout << secondline_print(std::dynamic_pointer_cast<NonProperty>(b.getSquare((player_pos - i + 4 + 40) % 40)));
+		}
+		
+		else if(dynamic_cast<Property *>(b.getSquare((player_pos - i + 4 + 40) % 40).get()) != nullptr){
+			auto ptr = dynamic_cast<Property *>(b.getSquare((player_pos - i + 4 + 40) % 40).get());
+			if(dynamic_cast<Upgradable *>(ptr)!=nullptr){
+				std::cout << secondline_print(std::make_shared<Upgradable>(*dynamic_cast<Upgradable *>(ptr)));
+			}else if(dynamic_cast<Residence *>(ptr)!=nullptr){
+				std::cout << secondline_print(std::make_shared<Residence>(*dynamic_cast<Residence *>(ptr)));
+			}else if(dynamic_cast<Gym *>(ptr)!=nullptr){
+				std::cout << secondline_print(std::make_shared<Gym>(*dynamic_cast<Gym *>(ptr)));
+			}
+		}
+		
+	}
+	std::cout << "|" << std::endl; 
+	//third line
+	for(int i = 0; i < 8; ++i){
+		std::cout << "|"; 
+		auto ptr = dynamic_cast<Property *>(b.getSquare((player_pos - i + 4 + 40) % 40).get());
+		if(dynamic_cast<Upgradable *>(ptr) != nullptr){
+			std::cout << thirdline_print(std::make_shared<Upgradable>(*dynamic_cast<Upgradable *>(ptr)));
+		}else{
+			std::cout << thirdline_print(b.getSquare((player_pos - i + 4 + 40) % 40));
+		}
+	}
+	std::cout << "|" << std::endl; 
+	//fourth line
+	for(int i = 0; i < 8; ++i){
+		std::cout << "|"; 
+		std::cout << fourthline_print(b.getSquare((player_pos - i + 4 + 40) % 40),b);
+	}
+	std::cout << "|" << std::endl; 
+	std::cout << "|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << mult_string("_",8) << 
+		"|" << mult_string("_",8) << "|" << mult_string("_",8) << "|" << std::endl;
+}
+
 std::string mult_string(std::string s, int n){
 	if(n == 0){
 		return "";

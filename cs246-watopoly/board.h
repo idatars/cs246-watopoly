@@ -74,4 +74,6 @@ std::string thirdline_print(std::shared_ptr<Upgradable> up); // name print
 std::string fourthline_print(std::shared_ptr<Square> sq, Board & b); // space print
 
 std::string mult_string(std::string s, int n);
+
+void displayStrip(Board &b, Player *player);
 #endif
