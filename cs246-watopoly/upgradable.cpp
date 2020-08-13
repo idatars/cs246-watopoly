@@ -84,6 +84,8 @@ void Upgradable::improve(Player * player){
 		throw(Exception{"You do not own the monopoly, keep tring!"}); // does not own monopoly
 	}else if(improvements == 5){ // improvement number is at max
 		throw(Exception{"You have reached the maximum improvement number."});
+	}else if(improvementCost > player->getMoney()){
+		throw(Exception{"You don't have enough money."});
 	}else{ // buy improvement
 		try{
 			player->withdrawMoney(improvementCost);
@@ -106,7 +108,7 @@ void Upgradable::sellimprove(Player * player){
 			improvements -= 1;
 		}catch(Exception & e){
 			throw(e);
-		}	
+		}
 	}
 }
 
@@ -126,6 +128,8 @@ void Upgradable::mortgageBy(Player * player){
 void Upgradable::unmortgageBy(Player * player){
 	if(!this->isMortgaged()){
 		throw(Exception{"You have already unmortgaged the property."});
+	}else if(this->getMortgage() * 6 / 5 > player->getMoney()){
+		throw(Exception{"You don't have enough money."});
 	}try{
 		player->withdrawMoney(this->getMortgage() * 6 / 5);
 		this->setUnmortgaged();

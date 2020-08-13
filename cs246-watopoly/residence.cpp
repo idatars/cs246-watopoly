@@ -64,6 +64,8 @@ void Residence::mortgageBy(Player * player){
 void Residence::unmortgageBy(Player * player){
 	if(!this->isMortgaged()){
 		throw(Exception{"You have already unmortgaged the property."});
+	}else if(this->getMortgage() * 6 / 5 > player->getMoney()){
+		throw(Exception{"You don't have enough money."});
 	}try{
 		player->withdrawMoney(this->getMortgage() * 6 / 5);
 		this->setUnmortgaged();

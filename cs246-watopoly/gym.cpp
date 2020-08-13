@@ -67,6 +67,8 @@ void Gym::mortgageBy(Player * player){
 void Gym::unmortgageBy(Player * player){
 	if(!this->isMortgaged()){
 		throw(Exception{"You have already unmortaged the property."});
+	}else if(this->getMortgage() * 6 / 5 > player->getMoney()){
+		throw(Exception{"You don't have enough money."});
 	}try{
 		player->withdrawMoney(this->getMortgage() * 6 / 5);
 		this->setUnmortgaged();
