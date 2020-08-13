@@ -58,42 +58,28 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 	}
 	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
 	else {
-		p->withdrawMoney(getTuition());
-		std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in rent.\n";
+		if(this->isMortgaged()){
+			return;
+		}try{
+			p->withdrawMoney(getTuition());
+			std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in rent.\n";
+		}catch(outOfMoney & out){
+			throw(out);
+		}
 	}
 }
 
 //returns true if the owener of the upgradable forms a monopoly and false otherwise
 bool Upgradable::ownMonopoly(){
 	return getBlock()->countOwner(getOwner()) == getBlock()->getMembers()->size();
-	
-	/*Player * owner =  this->getOwner(); 
-	if(owner==nullptr){
-		return false;
-	}
-	std::vector<Upgradable*> monopoly_members = block->getMembers();
-	std::vector<std::shared_ptr<Upgradable>> player_owned = owner->getUpgradables();
-	for(auto it=monopoly_members.begin(); it!=monopoly_members.end();++it){
-		//if owner does not own one of the buildings in the monopoly
-		bool has_upgradable = false;
-		for(auto it2=player_owned.begin(); it2!=player_owned.end();++it2){
-			if((*it2)->getName() == (*it)->getName()){
-				has_upgradable = true;
-				break;
-			}
-		}
-		if(!has_upgradable){
-			return false;
-		}
-	}
-	return true;
-	*/
 }
 
 //imporve the building
 void Upgradable::improve(Player * player){
-	if(player->getName() != this->getOwner()->getName()){
+	if(this->getOwner() == nullptr || player->getName() != this->getOwner()->getName()){
 		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(this->isMortgaged()){
+		throw(Exception{"You have mortgaged this building."});
 	}else if(!this->ownMonopoly()){
 		throw(Exception{"You do not own the monopoly, keep tring!"}); // does not own monopoly
 	}else if(improvements == 5){ // improvement number is at max
@@ -108,8 +94,10 @@ void Upgradable::improve(Player * player){
 	}
 }
 void Upgradable::sellimprove(Player * player){
-	if(player->getName() != this->getOwner()->getName()){
+	if(this->getOwner() == nullptr || player->getName() != this->getOwner()->getName()){
 		throw(Exception{"This building is not yours :("}); // not ur property
+	}else if(this->isMortgaged()){
+		throw(Exception{"You have mortgaged this building."});
 	}else if(improvements == 0){
 		throw(Exception{"You do not have enough improvements to sell"}); //no improvement
 	}else{
