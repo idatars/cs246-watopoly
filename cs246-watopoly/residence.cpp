@@ -12,12 +12,11 @@ void Residence::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		std::string answer;
 		if (p->getMoney() < getCost()) {
-			std::cout << "You cannot purchase this because you do not have enought money!\n";
+			std::cout << "You cannot purchase this because you do not have enough money!\n";
 			throw Auction(*this);
 		}
 		else {
 			std::cout << "Would you like to purchase " << getName() << " (Residence) for $" << getCost() << "?\n";
-			std::cout << "You have $" << p->getMoney() << std::endl;
 			while (1) {
 				std::cin >> answer;
 				if (answer == "yes") {

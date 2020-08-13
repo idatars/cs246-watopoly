@@ -105,6 +105,7 @@ void Board::move(int i) {
 	if (i + players[currplayer]->getPos() <= 39) {
 		players[currplayer]->setPos(players[currplayer]->getPos() + i);
 		std::cout << "You are now on " << peek(players[currplayer]->getPos()) << "\n";
+		displayStrip(*this, currentPlayer().get());
 		squares[players[currplayer]->getPos()]->playerEffect(players[currplayer]);
 	}
 	else {

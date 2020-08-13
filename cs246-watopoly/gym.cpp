@@ -14,13 +14,12 @@ int Gym::usageFees() {
 void Gym::playerEffect(std::shared_ptr<Player> p) {
 	if (getOwner() == nullptr) {
 		if (p->getMoney() < getCost()) {
-			std::cout << "You cannot purchase this because you do not have enought money!\n";
+			std::cout << "You cannot purchase this because you do not have enough money!\n";
 			throw Auction(*this);
 		}
 		else {
 			std::string answer;
 			std::cout << "Would you like to purchase " << getName() << " (Gym) for $" << getCost() << "?\n";
-			std::cout << "You have $" << p->getMoney() << std::endl;
 			while (1) {
 				std::cin >> answer;
 				if (answer == "yes") {

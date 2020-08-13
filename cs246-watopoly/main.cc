@@ -88,6 +88,9 @@ int main(int argc, char *argv[]) {
 	int currPlayer = 0;
 	while (playersnum > 1) {
 		std::cout << "It is " << b.currentPlayer()->getName() << "'s turn\n";
+		displayStrip(b, b.currentPlayer().get());
+		std::cout << "You currently have $" << b.currentPlayer()->getMoney() << '\n';
+		std::cout << "Enter 'help' for a list of commands\n";
 		std::string arg;
 
 		// JAIL
@@ -253,8 +256,23 @@ int main(int argc, char *argv[]) {
 					}
 				}
 			}
-			else if(arg == "p"){
+			else if(arg == "display"){
 				displayBoard(b);
+			}
+			else if (arg == "help") {
+				std::cout << "List of Commands:\n";
+				std::cout << "\troll : rolls two dice and moves the player that many squares\n";
+				std::cout << "\tnext : gives control to next player\n";
+				std::cout << "\ttrade <name> <give> <receive> : offers a trade to name where give and recieve can be amount of money or a property name\n";
+				std::cout << "\timprove <property> buy/sell : attempts to buy or sell an improvement for property\n";
+				std::cout << "\tmortgage <property> : attempts to mortgage property\n";
+				std::cout << "\tunmortgage <property> : attempts to unmortgage property\n";
+				std::cout << "\tbankrupt : declare bankruptcy\n";
+				std::cout << "\tassets : displays assets of current player\n";
+				std::cout << "\tall : displays assets of all players\n";
+				std::cout << "\tsave <filename> : saves game to given file\n";
+				std::cout << "\tdisplay : displays the full board\n";
+				std::cout << "\thelp : prints the list of commands\n";
 			}
 			else if (arg == "next") {
 				if (rolled == false) {
@@ -292,6 +310,8 @@ int main(int argc, char *argv[]) {
 					try {
 						auto property = b.findProperty(prop);
 						b.currentPlayer()->buyImprovement(property.get());
+						std::cout << "You have upgraded " << prop << " to level " << property->getImprovements() << '\n';
+						std::cout << "Your updated balance is $" << b.currentPlayer()->getMoney() << '\n';
 					}
 					catch (Exception e) {
 						std::cout << e.getMessage()<<std::endl;
@@ -301,6 +321,8 @@ int main(int argc, char *argv[]) {
 					try {
 						auto property = b.findProperty(prop);
 						b.currentPlayer()->sellImprovement(property.get());
+						std::cout << "You have downgraded " << prop << " to level " << property->getImprovements() << '\n';
+						std::cout << "Your updated balance is $" << b.currentPlayer()->getMoney() << '\n';
 					}
 					catch (Exception e) {
 						std::cout << e.getMessage()<<std::endl;
@@ -314,6 +336,8 @@ int main(int argc, char *argv[]) {
 				try {
 					auto property = b.findProperty(prop);
 					b.currentPlayer()->getMortgage(property.get());
+					std::cout << "You have mortgaged " << prop << " for $" << property->getMortgage() << '\n';
+					std::cout << "Your updated balance is $" << b.currentPlayer()->getMoney() << '\n';
 				}
 				catch (Exception e) {
 					std::cout << e.getMessage() << std::endl;
