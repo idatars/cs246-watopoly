@@ -84,9 +84,9 @@ int Gym::getImprovements() {
 void Gym::setImprovements(int level) {}
 
 void Gym::sellimprove(Player * player){
-	throw(Exception{"This building cannot be imrpoved"});
+	throw(Exception{"This building cannot be improved"});
 }
 
 void Gym::improve(Player * player){
-	throw(Exception{"This building cannot be imrpoved"});
+	throw(Exception{"This building cannot be improved"});
 }
