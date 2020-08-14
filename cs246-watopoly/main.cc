@@ -477,6 +477,7 @@ int main(int argc, char *argv[]) {
 					}
 					else if(input == "no" || input == "No") {
 						std::cout << "You have chosen not to quit without saving." << std::endl;
+						break;
 					}
 					else {
 						std::cout << "Incorrect input, please enter Yes or No: ";
