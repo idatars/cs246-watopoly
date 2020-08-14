@@ -398,6 +398,7 @@ int main(int argc, char *argv[]) {
 					std::cout << "You can (a) declare bankruptcy, or (b) try and raise money: ";
 					std::string input;
 					bool droppedOut = false;
+					std::string name = b.currentPlayer()->getName();
 					while (1) {
 						std::cin >> input;
 						if (input == "a" || input == "A") {
@@ -410,7 +411,7 @@ int main(int argc, char *argv[]) {
 								--playersnum;
 							}
 							droppedOut = true;
-							std::cout << "Thanks for playing!" << std::endl;
+							std::cout << "Thanks for playing, "<< name << "!" << std::endl;
 							break;
 						}
 						else if (input == "b" || input == "B") {
@@ -421,7 +422,6 @@ int main(int argc, char *argv[]) {
 						}
 					}
 					if (droppedOut == true) {
-						b.endturn();
 						break;
 					}
 				}

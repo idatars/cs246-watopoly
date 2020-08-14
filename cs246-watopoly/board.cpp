@@ -427,10 +427,10 @@ void Board::startAuction(Property* prop) {
 	int highestBid = 0;
 	int currWinner = 0;
 	int playersLeft = numplayers;
-	//bool stillIn[numplayers];
 	std::vector<int> stillIn;
 
 	//initializing players who can participate in auction
+	std::cout << "\n";
 	std::cout << "The auction will now begin for: " << prop->getName() << "." << std::endl;
 	std::cout << "All players are able to participate and the bidding will start at: $" << highestBid << "." << std::endl;
 	
@@ -441,12 +441,15 @@ void Board::startAuction(Property* prop) {
 	bool won = false;
 	bool tryAgain = false;
 	while (!won) {
-		int curr = currplayer + 1;
+		int curr;
+		if (currplayer + 1 == numplayers) {
+			curr = 0;
+		}
+		else {
+			curr = currplayer + 1;
+		}
 		int counter = 0;
 		while (counter < numplayers) {
-			if (curr == numplayers) {
-				curr = 0;
-			}
 			if (stillIn[curr] == 1){
 				if (players[curr]->getMoney() < highestBid) {
 					std::cout << players[curr]->getName() << ", you have been automatically withdrawn from this auction due to a lack of funds." << std::endl;
@@ -498,12 +501,19 @@ void Board::startAuction(Property* prop) {
 					}		
 				}
 			}
+			++counter;
+			
+			if (curr == numplayers - 1) {
+				curr = 0;
+			}
+			else {
+				++curr;
+			}
 			if (playersLeft == 1) { // if one player left then they wins
+				currWinner = curr;
 				won = true;
 				break;
 			}
-			++counter;
-			++curr;
 		}
 	}
 	std::cout << std::endl;
@@ -551,17 +561,14 @@ void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player>
 		}
 	}
 	--numplayers;
+	if (currplayer == numplayers) {
+		currplayer = 0;
+	}
 }
 
 void Board::dropout()
 {
 	auto dropoutPlayer = players[currplayer];
-	for (auto it : properties) {
-		if (it->getOwner() == dropoutPlayer) {
-			startAuction(it.get());
-		}
-	}
-	totalcups -= players[currplayer]->getCups();
 	for (auto it = players.begin(); it != players.end(); ++it) {
 		if ((*it) == dropoutPlayer) {
 			players.erase(it);
@@ -569,6 +576,18 @@ void Board::dropout()
 		}
 	}
 	--numplayers;
+	if (currplayer == numplayers) {
+		currplayer = 0;
+	}
+	for (auto it : properties) {
+		if (it->getOwner() == dropoutPlayer) {
+			it->setUnmortgaged();
+			startAuction(it.get());
+		}
+	}
+	totalcups -= players[currplayer]->getCups();
+
+	
 }
 
 std::shared_ptr<Property> Board::findProperty(std::string prop_name){
