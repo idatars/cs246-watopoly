@@ -133,6 +133,9 @@ void Upgradable::unmortgageBy(Player * player){
 	}try{
 		player->withdrawMoney(this->getMortgage() * 6 / 5);
 		this->setUnmortgaged();
+		if(improvements < 0){
+			improvements = 0;
+		}
 	}catch(Exception & e){
 		throw(e);
 	}
