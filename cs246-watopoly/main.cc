@@ -396,9 +396,17 @@ int main(int argc, char *argv[]) {
 				}
 			}
 			else if (arg == "assets") {
+				if (b.currentPlayer()->getPos() == 4 && moneyOwed == true) {
+					std::cout << "You cannot use access assets if you have to still pay tuition!" << std::endl;
+					continue;
+				}
 				b.printAssets(b.currentPlayer());
 			}
 			else if (arg == "all") {
+				if (b.currentPlayer()->getPos() == 4 && moneyOwed == true) {
+					std::cout << "You cannot use access assets if you have to still pay tuition!" << std::endl;
+					continue;
+				}
 				b.getAllAssets();
 			}
 			else if (arg == "save") {

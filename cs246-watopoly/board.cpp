@@ -1079,7 +1079,13 @@ std::istream& operator>>(std::istream& in, Board &b) {
 		if (owner != "BANK"){
 			b.properties[i]->setOwner(getPlayer);
 			getPlayer->addToWorth(b.properties[i]->getCost());
-			b.properties[i]->setImprovements(improvementLevel);
+			if (improvementLevel == -1) {
+				b.properties[i]->setMortgaged();
+			}
+			else {
+				b.properties[i]->setImprovements(improvementLevel);
+			}
+			
 		}
 	}
 	return in;
