@@ -272,6 +272,7 @@ int main(int argc, char *argv[]) {
 				std::cout << "\tall : displays assets of all players\n";
 				std::cout << "\tsave <filename> : saves game to given file\n";
 				std::cout << "\tdisplay : displays the full board\n";
+				std::cout << "\tquit : exits the game\n";
 				std::cout << "\thelp : prints the list of commands\n";
 			}
 			else if (arg == "next") {
@@ -405,35 +406,30 @@ int main(int argc, char *argv[]) {
 					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
 					continue;
 				}
-				b.endturn();
 				std::ofstream outFile;
 				std::string file;
 				std::cin >> file;
 				outFile.open(file);
 				outFile << b;
 				std::cout << "Your game has been saved to the following file: " << file << std::endl;
+				std::cout << "The game will now exit!" << std::endl;
+				return 0;
 			}
 			else if (arg == "quit") {
-				if (saved != true) {
-					std::cout << "You will be quitting without saving! Are you sure?: ";
-					std::string input;
-					while (1) {
-						std::cin >> input;
-						if (input == "yes" || input == "Yes") {
-							std::cout << "Thanks for playing!" << std::endl;
-							return 0;
-						}
-						else if(input == "no" || input == "No") {
-							std::cout << "You have chosen not to quit without saving." << std::endl;
-						}
-						else {
-							std::cout << "Incorrect input, please enter Yes or No: ";
-						}
+				std::cout << "You will be quitting without saving! Are you sure?: ";
+				std::string input;
+				while (1) {
+					std::cin >> input;
+					if (input == "yes" || input == "Yes") {
+						std::cout << "Thanks for playing!" << std::endl;
+						return 0;
 					}
-				}
-				else {
-					std::cout << "Thanks for playing!" << std::endl;
-					return 0;
+					else if(input == "no" || input == "No") {
+						std::cout << "You have chosen not to quit without saving." << std::endl;
+					}
+					else {
+						std::cout << "Incorrect input, please enter Yes or No: ";
+					}
 				}
 			}
 		}

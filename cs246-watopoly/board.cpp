@@ -545,6 +545,39 @@ std::shared_ptr<Property> Board::findProperty(std::string prop_name){
 	throw(Exception{"I cannot find this property."});
 } //find property with a given name
 
+char Board::getPiece(std::string &c) {
+	std::string newstr;
+	for (auto i : c) {
+		newstr += std::tolower(i);
+	}
+	if (newstr == "goose") {
+		return 'G';
+	}
+	else if (newstr == "grt bus") {
+		return 'B';
+	}
+	else if (newstr == "tim hortons doughnut") {
+		return 'D';
+	}
+	else if (newstr == "professor") {
+		return 'P';
+	}
+	else if (newstr == "student") {
+		return 'S';
+	}
+	else if (newstr == "money") {
+		return '$';
+	}
+	else if (newstr == "laptop") {
+		return 'L';
+	}
+	else if (newstr == "pink tie") {
+		return 'T';
+	}
+	else {
+		return '0';
+	}
+}
 ////////////////////////Functions Outside of Class////////////////////////////
 void displayBoard(Board &b){
 	
@@ -986,39 +1019,6 @@ std::string fourthline_print(std::shared_ptr<Square> sq, Board & b){
 	return tmp + mult_string(" ",max_player_num);
 } // player print
 
-char Board::getPiece(std::string &c) {
-	std::string newstr;
-	for (auto i : c) {
-		newstr += std::tolower(i);
-	}
-	if (newstr == "goose") {
-		return 'G';
-	}
-	else if (newstr == "grt bus") {
-		return 'B';
-	}
-	else if (newstr == "tim hortons doughnut") {
-		return 'D';
-	}
-	else if (newstr == "professor") {
-		return 'P';
-	}
-	else if (newstr == "student") {
-		return 'S';
-	}
-	else if (newstr == "money") {
-		return '$';
-	}
-	else if (newstr == "laptop") {
-		return 'L';
-	}
-	else if (newstr == "pink tie") {
-		return 'T';
-	}
-	else {
-		return '0';
-	}
-}
 
 std::istream& operator>>(std::istream& in, Board &b) {
 	//need to check if file ended early! so we can throw. put the inputs in a try bracket and throw 
