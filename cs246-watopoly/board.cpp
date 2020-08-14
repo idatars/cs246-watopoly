@@ -113,6 +113,7 @@ void Board::move(int i) {
 		std::cout << "You collect $200 from OSAP\n";
 		players[currplayer]->addMoney(200);
 		std::cout << "You are now on " << peek(players[currplayer]->getPos()) << "\n";
+		displayStrip(*this, currentPlayer().get());
 		squares[players[currplayer]->getPos()]->playerEffect(players[currplayer]);
 	}
 }
