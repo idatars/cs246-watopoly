@@ -54,7 +54,20 @@ int main(int argc, char *argv[]) {
 		std::vector<char> pieces;
 		for (int i = 1; i <= playersnum; ++i) {
 			std::cout << "Player" << i << ", please enter your name: ";
-			std::cin >> name;
+			
+			while (1) {
+				std::string temp;
+				std::cin >> name;
+				for (auto i : name) {
+					temp += std::tolower(i);
+				}
+				if (name == "bank") {
+					std::cout << "You cannot name yourself " << name << std::endl;
+				}
+				else {
+					break;
+				}
+			}
 			std::cout << "\n";
 			std::cout << "Please choose your character from the following:" << std::endl;
 			std::cout << "	Goose | GRT Bus | Tim Hortons Doughnut | Professor | Student | Money | Laptop | Pink Tie:" << std::endl;
@@ -192,20 +205,9 @@ int main(int argc, char *argv[]) {
 		bool moneyOwed = false;
 		bool saved = true;
 		int amtOwed;
+		int amtremain;
 		while (1) {
 			std::cin >> arg;
-			if (moneyOwed == true) {
-				if (b.currentPlayer()->getMoney() >= amtOwed) {
-					b.currentPlayer()->withdrawMoney(amtOwed);
-					if (rentToPlayer == true) {
-						owedTo->addMoney(amtOwed);
-					}
-					std::cout << "Your amount owed has been paid!" << std::endl;
-				}
-				else {
-					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
-				}
-			}
 			if (arg == "roll") {
 				if (!b.currentPlayer()->inTims() && !rolled) { // if player is not in jail
 					int roll = 0;
@@ -240,8 +242,8 @@ int main(int argc, char *argv[]) {
 							std::cout << b.currentPlayer()->getName() << ", you owe $"<< amtOwed << " to the bank."<< std::endl;
 						}
 						moneyOwed = true;
-						std::cout << "You can choose to delcare bankruptcy by calling the bankrupt command. You can also choose to \
-							mortgage/sell your properties to raise enough money to pay the money you owe." << std::endl;
+						std::cout<< "\n";
+						std::cout << "You can choose to delcare bankruptcy by calling the bankrupt command. You can also choose to mortgage/sell your properties to raise enough money to pay the money you owe." << std::endl;
 						std::cout << "Note: If you choose to raise money, once it has been raised it will automatically be deducted from your balance." << std::endl;
 						std::cout << "You can only use the following commands while you owe money:" << std::endl;
 						std::cout << "  improve (sell only)\n  trade\n  mortgage\n  bankrupt\n  assets\n  all" << std::endl;
@@ -281,7 +283,15 @@ int main(int argc, char *argv[]) {
 					continue;
 				}
 				else if (moneyOwed == true) {
-					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before ending your turn." << std::endl;
+					amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+					std::cout << "You still owe $" << amtremain << " to ";
+					if (owedTo != nullptr) {
+						std::cout<< owedTo->getName();
+					}
+					else {
+						std::cout<< "the Bank";
+					}
+					std::cout << "," << " you can declare bankruptcy or raise more money before ending your turn." << std::endl;
 				}
 				else {
 					b.endturn();
@@ -305,7 +315,15 @@ int main(int argc, char *argv[]) {
 				std::cin >> option;
 				if (option == "buy") {
 					if (moneyOwed == true) {
-						std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
+						amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+						std::cout << "You still owe $" << amtremain << " to ";
+						if (owedTo != nullptr) {
+							std::cout<< owedTo->getName();
+						}
+						else {
+							std::cout<< "the Bank";
+						}
+						std::cout << "," << " you can declare bankruptcy or raise more money before buy any improvements." << std::endl;
 						continue;
 					}
 					try {
@@ -346,7 +364,15 @@ int main(int argc, char *argv[]) {
 			}
 			else if (arg == "unmortgage") {
 				if (moneyOwed == true) {
-					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money." << std::endl;
+					amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+					std::cout << "You still owe $" << amtremain << " to ";
+					if (owedTo != nullptr) {
+						std::cout<< owedTo->getName();
+					}
+					else {
+						std::cout<< "the Bank";
+					}
+					std::cout << "," << " you can declare bankruptcy or raise more money before unmortgaging." << std::endl;
 					continue;
 				}
 				std::string prop;
@@ -361,34 +387,42 @@ int main(int argc, char *argv[]) {
 			}
 			else if (arg == "bankrupt") {
 				if (moneyOwed == true) {
-					std::cout << "You owe $" << amtOwed << " to";
+					amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+					std::cout << "You owe $" << amtremain << " to ";
 					if (owedTo != nullptr) {
 						std::cout << owedTo->getName() << "."<< std::endl;
 					}
 					else {
 						std::cout << "the bank."<< std::endl;
 					}
-					std::cout << "You can (a) declare bankruptcy, or (b) try and raise money:";
+					std::cout << "You can (a) declare bankruptcy, or (b) try and raise money: ";
 					std::string input;
+					bool droppedOut = false;
+					std::string name = b.currentPlayer()->getName();
 					while (1) {
 						std::cin >> input;
 						if (input == "a" || input == "A") {
 							if (owedTo != nullptr) {
 								b.transferAssets(b.currentPlayer(), owedTo);
+								--playersnum;
 							}
 							else {
 								b.dropout();
+								--playersnum;
 							}
-							std::cout << "Thanks for playing!" << std::endl;
+							droppedOut = true;
+							std::cout << "Thanks for playing, "<< name << "!" << std::endl;
 							break;
 						}
 						else if (input == "b" || input == "B") {
-
 							break;
 						}
 						else {
 							std::cout << "This is an invalid answer, please enter either 'a' or 'b':";
 						}
+					}
+					if (droppedOut == true) {
+						break;
 					}
 				}
 				else {
@@ -411,17 +445,26 @@ int main(int argc, char *argv[]) {
 			}
 			else if (arg == "save") {
 				if (moneyOwed == true) {
-					std::cout << "You still owe money to " << owedTo << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
-					continue;
+					amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+					std::cout << "You still owe $" << amtremain << " to ";
+					if (owedTo != nullptr) {
+						std::cout<< owedTo->getName();
+					}
+					else {
+						std::cout<< "the Bank";
+					}
+					std::cout << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
 				}
-				std::ofstream outFile;
-				std::string file;
-				std::cin >> file;
-				outFile.open(file);
-				outFile << b;
-				std::cout << "Your game has been saved to the following file: " << file << std::endl;
-				std::cout << "The game will now exit!" << std::endl;
-				return 0;
+				else {
+					std::ofstream outFile;
+					std::string file;
+					std::cin >> file;
+					outFile.open(file);
+					outFile << b;
+					std::cout << "Your game has been saved to the following file: " << file << std::endl;
+					std::cout << "The game will now exit!" << std::endl;
+					return 0;
+				}
 			}
 			else if (arg == "quit") {
 				std::cout << "You will be quitting without saving! Are you sure?: ";
@@ -440,11 +483,38 @@ int main(int argc, char *argv[]) {
 					}
 				}
 			}
+			else {
+				std::cout << "That's not a valid command. Type in \"help\" to list the possible commands\n";
+			}
+			if (moneyOwed == true) {
+				if (b.currentPlayer()->getMoney() >= amtOwed) {
+					b.currentPlayer()->withdrawMoney(amtOwed);
+					if (rentToPlayer == true) {
+						owedTo->addMoney(amtOwed);
+					}
+					std::cout << "Your amount owed has been paid!" << std::endl;
+					std::cout << "Your new balance is: $" << b.currentPlayer()->getMoney() << std::endl;
+					moneyOwed = false;
+				}
+				else {
+					amtremain = abs(amtOwed - b.currentPlayer()->getMoney());
+					std::cout << "Your balance is: $" << b.currentPlayer()->getMoney() << std::endl;
+					std::cout << "You still owe $"<< amtremain << " to ";
+					if (owedTo != nullptr) {
+						std::cout<< owedTo->getName();
+					}
+					else {
+						std::cout<< "the Bank";
+					}
+					std::cout << "," << " you can declare bankruptcy or raise more money." << std::endl;
+				}
+			}
+		}
+		if (playersnum == 1) {
+			auto remainingPlayers = b.allPlayers();
+			std::cout << remainingPlayers[0]->getName() << " is the winner!\nCongratulations, you win bragging rights and eternal glory!\n";
+			std::cout << "Thanks for playing! :D\n";
+			return 0;
 		}
 	}
-	if (playersnum == 1) {
-		std::cout << players[1]->getName() << " is the winner!\nCongratulations, you win bragging rights and eternal glory!\n";
-	}
-	std::cout << "Thanks for playing! :D\n";
-	return 0;
 }

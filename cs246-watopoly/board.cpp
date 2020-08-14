@@ -7,6 +7,7 @@
 #include "monopolyblock.h"
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.clear();
 	players.clear();
@@ -333,7 +334,7 @@ void Board::trade(const std::string &from, const std::string &to, const std::str
 
 			if (receivedMoney == true) {
 				tradingFrom->addMoney(receiving);
-				tradingFrom->withdrawMoney(receiving);
+				tradingTo->withdrawMoney(receiving);
 			}
 			else {
 				receivingProperty->setOwner(tradingFrom);
@@ -376,7 +377,25 @@ void Board::printAssets(std::shared_ptr<Player> p) {
 		//listing properties of player now
 		for (auto property : properties) {
 			if (property->getOwner() == p) {
-				std::cout << "    " << property->getName() << std::endl;
+				std::cout << "    " << property->getName();
+				int len = property->getName().length();
+				if ( len == 2) {
+					std::cout << "   ";
+				}
+				else if (len == 3) {
+					std::cout << "  ";
+				}
+				else {
+					std::cout << " ";
+				}
+				std::cout << "| Cost: " << std::left << std::setw(3) << property->getCost() << " | Mortgaged: ";
+				if (property->isMortgaged() == true) {
+					std::cout<< "Yes";
+				} 
+				else {
+					std::cout<< "No ";
+				}
+				std::cout << " | Cost to unmortgage: " << property->getMortgage() << "\n";
 			}
 		}
 		std::cout << "  Total Worth: $" << p->worth() << std::endl;
@@ -409,10 +428,10 @@ void Board::startAuction(Property* prop) {
 	int highestBid = 0;
 	int currWinner = 0;
 	int playersLeft = numplayers;
-	//bool stillIn[numplayers];
 	std::vector<int> stillIn;
 
 	//initializing players who can participate in auction
+	std::cout << "\n";
 	std::cout << "The auction will now begin for: " << prop->getName() << "." << std::endl;
 	std::cout << "All players are able to participate and the bidding will start at: $" << highestBid << "." << std::endl;
 	
@@ -423,12 +442,15 @@ void Board::startAuction(Property* prop) {
 	bool won = false;
 	bool tryAgain = false;
 	while (!won) {
-		int curr = currplayer + 1;
+		int curr;
+		if (currplayer + 1 == numplayers) {
+			curr = 0;
+		}
+		else {
+			curr = currplayer + 1;
+		}
 		int counter = 0;
 		while (counter < numplayers) {
-			if (curr == numplayers) {
-				curr = 0;
-			}
 			if (stillIn[curr] == 1){
 				if (players[curr]->getMoney() < highestBid) {
 					std::cout << players[curr]->getName() << ", you have been automatically withdrawn from this auction due to a lack of funds." << std::endl;
@@ -480,12 +502,19 @@ void Board::startAuction(Property* prop) {
 					}		
 				}
 			}
+			++counter;
+			
+			if (curr == numplayers - 1) {
+				curr = 0;
+			}
+			else {
+				++curr;
+			}
 			if (playersLeft == 1) { // if one player left then they wins
+				currWinner = curr;
 				won = true;
 				break;
 			}
-			++counter;
-			++curr;
 		}
 	}
 	std::cout << std::endl;
@@ -498,11 +527,10 @@ void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player>
 {
 	for (auto it : properties) {
 		if (it->getOwner() == from) {
-			it->setOwner(from);
+			it->setOwner(to);
 			if (it->isMortgaged()) {
 				int mortCost = it->getCost() / 2;
-				std::cout << it->getName() <<" is a mortgaged property," << to->getName() << ", would you like to unmortgage it now? Choosing to mortgage it \
-					later will cost 10% more! Enter either \"Yes\" or \"No\": ";
+				std::cout << it->getName() <<" is a mortgaged property," << to->getName() << ", would you like to unmortgage it now? Choosing to mortgage it later will cost 10% more! Enter either \"Yes\" or \"No\": ";
 				std::string input;
 				while (1) {
 					std::cin >> input;
@@ -514,27 +542,53 @@ void Board::transferAssets(std::shared_ptr<Player> from, std::shared_ptr<Player>
 					else if(input == "no" || input == "No") {
 						std::cout << it->getName() << " will remain mortgaged!" << std::endl;
 					}
+					break;
 				}
 			}
 			else {
-				from->addToWorth(it->getCost());
+				to->addToWorth(it->getCost());
 			}
 		}
 	}
 	for (int i = 0; i < from->getCups(); ++i) {
 		to->addCup();
 	}
+	to->addMoney(from->getMoney());
+	auto dropoutPlayer = players[currplayer];
+	for (auto it = players.begin(); it != players.end(); ++it) {
+		if ((*it) == dropoutPlayer) {
+			players.erase(it);
+			break;
+		}
+	}
+	--numplayers;
+	if (currplayer == numplayers) {
+		currplayer = 0;
+	}
 }
 
 void Board::dropout()
 {
 	auto dropoutPlayer = players[currplayer];
+	for (auto it = players.begin(); it != players.end(); ++it) {
+		if ((*it) == dropoutPlayer) {
+			players.erase(it);
+			break;
+		}
+	}
+	--numplayers;
+	if (currplayer == numplayers) {
+		currplayer = 0;
+	}
 	for (auto it : properties) {
 		if (it->getOwner() == dropoutPlayer) {
+			it->setUnmortgaged();
 			startAuction(it.get());
 		}
 	}
 	totalcups -= players[currplayer]->getCups();
+
+	
 }
 
 std::shared_ptr<Property> Board::findProperty(std::string prop_name){

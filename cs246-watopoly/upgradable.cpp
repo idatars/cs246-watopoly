@@ -55,7 +55,7 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 			}
 		}
 	}
-	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)";
+	else if (getOwner()->getName() == p->getName()) std::cout << "You own this property. Welcome home :)\n";
 	else {
 		if(this->isMortgaged()){
 			return;
@@ -63,6 +63,7 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 			p->withdrawMoney(getTuition());
 			std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in rent.\n";
 		}catch(outOfMoney & out){
+			out.playerowed = getOwner();
 			throw(out);
 		}
 	}
