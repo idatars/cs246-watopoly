@@ -33,7 +33,7 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.emplace_back(new Tuition()); // 4
 	squares.emplace_back(new Residence("MKV", Residences)); // 5
 	squares.emplace_back(new Upgradable("ECH", 100, 50, 6, 30, 90, 270, 400, 550, Arts2)); //6
-	squares.emplace_back(new NH()); // 7, NH
+	squares.emplace_back(new NH(*this)); // 7, NH
 	squares.emplace_back(new Upgradable("PAS", 100, 50, 6, 30, 90, 270, 400, 550, Arts2)); // 8
 	squares.emplace_back(new Upgradable("HH", 120, 50, 8, 40, 100, 300, 450, 600, Arts2)); // 9
 	squares.emplace_back(new TimsLine()); // 10
@@ -48,7 +48,7 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.emplace_back(new Upgradable("OPT", 200, 100, 16, 80, 220, 600, 800, 1000, Health)); // 19
 	squares.emplace_back(new GooseNesting()); // 20
 	squares.emplace_back(new Upgradable("EV1", 220, 150, 18, 90, 250, 700, 875, 1050, Env)); // 21
-	squares.emplace_back(new NH()); // 22, NH
+	squares.emplace_back(new NH(*this)); // 22, NH
 	squares.emplace_back(new Upgradable("EV2", 220, 150, 18, 90, 250, 700, 875, 1050, Env)); // 23
 	squares.emplace_back(new Upgradable("EV3", 240, 150, 20, 100, 300, 750, 925, 1100, Env)); // 24
 	squares.emplace_back(new Residence("V1", Residences)); // 25
@@ -62,7 +62,7 @@ void Board::newBoard(std::vector<std::shared_ptr<Player>> &p) {
 	squares.emplace_back(new SLC(*this)); // 33, SLC
 	squares.emplace_back(new Upgradable("C2", 350, 200, 28, 150, 450, 1000, 1200, 1400, Sci2)); // 34
 	squares.emplace_back(new Residence("REV", Residences)); //35
-	squares.emplace_back(new NH()); //36, NH
+	squares.emplace_back(new NH(*this)); //36, NH
 	squares.emplace_back(new Upgradable("MC", 350, 200, 35, 175, 500, 1100, 1300, 1500, Math)); // 37
 	squares.emplace_back(new CoopFee()); // 38
 	squares.emplace_back(new Upgradable("DC", 400, 200, 50, 200, 600, 1400, 1700, 2000, Math)); // 39
