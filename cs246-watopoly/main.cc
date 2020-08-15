@@ -7,7 +7,9 @@
 #include "exception.h"
 #include <algorithm>
 int main(int argc, char *argv[]) {
-	bool testing = true;
+	std::cin.exceptions(std::ios::failbit | std::ios::eofbit);
+	try {
+		bool testing = false;
 	std::string infile = "";
 
 	for (int i = 0; i < argc; ++i) {
@@ -51,6 +53,7 @@ int main(int argc, char *argv[]) {
 		}
 		std::string name;
 		std::string c;
+		
 		std::vector<char> pieces;
 		std::vector<std::string> names;
 		for (int i = 1; i <= playersnum; ++i) {
@@ -569,4 +572,9 @@ int main(int argc, char *argv[]) {
 			return 0;
 		}
 	}
+	}
+	catch (std::ios::failure) {
+		std::cout << "ERROR: Abrupt end of game (possibly with EOF signal (crtl-d))\n";
+	}
+	
 }
