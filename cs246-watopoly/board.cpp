@@ -456,6 +456,11 @@ void Board::startAuction(Property* prop) {
 		}
 		int counter = 0;
 		while (counter < numplayers) {
+			if (playersLeft <= 1) { // if one player left then they wins
+				currWinner = curr;
+				won = true;
+				break;
+			}
 			if (stillIn[curr] == 1){
 				if (players[curr]->getMoney() < highestBid) {
 					std::cout << players[curr]->getName() << ", you have been automatically withdrawn from this auction due to a lack of funds." << std::endl;
@@ -508,17 +513,11 @@ void Board::startAuction(Property* prop) {
 				}
 			}
 			++counter;
-			
 			if (curr == numplayers - 1) {
 				curr = 0;
 			}
 			else {
 				++curr;
-			}
-			if (playersLeft == 1) { // if one player left then they wins
-				currWinner = curr;
-				won = true;
-				break;
 			}
 		}
 	}
@@ -1116,6 +1115,13 @@ std::istream& operator>>(std::istream& in, Board &b) {
 			}
 			newPlayer->addCup();
 			--totalCups;
+		}
+		if (inTimsLine == 1) {
+			newPlayer->setInTims(true);
+			for (int i = 0; i < turnsInTims; ++i) {
+				newPlayer->stayinTims();
+			}
+			inTimsLine = 0;
 		}
 		newPlayers.emplace_back(newPlayer);
 	}//making all the players!

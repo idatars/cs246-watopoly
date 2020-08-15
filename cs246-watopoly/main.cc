@@ -100,12 +100,20 @@ int main(int argc, char *argv[]) {
 
 	int currPlayer = 0;
 	while (playersnum > 1) {
+		bool rolled = false;
+		bool rentToPlayer = false;
+		std::shared_ptr<Player> owedTo = nullptr;
+		bool moneyOwed = false;
+		bool saved = true;
+		int amtOwed;
+		int amtremain;
+		bool jailMoney = false;
 		std::cout << "It is " << b.currentPlayer()->getName() << "'s turn\n";
 		displayStrip(b, b.currentPlayer().get());
 		std::cout << "You currently have $" << b.currentPlayer()->getMoney() << '\n';
 		std::cout << "Enter 'help' for a list of commands\n";
 		std::string arg;
-
+		outOfMoney object{nullptr, 50};
 		// JAIL
 		if (b.currentPlayer()->inTims()) {
 			std::cout << "You are in the DC Tim's Line! You can either\n(a) try to roll doubles,\n(b) pay $50, or\n(c) use a Roll Up the Rim Cup to get out!\n";
@@ -123,7 +131,7 @@ int main(int argc, char *argv[]) {
 					else {
 						std::cout << "You did not roll doubles.\n";
 						if (b.currentPlayer()->turnsinTims() == 3) {
-							"This is your third turn in Tim's. You must (a) pay $50 or (b) use a Roll Up the Rim cup to get out\n";
+							std::cout << "This is your third turn in Tim's. You must (a) pay $50 or (b) use a Roll Up the Rim cup to get out\n";
 							std::string option;
 							while (1) {
 								std::cin >> option;
@@ -142,18 +150,32 @@ int main(int argc, char *argv[]) {
 											break;
 										}
 										catch (outOfMoney o) {
-
+											moneyOwed = true;
+											amtOwed = 50;
+											std::cout << "You are not able to pay your $50 to get out of the Tims Line. You can declare bankruptcy or try to raise money.\n";
+											jailMoney = true;
 										}
 										break;
 									}
 								}
 								else if (option == "b") {
-									b.currentPlayer()->withdrawMoney(50);
-									b.currentPlayer()->resetTims();
-									std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+									try {
+										b.currentPlayer()->withdrawMoney(50);
+										b.currentPlayer()->resetTims();
+										std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+										break;
+									}
+									catch (outOfMoney o) {
+										moneyOwed = true;
+										amtOwed = 50;
+										std::cout << "You are not able to pay your $50 to get out of the Tims Line. You can declare bankruptcy or try to raise money.\n";
+										jailMoney = true;
+									}
 									break;
 								}
-								std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
+								else {
+									std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
+								}
 							}
 						}
 						else {
@@ -165,8 +187,7 @@ int main(int argc, char *argv[]) {
 				}
 				else if (answer == "b") {
 					if (b.currentPlayer()->getMoney() < 50) {
-						std::cout << "You do not have enough money for this! Please try another option/n";
-						break;
+						std::cout << "You do not have enough money for this! Please try another option\n";
 					}
 					else {
 						b.currentPlayer()->withdrawMoney(50);
@@ -178,7 +199,6 @@ int main(int argc, char *argv[]) {
 				else if (answer == "c") {
 					if (b.currentPlayer()->getCups() <= 0) {
 						std::cout << "You do not have enough cups for this. Try another option\n";
-						break;
 					}
 					else {
 						b.currentPlayer()->useCup();
@@ -187,17 +207,14 @@ int main(int argc, char *argv[]) {
 						break;
 					}
 				}
-				std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
+				else {
+					std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
+				}
+				
 			}
 		}
 
-		bool rolled = false;
-		bool rentToPlayer = false;
-		std::shared_ptr<Player> owedTo = nullptr;
-		bool moneyOwed = false;
-		bool saved = true;
-		int amtOwed;
-		int amtremain;
+		
 		while (1) {
 			std::cin >> arg;
 			if (arg == "roll") {
@@ -469,6 +486,7 @@ int main(int argc, char *argv[]) {
 					}
 					else if(input == "no" || input == "No") {
 						std::cout << "You have chosen not to quit without saving." << std::endl;
+						break;
 					}
 					else {
 						std::cout << "Incorrect input, please enter Yes or No: ";
@@ -484,8 +502,15 @@ int main(int argc, char *argv[]) {
 					if (rentToPlayer == true) {
 						owedTo->addMoney(amtOwed);
 					}
-					std::cout << "Your amount owed has been paid!" << std::endl;
-					std::cout << "Your new balance is: $" << b.currentPlayer()->getMoney() << std::endl;
+					if (jailMoney == true) {
+						b.currentPlayer()->resetTims();
+						std::cout << "You are now out of jail!" << std::endl;
+					}
+					else {
+						std::cout << "Your amount owed has been paid!" << std::endl;
+						std::cout << "Your new balance is: $" << b.currentPlayer()->getMoney() << std::endl;
+					}
+					jailMoney = false;
 					moneyOwed = false;
 				}
 				else {
