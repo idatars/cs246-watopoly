@@ -61,7 +61,9 @@ void Upgradable::playerEffect(std::shared_ptr<Player> p) {
 			return;
 		}try{
 			p->withdrawMoney(getTuition());
-			std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in rent.\n";
+			std::cout << "You pay $" << getTuition() << " to " << getOwner()->getName() << " in tuition.\n";
+			std::cout << "Your updated balance is $" << p->getMoney() << '\n';
+			getOwner()->addMoney(getTuition());
 		}catch(outOfMoney & out){
 			out.playerowed = getOwner();
 			throw(out);

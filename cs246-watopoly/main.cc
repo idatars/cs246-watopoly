@@ -7,7 +7,7 @@
 #include "exception.h"
 #include <algorithm>
 int main(int argc, char *argv[]) {
-	bool testing = false;
+	bool testing = true;
 	std::string infile = "";
 
 	for (int i = 0; i < argc; ++i) {
@@ -139,6 +139,7 @@ int main(int argc, char *argv[]) {
 									if (b.currentPlayer()->getCups() > 0 && b.currentPlayer()->getMoney() < 50) { // forces them to use a cup if they have one and not enough cash
 										std::cout << "You do not have enough money for this. You must use a cup instead\n You are now out of Tim's and may continue with your turn";
 										b.currentPlayer()->useCup();
+										b.useCup();
 										b.currentPlayer()->resetTims();
 										break;
 									}
@@ -160,7 +161,8 @@ int main(int argc, char *argv[]) {
 								}
 								else if (option == "b") {
 									try {
-										b.currentPlayer()->withdrawMoney(50);
+										b.currentPlayer()->useCup();
+										b.useCup();
 										b.currentPlayer()->resetTims();
 										std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
 										break;
@@ -202,6 +204,7 @@ int main(int argc, char *argv[]) {
 					}
 					else {
 						b.currentPlayer()->useCup();
+						b.useCup();
 						b.currentPlayer()->resetTims();
 						std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
 						break;
@@ -220,21 +223,42 @@ int main(int argc, char *argv[]) {
 			if (arg == "roll") {
 				if (!b.currentPlayer()->inTims() && !rolled) { // if player is not in jail
 					int roll = 0;
+					int d1;
+					int d2;
 					if (testing) {
 						try {
 							std::cin >> arg;
-							roll += stoi(arg);
+							d1 = stoi(arg);
 							std::cin >> arg;
-							roll += stoi(arg);
+							d2 = stoi(arg);
 						}
 						catch(std::invalid_argument) {
 							std::cerr << "Invalid roll numbers. Rolling from scratch\n";
 						}
 					}
 					else {
-						roll = (rand() % 6 + 1) + (rand() % 6 + 1);
-						std::cout << "You have rolled a " << roll << '\n';
+						d1 = rand() % 6 + 1;
+						d2 = rand() % 6 + 1;
 					}
+					for (int i = 0; i < 3; ++i) {
+						if (d1 != d2) {								
+							roll = d1 + d2;
+							break;
+						}
+						else if (i == 2) {
+							std::cout << "You have rolled doubles three times in a row and are being sent to the Tim's Line!\n";
+							displayStrip(b, b.currentPlayer().get());
+							b.currentPlayer()->setInTims(true);
+						}
+						else {
+							std::cout << "You roll double " << d1 << "'s and roll again.\n";
+						}
+						d1 = rand() % 6 + 1;
+						d2 = rand() % 6 + 1;
+					}
+					if (b.currentPlayer()->inTims()) continue;
+					std::cout << "You have rolled a " << roll << '\n';
+
 					rolled = true;
 					try { b.move(roll); }
 					catch (Auction p) {
@@ -267,7 +291,7 @@ int main(int argc, char *argv[]) {
 					}
 				}
 			}
-			else if(arg == "display"){
+			else if(arg == "display") {
 				displayBoard(b);
 			}
 			else if (arg == "help") {
@@ -287,7 +311,7 @@ int main(int argc, char *argv[]) {
 				std::cout << "\thelp : prints the list of commands\n";
 			}
 			else if (arg == "next") {
-				if (rolled == false) {
+				if (rolled == false && !b.currentPlayer()->inTims()) {
 					std::cout << "You haven't rolled yet! Roll first then end your turn." << std::endl;
 					continue;
 				}
@@ -465,6 +489,9 @@ int main(int argc, char *argv[]) {
 					std::cout << "," << " you can declare bankruptcy or raise more money before saving." << std::endl;
 				}
 				else {
+					if (rolled) {
+						b.endturn();
+					}
 					std::ofstream outFile;
 					std::string file;
 					std::cin >> file;

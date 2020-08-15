@@ -2,10 +2,12 @@
 #include <iostream>
 #include "exception.h"
 
-Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {}
+Residence::Residence(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 200, b) {
+	b->getMembers()->push_back(this);
+}
 
 int Residence::getRent() {
-    return rent[getBlock()->countOwner(getOwner())];
+    return rent[getBlock()->countOwner(getOwner()) - 1];
 }
 
 void Residence::playerEffect(std::shared_ptr<Player> p) {
@@ -43,6 +45,8 @@ void Residence::playerEffect(std::shared_ptr<Player> p) {
 		}try{
 			p->withdrawMoney(getRent());
 			std::cout << "You pay $" << getRent() << " to " << getOwner()->getName() << " in rent.\n";
+			std::cout << "Your updated balance is $" << p->getMoney() << '\n';
+			getOwner()->addMoney(getRent());
 		}catch(outOfMoney & out){
 			out.playerowed = getOwner();
 			throw(out);

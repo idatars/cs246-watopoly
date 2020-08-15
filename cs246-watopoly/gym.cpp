@@ -2,7 +2,9 @@
 #include "exception.h"
 #include <iostream>
 
-Gym::Gym(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 150, b) {}
+Gym::Gym(std::string name, std::shared_ptr<MonopolyBlock> b) : Property(name, 150, b) {
+	b->getMembers()->push_back(this);
+}
 
 int Gym::usageFees() {
 	if (getBlock()->countOwner(getOwner()) == 2) {
@@ -45,7 +47,9 @@ void Gym::playerEffect(std::shared_ptr<Player> p) {
 			return;
 		}try{
 			p->withdrawMoney(usageFees());
-			std::cout << "You pay $" << usageFees() << " to " << getOwner()->getName() << " in rent.\n";
+			std::cout << "You pay $" << usageFees() << " to " << getOwner()->getName() << " in usage fees.\n";
+			std::cout << "Your updated balance is $" << p->getMoney() << '\n';
+			getOwner()->addMoney(usageFees());
 		}catch(outOfMoney & out){
 			out.playerowed = getOwner();
 			throw(out);

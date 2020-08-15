@@ -10,10 +10,12 @@ void Tuition::playerEffect(std::shared_ptr<Player> p) {
 		std::cin >> answer;
 		if (answer == "a") {
 			p->withdrawMoney(300);
+			std::cout << "You pay $300 to the bank, you balance is now $" << p->getMoney() << '\n';
 			break;
 		}
 		else if (answer == "b") {
 			p->withdrawMoney(p->worth() / 10);
+			std::cout << "You pay $300 to the bank, you balance is now $" << p->worth() / 10 << '\n';
 			break;
 		}
 		else {
