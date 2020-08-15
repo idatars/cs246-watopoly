@@ -41,6 +41,7 @@ public:
 	std::shared_ptr<Square> getSquare(int i);
 	void addCup();
 	void useCup();
+	int getCups();
 	// if trade() return false, ask p1 if he wants to trade again
 	void trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive); 
 	void printAssets(std::shared_ptr<Player> p); // prints assets of current player

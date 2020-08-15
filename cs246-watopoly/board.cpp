@@ -149,6 +149,11 @@ void Board::useCup()
 	--totalcups;
 }
 
+int Board::getCups()
+{
+	return totalcups;
+}
+
 void Board::trade(const std::string &from, const std::string &to, const std::string &give, const std::string &receive) {
 	if (from == to) {
 		std::cout << "You can't trade yourself!" << std::endl;
