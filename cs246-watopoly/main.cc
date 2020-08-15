@@ -52,6 +52,7 @@ int main(int argc, char *argv[]) {
 		std::string name;
 		std::string c;
 		std::vector<char> pieces;
+		std::vector<std::string> names;
 		for (int i = 1; i <= playersnum; ++i) {
 			std::cout << "Player" << i << ", please enter your name: ";
 			
@@ -65,7 +66,14 @@ int main(int argc, char *argv[]) {
 					std::cout << "You cannot name yourself " << name << std::endl;
 				}
 				else {
-					break;
+					int counter = count(names.begin(), names.end(), name);
+					if (counter == 0) {
+						names.emplace_back(name);
+						break;
+					}
+					else {
+						std::cout << "This name is already being used, please select a new one!" << std::endl;
+					}
 				}
 			}
 			std::cout << "\n";
