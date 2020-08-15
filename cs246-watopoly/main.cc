@@ -107,37 +107,8 @@ int main(int argc, char *argv[]) {
 		std::string arg;
 
 		// JAIL
-		if (b.currentPlayer()->inTims() && b.currentPlayer()->turnsinTims() == 3 && b.currentPlayer()->getCups() > 0) {
-			std::cout << "This is your third turn in the DC Tim's Line, you must either\n(a) pay $50, or\n(b) use a Roll Up the Rim Cup (you have "
-				<< b.currentPlayer()->getCups() << " cups)\nto get out!\n";
-			std::string answer;
-			while (1) {
-				std::cin >> answer;
-				if (answer == "a") {
-					b.currentPlayer()->withdrawMoney(50);
-					b.currentPlayer()->resetTims();
-					std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
-					break;
-				}
-				else if (answer == "b") {
-					b.currentPlayer()->useCup();
-					b.currentPlayer()->resetTims();
-					std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
-					break;
-				}
-				else {
-					std::cout << "Invalid input! Please enter 'a' or 'b':";
-				}
-			}
-		}
-		else if (b.currentPlayer()->inTims() && b.currentPlayer()->turnsinTims() == 3) {
-			std::cout << "This is your third turn in the DC Tim's Line, you must pay $50 to get out\n";
-			b.currentPlayer()->withdrawMoney(50);
-			std::cout << "You are now out of the Tim's line. You may continue with your turn /n";
-		}
-		else if (b.currentPlayer()->inTims() && b.currentPlayer()->getCups() > 0) {
-			std::cout << "You are in the DC Tim's Line! You can either\n(a) try to roll doubles,\n(b) pay $50, or\n(c) use a Roll Up the Rim Cup (you have "
-				<< b.currentPlayer()->getCups() << " cups)\nto get out!\n";
+		if (b.currentPlayer()->inTims()) {
+			std::cout << "You are in the DC Tim's Line! You can either\n(a) try to roll doubles,\n(b) pay $50, or\n(c) use a Roll Up the Rim Cup to get out!\n";
 			std::string answer;
 			while (1) {
 				std::cin >> answer;
@@ -150,52 +121,73 @@ int main(int argc, char *argv[]) {
 						b.currentPlayer()->resetTims();
 					}
 					else {
-						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
-						b.currentPlayer()->stayinTims();
+						std::cout << "You did not roll doubles.\n";
+						if (b.currentPlayer()->turnsinTims() == 3) {
+							"This is your third turn in Tim's. You must (a) pay $50 or (b) use a Roll Up the Rim cup to get out\n";
+							std::string option;
+							while (1) {
+								std::cin >> option;
+								if (option == "a") {
+									if (b.currentPlayer()->getCups() > 0 && b.currentPlayer()->getMoney() < 50) { // forces them to use a cup if they have one and not enough cash
+										std::cout << "You do not have enough money for this. You must use a cup instead\n You are now out of Tim's and may continue with your turn";
+										b.currentPlayer()->useCup();
+										b.currentPlayer()->resetTims();
+										break;
+									}
+									else {
+										try {
+											b.currentPlayer()->withdrawMoney(50);
+											b.currentPlayer()->resetTims();
+											std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+											break;
+										}
+										catch (outOfMoney o) {
+
+										}
+										break;
+									}
+								}
+								else if (option == "b") {
+									b.currentPlayer()->withdrawMoney(50);
+									b.currentPlayer()->resetTims();
+									std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+									break;
+								}
+								std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
+							}
+						}
+						else {
+							std::cout << "You may continue with your turn.\n";
+							b.currentPlayer()->stayinTims();
+						}
 					}
 					break;
 				}
 				else if (answer == "b") {
-					b.currentPlayer()->withdrawMoney(50);
-					b.currentPlayer()->resetTims();
-					std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
-					break;
+					if (b.currentPlayer()->getMoney() < 50) {
+						std::cout << "You do not have enough money for this! Please try another option/n";
+						break;
+					}
+					else {
+						b.currentPlayer()->withdrawMoney(50);
+						b.currentPlayer()->resetTims();
+						std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+						break;
+					}
 				}
 				else if (answer == "c") {
-					b.currentPlayer()->useCup();
-					b.currentPlayer()->resetTims();
-					std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
-					break;
-				}
-				std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
-			}
-		}
-		else if (b.currentPlayer()->inTims()) {
-			std::cout << "You are in the DC Tim's Line! You can either\n(a) try to roll doubles, or\n(b) pay $50\n to get out\n";
-			std::string answer;
-			while (1) {
-				std::cin >> answer;
-				if (answer == "a") {
-					int first = rand() % 6 + 1;
-					int second = rand() % 6 + 1;
-					std::cout << "First die: " << first << "\nSecond die: " << second << '\n';
-					if (first == second) {
-						std::cout << "You have rolled doubles and are now out of the Tim's line!\nYou may continue with your turn.\n";
-						b.currentPlayer()->resetTims();
+					if (b.currentPlayer()->getCups() <= 0) {
+						std::cout << "You do not have enough cups for this. Try another option\n";
+						break;
 					}
 					else {
-						std::cout << "You did not roll doubles.\nYou may continue with your turn.\n";
-						b.currentPlayer()->stayinTims();
+						b.currentPlayer()->useCup();
+						b.currentPlayer()->resetTims();
+						std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
+						break;
 					}
-					break;
 				}
-				else if (answer == "b") {
-					b.currentPlayer()->withdrawMoney(50);
-					b.currentPlayer()->resetTims();
-					std::cout << "Congrats! You are now out of the Tim's Line!\nYou may continue with your turn.\n";
-					break;
-				}
-				std::cout << "Invalid input. Please enter either 'a' or 'b': ";
+				std::cout << "Invalid input. Please enter either 'a', 'b', or 'c': ";
 			}
 		}
 

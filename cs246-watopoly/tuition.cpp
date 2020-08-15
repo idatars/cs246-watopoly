@@ -13,7 +13,7 @@ void Tuition::playerEffect(std::shared_ptr<Player> p) {
 			break;
 		}
 		else if (answer == "b") {
-			p->withdrawMoney(p->worth());
+			p->withdrawMoney(p->worth() / 10);
 			break;
 		}
 		else {
